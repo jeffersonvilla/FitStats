@@ -11,5 +11,6 @@ public class App
         
         ControladorUsuario controlador = new ControladorUsuario();
         VentanaRegistroUsuario vista = new VentanaRegistroUsuario(controlador);
+        controlador.setVista(vista);
     }
 }
