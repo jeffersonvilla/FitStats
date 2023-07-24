@@ -44,24 +44,19 @@ public class ControladorInicioSesion {
 				else {
 					JOptionPane.showMessageDialog(null, "Inicio correcto!");
 					crearSesion(email);
-					this.controladorPrincipal.abrirFuncionalidad(this.sesionUsuario);
+					this.controladorPrincipal.abrirVentanaActividades(this.sesionUsuario);
 				}
 			}else vista.mostrarErrorEmailNoRegistrado();
 		}else vista.validarFormatoEmail();
 		
 	}
 	
-	public void cerrarSesion() {
-		daoSesion.cerrarSesion(this.sesionUsuario);
-		this.sesionUsuario = null;
-	}
-	
 	private void crearSesion(String email) {
 		Usuario usuario = daoUsuario.leerUsuarioPorEmail(email);
 		this.sesionUsuario = daoSesion.sesionAbiertaPorIdUsuario(usuario.getId());
 		if(this.sesionUsuario == null) {			
-			this.sesionUsuario = new Sesion(new GregorianCalendar(), usuario.getId());
-			daoSesion.crearSesion(sesionUsuario);
+			daoSesion.crearSesion(new Sesion(new GregorianCalendar(), usuario.getId()));
+			this.sesionUsuario = daoSesion.sesionAbiertaPorIdUsuario(usuario.getId());
 		}
 	}
 	

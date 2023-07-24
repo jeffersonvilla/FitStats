@@ -74,6 +74,7 @@ public class Sesion {
 	}
 	
 	private String convertirFechaEnString(GregorianCalendar fechaHora) {
+		if(fechaHora == null) return "null";
 		return String.format("%04d-%02d-%02d %02d:%02d:%02d", 
 				fechaHora.get(GregorianCalendar.YEAR),
 				fechaHora.get(GregorianCalendar.MONTH),
@@ -85,7 +86,9 @@ public class Sesion {
 
 	@Override
 	public String toString() {
-		return "Sesion [idSesion=" + idSesion + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin
+		return "Sesion [idSesion=" + idSesion 
+				+ ", fechaInicio=" + convertirFechaEnString(fechaInicio) 
+				+ ", fechaFin=" + convertirFechaEnString(fechaFin)
 				+ ", idUsuario=" + idUsuario + "]";
 	}
 }

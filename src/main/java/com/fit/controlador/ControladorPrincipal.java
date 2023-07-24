@@ -1,6 +1,10 @@
 package com.fit.controlador;
 
+import java.util.GregorianCalendar;
+
+import com.fit.dao.DaoSesion;
 import com.fit.modelo.Sesion;
+import com.fit.vista.VentanaActividades;
 import com.fit.vista.VentanaInicioSesion;
 import com.fit.vista.VentanaPrincipal;
 import com.fit.vista.VentanaRegistroUsuario;
@@ -15,7 +19,13 @@ public class ControladorPrincipal {
 	private ControladorRegistroUsuario controladorRegistroUsuario;
 	private VentanaRegistroUsuario ventanaRegistroUsuario;
 	
+	private ControladorActividades controladorActividades;
+	private VentanaActividades ventanaActividades;
+	
+	private DaoSesion daoSesion;
+	
 	public ControladorPrincipal() {
+		this.daoSesion = new DaoSesion();
 		this.ventanaPrincipal = new VentanaPrincipal(this);
 	}
 	
@@ -43,8 +53,24 @@ public class ControladorPrincipal {
 		this.ventanaPrincipal.setVisible(true);
 	}
 
-	public void abrirFuncionalidad(Sesion sesionUsuario) {
+	public void abrirVentanaActividades(Sesion sesionUsuario) {
 		cerrarVentanaInicioSesion();
-		System.out.println("Sin implementar");
+		this.controladorActividades = new ControladorActividades(this, sesionUsuario);
+		this.ventanaActividades = new VentanaActividades(controladorActividades);
+		this.controladorActividades.setVista(ventanaActividades);
+		this.ventanaPrincipal.setVisible(false);
 	}
+	
+	private void cerrarVentanaActividades() {
+		if(this.ventanaActividades != null) this.ventanaActividades.dispose();
+		this.ventanaPrincipal.setVisible(true);
+	}
+
+	public void cerrarSesion(Sesion sesion) {
+		sesion.setFechaFin(new GregorianCalendar());
+		this.daoSesion.cerrarSesion(sesion);
+		cerrarVentanaActividades();
+	}
+	
+	
 }

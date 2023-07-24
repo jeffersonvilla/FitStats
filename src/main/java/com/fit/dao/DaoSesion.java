@@ -35,7 +35,7 @@ public class DaoSesion {
 	
 	public Sesion sesionAbiertaPorIdUsuario(int idUsuario) {
 		try {
-			String query = "select * from sesion where idSesion = ? and fecha_fin is null";
+			String query = "select * from sesion where idUsuario = ? and fecha_fin is null";
 			PreparedStatement preparedStatement = conexion.prepareStatement(query);
 			preparedStatement.setInt(1, idUsuario);
 			ResultSet resultado = preparedStatement.executeQuery();
