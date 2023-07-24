@@ -4,15 +4,17 @@ import java.util.regex.Pattern;
 
 import com.fit.dao.DaoUsuario;
 import com.fit.modelo.Usuario;
-import com.fit.vista.VistaUsuario;
+import com.fit.vista.VistaRegistroUsuario;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import jakarta.mail.internet.AddressException;
 import jakarta.mail.internet.InternetAddress;
 
-public class ControladorUsuario {
+public class ControladorRegistroUsuario {
 	
-	private VistaUsuario vista;
+	private ControladorPrincipal controladorPrincipal;
+	
+	private VistaRegistroUsuario vista;
 	
 	private DaoUsuario dao = new DaoUsuario();
 	
@@ -32,15 +34,21 @@ public class ControladorUsuario {
 	
 	private static final String MENSAJE_EMAIL_EN_USO = "Este email ya está en uso";
 	
-	public void setVista(VistaUsuario vista) {
+	public ControladorRegistroUsuario(ControladorPrincipal controladorPrincipal) {
+		this.controladorPrincipal = controladorPrincipal;
+	}
+	
+	public void setVista(VistaRegistroUsuario vista) {
 		this.vista = vista;
 	}
 	
 	public void registrarUsuario(String nombre, String email, char[] password) {
 		if(validarDatosUsuario(nombre, email, password)) {
 			if(dao.validarEmailDisponible(email)) {
-				if(dao.crearUsuario(new Usuario(nombre, email, BCrypt.withDefaults().hashToString(BCrypt.MIN_COST, password))))
+				if(dao.crearUsuario(new Usuario(nombre, email, BCrypt.withDefaults().hashToString(BCrypt.MIN_COST, password)))) {
 					vista.usuarioRegistradoCorrectamente(MENSAJE_USUARIO_REGISTRADO_CORRECTAMENTE);
+					this.controladorPrincipal.cerrarVentanaRegistroUsuario();					
+				}
 				else
 					vista.problemasRegistrandoUsuario(MENSAJE_PROBLEMA_REGISTRANDO_USUARIO);
 			}else {
@@ -91,5 +99,10 @@ public class ControladorUsuario {
 	
 	private boolean passwordTieneFormatoValido(char[] password) {
         return Pattern.compile(FORMATO_PASSWORD).matcher(new String(password)).matches();
+	}
+
+	public void cancelarRegistroUsuario() {
+		this.controladorPrincipal.cerrarVentanaRegistroUsuario();
+		
 	}
 }

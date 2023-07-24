@@ -7,6 +7,15 @@ public class Usuario {
 	private String email;
 	private String password;
 	
+	
+	
+	public Usuario(int id, String nombre, String email) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.email = email;
+	}
+
 	public Usuario(String nombre, String email, String password) {
 		super();
 		this.nombre = nombre;

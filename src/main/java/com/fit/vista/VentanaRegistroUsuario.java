@@ -18,15 +18,15 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
-import com.fit.controlador.ControladorUsuario;
+import com.fit.controlador.ControladorRegistroUsuario;
 
-public class VentanaRegistroUsuario extends JFrame implements VistaUsuario{
+public class VentanaRegistroUsuario extends JFrame implements VistaRegistroUsuario{
 
-	private ControladorUsuario controlador;
+	private ControladorRegistroUsuario controlador;
 	
 	private PanelFormularioRegistroUsuario panelRegistroUsuario;
 	
-	public VentanaRegistroUsuario(ControladorUsuario controlador) {
+	public VentanaRegistroUsuario(ControladorRegistroUsuario controlador) {
 		
 		this.controlador = controlador;
 		
@@ -64,6 +64,7 @@ public class VentanaRegistroUsuario extends JFrame implements VistaUsuario{
 		this.panelRegistroUsuario.limpiarTodosLosTextAndPassFields();
 		JOptionPane.showMessageDialog(this, mensajeProblemaRegistrandoUsuario, "Error de registro", JOptionPane.ERROR_MESSAGE);
 	}
+
 }
 
 class PanelFormularioRegistroUsuario extends JPanel{
@@ -83,7 +84,7 @@ class PanelFormularioRegistroUsuario extends JPanel{
 	private GridBagLayout layout;
 	private GridBagConstraints constraints;
 	
-	public PanelFormularioRegistroUsuario(final ControladorUsuario controlador) {
+	public PanelFormularioRegistroUsuario(final ControladorRegistroUsuario controlador) {
 		
 		this.layout = new GridBagLayout();
 		setLayout(this.layout);
@@ -107,6 +108,21 @@ class PanelFormularioRegistroUsuario extends JPanel{
 		});
 		
 		add(botonRegitrarUsuario, this.constraints);
+		
+		ajustarConstraints(0, 7, 2, 1, GridBagConstraints.CENTER);
+		JButton botonCancelar = new JButton("Cancelar");
+		
+		botonCancelar.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				limpiarMesajesError();
+				limpiarTodosLosTextAndPassFields();
+				controlador.cancelarRegistroUsuario();
+			}
+		});
+		
+		add(botonCancelar, this.constraints);
+		
 	}
 	
 	private void agregarCamposNombre() {
