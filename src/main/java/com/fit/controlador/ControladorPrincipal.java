@@ -32,8 +32,8 @@ public class ControladorPrincipal {
 	public void abrirVentanaInicioSesion() {
 		this.controladorInicioSesion = new ControladorInicioSesion(this);
 		this.ventanaInicioSesion = new VentanaInicioSesion(this.controladorInicioSesion);
-    	this.controladorInicioSesion.setVista(this.ventanaInicioSesion);
-    	this.ventanaPrincipal.setVisible(false);
+    		this.controladorInicioSesion.setVista(this.ventanaInicioSesion);
+    		this.ventanaPrincipal.setVisible(false);
 	}
 	
 	public void cerrarVentanaInicioSesion() {
