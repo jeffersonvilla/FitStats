@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.fit.dao.conexion.MysqlConnection;
+import com.fit.modelo.Actividad;
 
 public class DaoActividad {
 
@@ -14,7 +15,7 @@ public class DaoActividad {
 	public DaoActividad() {
 		conexion = MysqlConnection.getConnection();
 	}
-	
+
 	public String[] getListaActividades() {
 		String[] actividades = new String[getNumeroActividades()];
 		try {

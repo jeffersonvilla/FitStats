@@ -9,6 +9,12 @@ public class Carrera extends Actividad {
 	public Carrera(int id) {
 		super(id);
 	}
+	
+	public Carrera(float distancia, float ritmo_promedio) {
+		super();
+		this.distancia = distancia;
+		this.ritmo_promedio = ritmo_promedio;
+	}
 
 	public Carrera(int id, float distancia, float ritmo_promedio) {
 		super(id);
@@ -36,6 +42,11 @@ public class Carrera extends Actividad {
 	public String toString() {
 		return "Carrera [distancia=" + distancia + ", ritmo_promedio=" + ritmo_promedio + ", getId()=" + getId()
 				+ ", toString()=" + super.toString() + "]";
+	}
+
+	@Override
+	public boolean guardarEnDB_AsociadoConRegistro(int regstroId) {
+		return super.daoDetalleActividad.guardarCarrera(regstroId, this);
 	}
 
 	

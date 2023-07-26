@@ -1,8 +1,13 @@
 package com.fit.modelo;
 
 public class Caminata extends Actividad{
-
+	
 	private float distancia;
+	
+	public Caminata(float distancia) {
+		super();
+		this.distancia = distancia;
+	}
 
 	public Caminata(int id, float distancia) {
 		super(id);
@@ -20,6 +25,11 @@ public class Caminata extends Actividad{
 	@Override
 	public String toString() {
 		return "Caminata [distancia=" + distancia + ", toString()=" + super.toString() + "]";
+	}
+
+	@Override
+	public boolean guardarEnDB_AsociadoConRegistro(int regstroId) {
+		return super.daoDetalleActividad.guardarCaminata(regstroId, this);
 	}
 	
 	

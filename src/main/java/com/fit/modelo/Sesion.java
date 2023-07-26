@@ -3,6 +3,8 @@ package com.fit.modelo;
 import java.time.format.DateTimeFormatter;
 import java.util.GregorianCalendar;
 
+import com.fit.modelo.util.ConversorFecha;
+
 public class Sesion {
 
 	private int idSesion;
@@ -45,7 +47,7 @@ public class Sesion {
 	}
 	
 	public String getFechaIncioComoString() {
-		return convertirFechaEnString(this.fechaInicio);
+		return ConversorFecha.convertirGregorianCalendarEnFormatoDateTimeMySql(this.fechaInicio);
 	}
 
 
@@ -62,7 +64,7 @@ public class Sesion {
 	}
 	
 	public String getFechaFinComoString() {
-		return convertirFechaEnString(this.fechaFin);
+		return ConversorFecha.convertirGregorianCalendarEnFormatoDateTimeMySql(this.fechaFin);
 	}
 
 	public int getIdUsuario() {
@@ -72,23 +74,12 @@ public class Sesion {
 	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
 	}
-	
-	private String convertirFechaEnString(GregorianCalendar fechaHora) {
-		if(fechaHora == null) return "null";
-		return String.format("%04d-%02d-%02d %02d:%02d:%02d", 
-				fechaHora.get(GregorianCalendar.YEAR),
-				fechaHora.get(GregorianCalendar.MONTH),
-				fechaHora.get(GregorianCalendar.DAY_OF_MONTH),
-				fechaHora.get(GregorianCalendar.HOUR_OF_DAY),
-				fechaHora.get(GregorianCalendar.MINUTE),
-				fechaHora.get(GregorianCalendar.SECOND));
-	}
 
 	@Override
 	public String toString() {
 		return "Sesion [idSesion=" + idSesion 
-				+ ", fechaInicio=" + convertirFechaEnString(fechaInicio) 
-				+ ", fechaFin=" + convertirFechaEnString(fechaFin)
+				+ ", fechaInicio=" + getFechaIncioComoString() 
+				+ ", fechaFin=" + getFechaFinComoString()
 				+ ", idUsuario=" + idUsuario + "]";
 	}
 }
