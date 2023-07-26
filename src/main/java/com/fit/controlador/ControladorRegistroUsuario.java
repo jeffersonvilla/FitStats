@@ -49,8 +49,7 @@ public class ControladorRegistroUsuario {
 					vista.usuarioRegistradoCorrectamente(MENSAJE_USUARIO_REGISTRADO_CORRECTAMENTE);
 					this.controladorPrincipal.cerrarVentanaRegistroUsuario();					
 				}
-				else
-					vista.problemasRegistrandoUsuario(MENSAJE_PROBLEMA_REGISTRANDO_USUARIO);
+				else vista.problemasRegistrandoUsuario(MENSAJE_PROBLEMA_REGISTRANDO_USUARIO);
 			}else {
 				vista.validarEmail(MENSAJE_EMAIL_EN_USO);
 			}
@@ -59,10 +58,10 @@ public class ControladorRegistroUsuario {
 	}
 
 	private boolean validarDatosUsuario(String nombre, String email, char[] password) {
-    	boolean nombreValido = validarNombre(nombre);
-    	boolean emailValido = validarEmail(email);
-    	boolean passwordValido = validarPassword(password);
-    	return nombreValido && emailValido && passwordValido;
+    		boolean nombreValido = validarNombre(nombre);
+    		boolean emailValido = validarEmail(email);
+    		boolean passwordValido = validarPassword(password);
+    		return nombreValido && emailValido && passwordValido;
 	}
 
 	
@@ -85,8 +84,8 @@ public class ControladorRegistroUsuario {
 	}
 
 	private boolean nombreTieneFormatoValido(String nombre) {
-        return Pattern.compile(FORMATO_NOMBRE).matcher(nombre).matches();
-    }
+        	return Pattern.compile(FORMATO_NOMBRE).matcher(nombre).matches();
+    	}
 	
 	private boolean emailTieneFormatoValido(String email) {
 		try {
@@ -98,11 +97,10 @@ public class ControladorRegistroUsuario {
 	}
 	
 	private boolean passwordTieneFormatoValido(char[] password) {
-        return Pattern.compile(FORMATO_PASSWORD).matcher(new String(password)).matches();
+        	return Pattern.compile(FORMATO_PASSWORD).matcher(new String(password)).matches();
 	}
 
 	public void cancelarRegistroUsuario() {
-		this.controladorPrincipal.cerrarVentanaRegistroUsuario();
-		
+		this.controladorPrincipal.cerrarVentanaRegistroUsuario();	
 	}
 }
