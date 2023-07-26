@@ -19,24 +19,25 @@ public class ControladorActividades {
 	private ControladorPrincipal controladorPrincipal;
 	
 	private VentanaActividades vista;
+
+	private DaoActividad daoActividad;
+
+	private DaoRegistro daoRegistro;
+	
+	private DaoDetalleActividad daoDetalleActividad;
 	
 	private Sesion sesion;
 	
 	private String[] actividades;
 	
-	private DaoActividad daoActividad;
+	private final String MENSAJE_CAMPO_VACIO = "Debe llenar este campo";
 	
-	private DaoDetalleActividad daoDetalleActividad;
-	
-	private DaoRegistro daoRegistro;
-	
-	private final String ERROR_CAMPO_VACIO = "Debe llenar este campo.";
-	
-	private final String ERROR_CAMPO_NUMERICO = "Solo valores numéricos";
+	private final String MENSAJE_CAMPO_NUMERICO = "Solo valores numéricos";
 	
 	public ControladorActividades(ControladorPrincipal controladorPrincipal, Sesion sesion) {
 		this.controladorPrincipal = controladorPrincipal;
 		this.sesion = sesion;
+		
 		this.daoActividad = new DaoActividad();
 		this.daoRegistro = new DaoRegistro();
 		this.daoDetalleActividad = new DaoDetalleActividad();
@@ -53,7 +54,7 @@ public class ControladorActividades {
 		try {
 			distancia = Float.parseFloat(distanciaString);	
 		}catch(NumberFormatException nfe) {
-			vista.mostrarErrorCampoDistancia(ERROR_CAMPO_NUMERICO);
+			vista.mostrarErrorCampoDistancia(MENSAJE_CAMPO_NUMERICO);
 		}
 		
 		if(distancia != -1) {
@@ -69,21 +70,20 @@ public class ControladorActividades {
 		try {
 			distancia = Float.parseFloat(distanciaString);
 		}catch(NumberFormatException nfe) {
-			vista.mostrarErrorCampoDistancia(ERROR_CAMPO_NUMERICO);
+			vista.mostrarErrorCampoDistancia(MENSAJE_CAMPO_NUMERICO);
 		}
 		
 		float ritmo = -1;
 		try {
 			ritmo = Float.parseFloat(ritmoString);
 		}catch(NumberFormatException nfe) {
-			vista.mostrarErrorCampoRitmoPromedio(ERROR_CAMPO_NUMERICO);
+			vista.mostrarErrorCampoRitmoPromedio(MENSAJE_CAMPO_NUMERICO);
 		}
 		
 		if(distancia != -1 && ritmo != -1) {
 			vista.limpiarCamposError();
 			registrarActividad(new Carrera(index + 1, distancia, ritmo));	
-		}
-		   
+		}	   
 	}
 	
 	private void registrarActividad(Actividad actividad) {
@@ -93,8 +93,7 @@ public class ControladorActividades {
 				vista.limpiarCamposTexto();
 				JOptionPane.showMessageDialog(null, "correcto!");
 			}else System.out.println("No se ha guardado detalle actividad");
-		}else System.out.println("No se ha guardado registro");
-		
+		}else System.out.println("No se ha guardado registro");	
 	}
 	
 	public void cerrarSesion() {

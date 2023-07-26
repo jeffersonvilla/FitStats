@@ -21,7 +21,9 @@ import javax.swing.UIManager;
 import com.fit.controlador.ControladorRegistroUsuario;
 
 public class VentanaRegistroUsuario extends JFrame implements VistaRegistroUsuario{
-
+	
+	private static final long serialVersionUID = 1L;
+	
 	private ControladorRegistroUsuario controlador;
 	
 	private PanelFormularioRegistroUsuario panelRegistroUsuario;
@@ -64,10 +66,11 @@ public class VentanaRegistroUsuario extends JFrame implements VistaRegistroUsuar
 		this.panelRegistroUsuario.limpiarTodosLosTextAndPassFields();
 		JOptionPane.showMessageDialog(this, mensajeProblemaRegistrandoUsuario, "Error de registro", JOptionPane.ERROR_MESSAGE);
 	}
-
 }
 
 class PanelFormularioRegistroUsuario extends JPanel{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private JTextField textFieldNombre ;
 	private JTextField textFieldEmail;
@@ -122,7 +125,6 @@ class PanelFormularioRegistroUsuario extends JPanel{
 		});
 		
 		add(botonCancelar, this.constraints);
-		
 	}
 	
 	private void agregarCamposNombre() {
@@ -217,5 +219,4 @@ class PanelFormularioRegistroUsuario extends JPanel{
 		this.labelErrorPassword.setText(" ");
 		this.passFieldPassword.setBorder(UIManager.getBorder("PasswordField.border"));
 	}
-	
 }

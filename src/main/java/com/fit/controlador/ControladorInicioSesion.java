@@ -2,8 +2,6 @@ package com.fit.controlador;
 
 import java.util.GregorianCalendar;
 
-import javax.swing.JOptionPane;
-
 import com.fit.dao.DaoSesion;
 import com.fit.dao.DaoUsuario;
 import com.fit.modelo.Sesion;
@@ -37,29 +35,37 @@ public class ControladorInicioSesion {
 	}
 	
 	public void iniciarSesion(String email, char[] password) {
-		if(emailTieneFormatoValido(email)) {			
+		if(validarDatos(email, password)) {
 			String passwordEncriptado =  daoUsuario.leerPassUsuarioPorEmail(email);
 			if(passwordEncriptado != null) {
-				if(!BCrypt.verifyer().verify(password,passwordEncriptado).verified) vista.mostrarErrorValidarCredenciales();
+				if(!BCrypt.verifyer().verify(password,passwordEncriptado).verified) 
+					vista.validarPassword(Usuario.MENSAJE_PASSWORD_INCORRECTO);
 				else {
-					JOptionPane.showMessageDialog(null, "Inicio correcto!");
 					crearSesion(email);
 					this.controladorPrincipal.abrirVentanaActividades(this.sesionUsuario);
 				}
-			}else vista.mostrarErrorEmailNoRegistrado();
-		}else vista.validarFormatoEmail();
-		
-	}
-	
-	private void crearSesion(String email) {
-		Usuario usuario = daoUsuario.leerUsuarioPorEmail(email);
-		this.sesionUsuario = daoSesion.sesionAbiertaPorIdUsuario(usuario.getId());
-		if(this.sesionUsuario == null) {			
-			daoSesion.crearSesion(new Sesion(new GregorianCalendar(), usuario.getId()));
-			this.sesionUsuario = daoSesion.sesionAbiertaPorIdUsuario(usuario.getId());
+			}else vista.validarEmail(Usuario.MENSAJE_EMAIL_NO_REGISTRADO);
 		}
 	}
 	
+	private boolean validarDatos(String email, char[] password) {
+		boolean emailValido = validarEmail(email);
+		boolean passwordValido = validarPassword(password);
+		return emailValido && passwordValido;
+	}
+
+	private boolean validarEmail(String email) {
+		if(emailTieneFormatoValido(email)) return true;
+		vista.validarEmail(Usuario.MENSAJE_EMAIL_NO_VALIDO);
+		return false;
+	}
+
+	private boolean validarPassword(char[] password) {
+		if(passwordNoEstaVacio(password)) return true;
+		vista.validarPassword(Usuario.MENSAJE_CAMPO_VACIO);
+		return false;
+	}
+
 	private boolean emailTieneFormatoValido(String email) {
 		try {
 			(new InternetAddress(email)).validate();
@@ -68,11 +74,21 @@ public class ControladorInicioSesion {
 			return false;
 		}
 	}
+	
+	private boolean passwordNoEstaVacio(char[] password) {
+		return password.length != 0;
+	}
+
+	private void crearSesion(String email) {
+		Usuario usuario = daoUsuario.leerUsuarioPorEmail(email);
+		this.sesionUsuario = daoSesion.sesionAbiertaPorIdUsuario(usuario.getId());
+		if(this.sesionUsuario == null) {			
+			daoSesion.crearSesion(new Sesion(new GregorianCalendar(), usuario.getId()));
+			this.sesionUsuario = daoSesion.sesionAbiertaPorIdUsuario(usuario.getId());
+		}
+	}
 
 	public void cancelarInicioSesion() {
 		this.controladorPrincipal.cerrarVentanaInicioSesion();
 	}
-	
-	
-	
 }

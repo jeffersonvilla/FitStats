@@ -14,6 +14,8 @@ import com.fit.controlador.ControladorPrincipal;
 
 public class VentanaPrincipal extends JFrame{
 
+	private static final long serialVersionUID = 1L;
+
 	private ControladorPrincipal controlador;
 	
 	private PanelPrincipal panel;
@@ -38,14 +40,11 @@ public class VentanaPrincipal extends JFrame{
 		panel = new PanelPrincipal(this.controlador);
 		add(panel, BorderLayout.CENTER);
 	}
-	
-	
-	
-	
-	
 }
 
 class PanelPrincipal extends JPanel{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private GridBagConstraints constraints;
 	
@@ -88,6 +87,5 @@ class PanelPrincipal extends JPanel{
 		this.constraints.gridwidth = w;
 		this.constraints.gridheight = h;
 		if(a != -1) this.constraints.anchor = a;
-	}
-	
+	}	
 }

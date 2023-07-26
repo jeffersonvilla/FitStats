@@ -11,6 +11,4 @@ public interface VistaRegistroUsuario {
 	void usuarioRegistradoCorrectamente(String mensajeUsuarioRegistradoCorrectamente);
 
 	void problemasRegistrandoUsuario(String mensajeProblemaRegistrandoUsuario);
-
-
 }

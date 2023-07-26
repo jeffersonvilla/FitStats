@@ -1,7 +1,6 @@
 package com.fit.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,7 +25,7 @@ public class DaoSesion {
 			PreparedStatement preparedStatement = conexion.prepareStatement(query);
 			preparedStatement.setString(1, sesion.getFechaIncioComoString());
 			preparedStatement.setInt(2, sesion.getIdUsuario());
-			return preparedStatement.execute();
+			return preparedStatement.executeUpdate() > 0;
 		}catch(SQLException e){
 			e.printStackTrace();
 			return false;
@@ -60,7 +59,7 @@ public class DaoSesion {
 			PreparedStatement preparedStatement = conexion.prepareStatement(query);
 			preparedStatement.setString(1, sesion.getFechaFinComoString());
 			preparedStatement.setInt(2, sesion.getIdSesion());
-			return preparedStatement.execute();
+			return preparedStatement.executeUpdate() > 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;

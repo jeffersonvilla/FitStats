@@ -3,7 +3,6 @@ package com.fit.vista;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -25,12 +24,13 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 import com.fit.controlador.ControladorActividades;
-import com.fit.modelo.Caminata;
 
-public class VentanaActividades extends JFrame implements ActionListener{
-
+public class VentanaActividades extends JFrame {
+	
+	private static final long serialVersionUID = 1L;
+	
 	private ControladorActividades controlador;
-
+	
 	private JMenuBar barraMenu;
 	
 	private JPanel panelActividad;
@@ -107,7 +107,16 @@ public class VentanaActividades extends JFrame implements ActionListener{
 	private JPanel getPanelSeleccionActividad(){		
 		JPanel panelSeleccionActividades = new JPanel();
 		JComboBox<String> listaOpcionesActividad = new JComboBox<String>(opcionesActividad);
-		listaOpcionesActividad.addActionListener(this);	
+		listaOpcionesActividad.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JComboBox opciones = (JComboBox) e.getSource();
+				actividadSelecionada = opciones.getSelectedIndex();
+				cardLayout.show(panelFormularioActividad, opcionesActividad[opciones.getSelectedIndex()]);
+				
+			}
+		});	
 		panelSeleccionActividades.add(listaOpcionesActividad);
 		return panelSeleccionActividades;
 	}
@@ -115,18 +124,13 @@ public class VentanaActividades extends JFrame implements ActionListener{
 	private JPanel getPanelFormularioActividad() {
 		JPanel panelFormularioActividad = new JPanel(this.cardLayout);
 		
+		JPanel panelFormCaminata = getPanelFormularioCaminata();
+		panelFormularioActividad.add(panelFormCaminata, this.opcionesActividad[0]);
 		
 		JPanel panelFormCarrera = getPanelFormularioCarrera();
-		
-		
 		panelFormularioActividad.add(panelFormCarrera, this.opcionesActividad[1]);
 		
 		return panelFormularioActividad;
-	}
-	
-	private void creaPanelFormCaminata() {
-		JPanel panelFormCaminata = getPanelFormularioCaminata();
-		panelFormularioActividad.add(panelFormCaminata, this.opcionesActividad[0]);
 	}
 	
 	private JPanel getPanelFormularioCaminata() {
@@ -206,12 +210,6 @@ public class VentanaActividades extends JFrame implements ActionListener{
 		return panelFormularioCarrera;
 	}
 	
-	public void actionPerformed(ActionEvent e) {
-		JComboBox opciones = (JComboBox) e.getSource();
-		this.actividadSelecionada = opciones.getSelectedIndex();
-		this.cardLayout.show(this.panelFormularioActividad, this.opcionesActividad[opciones.getSelectedIndex() ]);
-	}
-	
 	private void agregarEventoCerrarSesionCuandoCierraVentana() {
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -259,6 +257,31 @@ public class VentanaActividades extends JFrame implements ActionListener{
 		this.textFieldDistancia.setText("");
 		this.textFieldRitmoPromedio.setText("");
 	}
+	
+	
+}
+
+class PanelFormularioCaminata extends JPanel{
+
+	private static final long serialVersionUID = 1L;
+	
+	private JTextField textFieldDistancia;
+	
+	private JLabel labelErrorDistancia;
+	
+	private GridBagConstraints constraints;
+	
+	public PanelFormularioCaminata(final ControladorActividades controlador) {
+		setLayout(new GridBagLayout());
+		
+		
+	}
+	
+}
+
+class PanelFormularioCarrera extends JPanel{
+
+	private static final long serialVersionUID = 1L;
 	
 	
 }

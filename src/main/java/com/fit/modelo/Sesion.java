@@ -1,6 +1,5 @@
 package com.fit.modelo;
 
-import java.time.format.DateTimeFormatter;
 import java.util.GregorianCalendar;
 
 import com.fit.modelo.util.ConversorFecha;
@@ -49,7 +48,6 @@ public class Sesion {
 	public String getFechaIncioComoString() {
 		return ConversorFecha.convertirGregorianCalendarEnFormatoDateTimeMySql(this.fechaInicio);
 	}
-
 
 	public void setFechaInicio(GregorianCalendar fechaInicio) {
 		this.fechaInicio = fechaInicio;

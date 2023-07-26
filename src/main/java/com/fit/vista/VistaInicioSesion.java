@@ -2,10 +2,7 @@ package com.fit.vista;
 
 public interface VistaInicioSesion {
 
-	public void mostrarErrorValidarCredenciales();
+	public void validarEmail(String mensajeValidacionEmail);
 
-	public void mostrarErrorEmailNoRegistrado();
-
-	public void validarFormatoEmail();
-
+	public void validarPassword(String mensajeValidacionPassword);
 }
