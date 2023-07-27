@@ -47,7 +47,6 @@ public class DaoRegistro {
 			if(resultado.next()) return resultado.getInt("registro_id");
 			return -1;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return -1;
 		}

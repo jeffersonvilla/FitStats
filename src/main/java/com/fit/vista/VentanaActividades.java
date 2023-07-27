@@ -3,6 +3,7 @@ package com.fit.vista;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -25,7 +26,7 @@ import javax.swing.UIManager;
 
 import com.fit.controlador.ControladorActividades;
 
-public class VentanaActividades extends JFrame {
+public class VentanaActividades extends JFrame implements VistaActividades{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -42,22 +43,14 @@ public class VentanaActividades extends JFrame {
 	private CardLayout cardLayout;
 	
 	private String[] opcionesActividad;
-	
-	private JTextField textFieldDistancia;
-	
-	private JLabel labelErrorDistancia;
-	
-	private JTextField textFieldRitmoPromedio;
-	
-	private JLabel labelErrorRitmoPromedio;
-	
+
 	private int actividadSelecionada;
 	
 	public VentanaActividades(final ControladorActividades controlador) {
 		this.controlador = controlador;
 		
 		this.opcionesActividad = controlador.opcionesActividades();
-				
+		
 		setSize(Pantalla.ancho/2, Pantalla.alto/2);
 		setLocation(Pantalla.ancho/4, Pantalla.alto/4);
 		
@@ -124,92 +117,15 @@ public class VentanaActividades extends JFrame {
 	private JPanel getPanelFormularioActividad() {
 		JPanel panelFormularioActividad = new JPanel(this.cardLayout);
 		
-		JPanel panelFormCaminata = getPanelFormularioCaminata();
+		PanelFormularioCaminata panelFormCaminata = new PanelFormularioCaminata(this.controlador);
 		panelFormularioActividad.add(panelFormCaminata, this.opcionesActividad[0]);
 		
-		JPanel panelFormCarrera = getPanelFormularioCarrera();
+		PanelFormularioCarrera panelFormCarrera = new PanelFormularioCarrera(this.controlador);
 		panelFormularioActividad.add(panelFormCarrera, this.opcionesActividad[1]);
 		
 		return panelFormularioActividad;
 	}
-	
-	private JPanel getPanelFormularioCaminata() {
-		JPanel panelFormularioCaminata = new JPanel(new GridBagLayout());
-		GridBagConstraints constraints = new GridBagConstraints();
-		
-		ajustarConstraints(constraints, 0, 0, 1, 1, GridBagConstraints.WEST);
-		panelFormularioCaminata.add(new JLabel("Distancia (km):"), constraints);
-		
-		ajustarConstraints(constraints, 1, 0, 1, 1, GridBagConstraints.WEST);
-		this.textFieldDistancia = new JTextField(15);
-		panelFormularioCaminata.add(this.textFieldDistancia, constraints);
-		
-		ajustarConstraints(constraints, 0, 1, 2, 1, GridBagConstraints.WEST);
-		constraints.fill = GridBagConstraints.HORIZONTAL;
-		this.labelErrorDistancia = getLabelError();
-		panelFormularioCaminata.add(this.labelErrorDistancia, constraints);
-		
-		ajustarConstraints(constraints, 0, 3, 2, 1, GridBagConstraints.WEST);
-		JButton botonGuardarCaminata = new JButton("Guardar");
-		panelFormularioCaminata.add(botonGuardarCaminata, constraints);
-		botonGuardarCaminata.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				controlador.registrarCaminata(actividadSelecionada,textFieldDistancia.getText());;
-			}
-		});
-		
-		return panelFormularioCaminata;
-	}
-	
-	private JLabel getLabelError() {
-		JLabel labelError = new JLabel(" ");
-		labelError.setForeground(Color.RED);
-		return labelError;
-	}
-	
-	private JPanel getPanelFormularioCarrera() {
-		JPanel panelFormularioCarrera = new JPanel(new GridBagLayout());
-		GridBagConstraints constraints = new GridBagConstraints();
-		
-		ajustarConstraints(constraints, 0, 0, 1, 1, GridBagConstraints.WEST);
-		panelFormularioCarrera.add(new JLabel("Distancia (km):"), constraints);
-		
-		ajustarConstraints(constraints, 1, 0, 1, 1, GridBagConstraints.WEST);
-		this.textFieldDistancia = new JTextField(15);
-		panelFormularioCarrera.add(this.textFieldDistancia, constraints);
-		
-		ajustarConstraints(constraints, 0, 1, 2, 1, GridBagConstraints.WEST);
-		constraints.fill = GridBagConstraints.HORIZONTAL;
-		this.labelErrorDistancia = getLabelError();
-		panelFormularioCarrera.add(this.labelErrorDistancia, constraints);
-		
-		ajustarConstraints(constraints, 0, 2, 1, 1, GridBagConstraints.WEST);
-		panelFormularioCarrera.add(new JLabel("Ritmo promedio (min por km):"), constraints);
-		
-		ajustarConstraints(constraints, 1, 2, 1, 1, GridBagConstraints.WEST);
-		this.textFieldRitmoPromedio = new JTextField(15);
-		panelFormularioCarrera.add(this.textFieldRitmoPromedio, constraints);
-		
-		ajustarConstraints(constraints, 0, 3, 2, 1, GridBagConstraints.WEST);
-		constraints.fill = GridBagConstraints.HORIZONTAL;
-		this.labelErrorRitmoPromedio = getLabelError();
-		panelFormularioCarrera.add(this.labelErrorRitmoPromedio, constraints);
-		
-		ajustarConstraints(constraints, 0, 4, 2, 1, GridBagConstraints.WEST);
-		JButton botonGuardarCarrera = new JButton("Guardar");
-		panelFormularioCarrera.add(botonGuardarCarrera, constraints);
-		botonGuardarCarrera.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				controlador.registrarCarrera(actividadSelecionada, textFieldDistancia.getText(), textFieldRitmoPromedio.getText());;
-			}
-		});
-		return panelFormularioCarrera;
-	}
-	
+
 	private void agregarEventoCerrarSesionCuandoCierraVentana() {
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -219,15 +135,199 @@ public class VentanaActividades extends JFrame {
 			}
 		});
 	}
-	
-	private void ajustarConstraints(GridBagConstraints constraints, int x , int y, int w, int h, int a) {
-		constraints.gridx = x;
-		constraints.gridy = y;
-		constraints.gridwidth = w;
-		constraints.gridheight = h;
-		if(a != -1) constraints.anchor = a;
+
+	@Override
+	public int getActividadSelecionada() {
+		return this.actividadSelecionada;
 	}
 
+	@Override
+	public void limpiarCamposError(int actividad) {
+		Component componente = this.panelFormularioActividad.getComponent(actividad); 
+		if(componente instanceof PanelFormularioCaminata)
+			((PanelFormularioCaminata) componente).limpiarCamposError();
+		else if (componente instanceof PanelFormularioCarrera)
+			((PanelFormularioCarrera) componente).limpiarCamposError();
+	}
+
+	@Override
+	public void validarDistancia(int actividad, String mensajeError) {
+		Component componente = this.panelFormularioActividad.getComponent(actividad); 
+		if(componente instanceof PanelFormularioCaminata)
+			((PanelFormularioCaminata) componente).mostrarErrorCampoDistancia(mensajeError);
+		else if (componente instanceof PanelFormularioCarrera)
+			((PanelFormularioCarrera) componente).mostrarErrorCampoDistancia(mensajeError);
+	}
+
+	@Override
+	public void validarRitmoPromedio(int actividad, String mensajeError) {
+		Component componente = this.panelFormularioActividad.getComponent(actividad); 
+		if (componente instanceof PanelFormularioCarrera)
+			((PanelFormularioCarrera) componente).mostrarErrorCampoRitmoPromedio(mensajeError);
+	}
+
+	@Override
+	public void limpiarCamposTexto(int actividad) {
+		Component componente = this.panelFormularioActividad.getComponent(actividad); 
+		if(componente instanceof PanelFormularioCaminata)
+			((PanelFormularioCaminata) componente).limpiarCamposTexto();
+		else if (componente instanceof PanelFormularioCarrera)
+			((PanelFormularioCarrera) componente).limpiarCamposTexto();
+	}	
+}
+
+class PanelFormularioCaminata extends JPanel{
+
+	private static final long serialVersionUID = 1L;
+	
+	private JTextField textFieldDistancia;
+	
+	private JLabel labelErrorDistancia;
+	
+	private GridBagConstraints constraints;
+	
+	public PanelFormularioCaminata(final ControladorActividades controlador) {
+		setLayout(new GridBagLayout());
+		
+		this.constraints = new GridBagConstraints();
+		this.constraints.anchor = GridBagConstraints.WEST;
+		
+		ajustarConstraints(0, 0, 1, 1);
+		add(new JLabel("Distancia (km):"), constraints);
+		
+		ajustarConstraints(1, 0, 1, 1);
+		this.textFieldDistancia = new JTextField(15);
+		add(this.textFieldDistancia, constraints);
+		
+		ajustarConstraints(0, 1, 2, 1);
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		this.labelErrorDistancia = getLabelError();
+		add(this.labelErrorDistancia, constraints);
+		
+		ajustarConstraints(0, 2, 2, 1);
+		JButton botonGuardarCarrera = new JButton("Guardar");
+		add(botonGuardarCarrera, constraints);
+		botonGuardarCarrera.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controlador.registrarCaminata(textFieldDistancia.getText());
+			}
+		});
+	
+	}
+
+	private JLabel getLabelError() {
+		JLabel labelError = new JLabel(" ");
+		labelError.setForeground(Color.RED);
+		return labelError;
+	}
+	
+	private void ajustarConstraints(int x , int y, int w, int h) {
+		this.constraints.gridx = x;
+		this.constraints.gridy = y;
+		this.constraints.gridwidth = w;
+		this.constraints.gridheight = h;
+	}
+	
+	public void limpiarCamposError() {
+		limpiarCampoErrorDistancia();
+	}
+	
+	public void limpiarCamposTexto() {
+		this.textFieldDistancia.setText("");
+	}
+	
+	public void mostrarErrorCampoDistancia(String mensajeError) {
+		this.labelErrorDistancia.setText(mensajeError);
+		this.textFieldDistancia.setBorder(BorderFactory.createLineBorder(Color.RED));
+	}
+	
+	private void limpiarCampoErrorDistancia() {
+		this.labelErrorDistancia.setText(" ");
+		this.textFieldDistancia.setBorder(UIManager.getBorder("TextField.border"));
+	}
+}
+
+class PanelFormularioCarrera extends JPanel{
+
+	private static final long serialVersionUID = 1L;
+	
+	private JTextField textFieldDistancia;
+	
+	private JLabel labelErrorDistancia;
+	
+	private JTextField textFieldRitmoPromedio;
+	
+	private JLabel labelErrorRitmoPromedio;
+	
+	private GridBagConstraints constraints;
+	
+	public PanelFormularioCarrera(final ControladorActividades controlador) {
+		setLayout(new GridBagLayout());
+		
+		this.constraints = new GridBagConstraints();
+		this.constraints.anchor = GridBagConstraints.WEST;
+		
+		ajustarConstraints(0, 0, 1, 1);
+		add(new JLabel("Distancia (km):"), constraints);
+		
+		ajustarConstraints(1, 0, 1, 1);
+		this.textFieldDistancia = new JTextField(15);
+		add(this.textFieldDistancia, constraints);
+		
+		ajustarConstraints(0, 1, 2, 1);
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		this.labelErrorDistancia = getLabelError();
+		add(this.labelErrorDistancia, constraints);
+		
+		ajustarConstraints(0, 2, 1, 1);
+		add(new JLabel("Ritmo promedio (min por km):"), constraints);
+		
+		ajustarConstraints(1, 2, 1, 1);
+		this.textFieldRitmoPromedio = new JTextField(15);
+		add(this.textFieldRitmoPromedio, constraints);
+		
+		ajustarConstraints(0, 3, 2, 1);
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		this.labelErrorRitmoPromedio = getLabelError();
+		add(this.labelErrorRitmoPromedio, constraints);
+		
+		ajustarConstraints(0, 4, 2, 1);
+		JButton botonGuardarCarrera = new JButton("Guardar");
+		add(botonGuardarCarrera, constraints);
+		botonGuardarCarrera.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controlador.registrarCarrera(textFieldDistancia.getText(), textFieldRitmoPromedio.getText());;
+			}
+		});
+	}
+	
+	private JLabel getLabelError() {
+		JLabel labelError = new JLabel(" ");
+		labelError.setForeground(Color.RED);
+		return labelError;
+	}
+	
+	private void ajustarConstraints(int x , int y, int w, int h) {
+		this.constraints.gridx = x;
+		this.constraints.gridy = y;
+		this.constraints.gridwidth = w;
+		this.constraints.gridheight = h;
+	}
+	
+	public void limpiarCamposError() {
+		limpiarCampoErrorDistancia();
+		limpiarCampoErrorRitmoPromedio();
+	}
+	
+	public void limpiarCamposTexto() {
+		this.textFieldDistancia.setText("");
+		this.textFieldRitmoPromedio.setText("");
+	}
+	
 	public void mostrarErrorCampoDistancia(String mensajeError) {
 		this.labelErrorDistancia.setText(mensajeError);
 		this.textFieldDistancia.setBorder(BorderFactory.createLineBorder(Color.RED));
@@ -247,43 +347,6 @@ public class VentanaActividades extends JFrame {
 		this.labelErrorRitmoPromedio.setText(" ");
 		this.textFieldRitmoPromedio.setBorder(UIManager.getBorder("TextField.border"));
 	}
-	
-	public void limpiarCamposError() {
-		limpiarCampoErrorDistancia();
-		limpiarCampoErrorRitmoPromedio();
-	}
-	
-	public void limpiarCamposTexto() {
-		this.textFieldDistancia.setText("");
-		this.textFieldRitmoPromedio.setText("");
-	}
-	
-	
-}
-
-class PanelFormularioCaminata extends JPanel{
-
-	private static final long serialVersionUID = 1L;
-	
-	private JTextField textFieldDistancia;
-	
-	private JLabel labelErrorDistancia;
-	
-	private GridBagConstraints constraints;
-	
-	public PanelFormularioCaminata(final ControladorActividades controlador) {
-		setLayout(new GridBagLayout());
-		
-		
-	}
-	
-}
-
-class PanelFormularioCarrera extends JPanel{
-
-	private static final long serialVersionUID = 1L;
-	
-	
 }
 
 

@@ -1,99 +1,90 @@
 package com.fit.controlador;
 
 import java.util.GregorianCalendar;
+import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
 import com.fit.dao.DaoActividad;
-import com.fit.dao.DaoDetalleActividad;
-import com.fit.dao.DaoRegistro;
 import com.fit.modelo.Actividad;
 import com.fit.modelo.Caminata;
 import com.fit.modelo.Carrera;
 import com.fit.modelo.Registro;
 import com.fit.modelo.Sesion;
-import com.fit.vista.VentanaActividades;
+import com.fit.vista.VistaActividades;
 
 public class ControladorActividades {
 
 	private ControladorPrincipal controladorPrincipal;
 	
-	private VentanaActividades vista;
+	private VistaActividades vista;
 
 	private DaoActividad daoActividad;
-
-	private DaoRegistro daoRegistro;
-	
-	private DaoDetalleActividad daoDetalleActividad;
 	
 	private Sesion sesion;
 	
 	private String[] actividades;
 	
-	private final String MENSAJE_CAMPO_VACIO = "Debe llenar este campo";
+	private final String FORMATO_DISTANCIA = "^(?=\\d{1,10}(\\.\\d{0,5})?$)\\d+(\\.\\d+)?$";
 	
-	private final String MENSAJE_CAMPO_NUMERICO = "Solo valores numéricos";
+	private final String FORMATO_RITMO_PROMEDIO = "^(?=\\d{0,5}(\\.\\d{0,5})?$)\\d*(\\.\\d*)?$";
+	
+	private final String MENSAJE_VALIDACION_DISTANCIA = "Solo valores numéricos, máximo 10 digitos";
+	
+	private final String MENSAJE_VALIDACION_RITMO_PROMEDIO = "Solo valores numéricos, máximo 5 digitos";
 	
 	public ControladorActividades(ControladorPrincipal controladorPrincipal, Sesion sesion) {
 		this.controladorPrincipal = controladorPrincipal;
 		this.sesion = sesion;
 		
 		this.daoActividad = new DaoActividad();
-		this.daoRegistro = new DaoRegistro();
-		this.daoDetalleActividad = new DaoDetalleActividad();
 	}
 	
-	public void setVista(VentanaActividades vista) {
+	public void setVista(VistaActividades vista) {
 		this.vista = vista;
 	}
 	
-	public void registrarCaminata(int index, String distanciaString) {
-		vista.limpiarCamposError();
-		
-		float distancia = -1;
-		try {
-			distancia = Float.parseFloat(distanciaString);	
-		}catch(NumberFormatException nfe) {
-			vista.mostrarErrorCampoDistancia(MENSAJE_CAMPO_NUMERICO);
-		}
-		
-		if(distancia != -1) {
-			vista.limpiarCamposError();
-			registrarActividad(new Caminata(index + 1, distancia));
-		} 
+	public void registrarCaminata(String distanciaString) {
+		vista.limpiarCamposError(getActividadSelecionada());
+		if(validarDistancia(distanciaString)) 
+			registrarActividad(new Caminata(getActividadSelecionada() + 1, Float.parseFloat(distanciaString)));
 	}
 	
-	public void registrarCarrera(int index, String distanciaString, String ritmoString) {
-		vista.limpiarCamposError();
-		
-		float distancia = -1;
-		try {
-			distancia = Float.parseFloat(distanciaString);
-		}catch(NumberFormatException nfe) {
-			vista.mostrarErrorCampoDistancia(MENSAJE_CAMPO_NUMERICO);
+	public void registrarCarrera(String distanciaString, String ritmoString) {
+		vista.limpiarCamposError(getActividadSelecionada());
+		if(validarDatosCarrera(distanciaString, ritmoString)) {
+			float distancia = Float.parseFloat(distanciaString);
+			float ritmo = Float.parseFloat(ritmoString);
+			registrarActividad(new Carrera(getActividadSelecionada() + 1, distancia, ritmo));
 		}
-		
-		float ritmo = -1;
-		try {
-			ritmo = Float.parseFloat(ritmoString);
-		}catch(NumberFormatException nfe) {
-			vista.mostrarErrorCampoRitmoPromedio(MENSAJE_CAMPO_NUMERICO);
-		}
-		
-		if(distancia != -1 && ritmo != -1) {
-			vista.limpiarCamposError();
-			registrarActividad(new Carrera(index + 1, distancia, ritmo));	
-		}	   
 	}
 	
+	private boolean validarDatosCarrera(String distancia, String ritmo) {
+		boolean distanciaValida = validarDistancia(distancia);
+		boolean ritmoValido = validarRitmo(ritmo);
+		return distanciaValida && ritmoValido;
+	}
+
+	private boolean validarDistancia(String distancia) {
+		if(!distancia.isEmpty() && Pattern.matches(FORMATO_DISTANCIA, distancia)) return true;
+		vista.validarDistancia(getActividadSelecionada(), MENSAJE_VALIDACION_DISTANCIA);
+		return false;
+	}
+	
+	private boolean validarRitmo(String ritmo) {
+		if(!ritmo.isEmpty() && Pattern.matches(FORMATO_RITMO_PROMEDIO, ritmo)) return true;
+		vista.validarRitmoPromedio(getActividadSelecionada(), MENSAJE_VALIDACION_RITMO_PROMEDIO);
+		return false;
+	}
+
 	private void registrarActividad(Actividad actividad) {
 		Registro registro = new Registro(this.sesion.getIdUsuario(),actividad.getId(),new GregorianCalendar(),null);
 		if(registro.guardarEnDB()) {
 			if(actividad.guardarEnDB_AsociadoConRegistro(registro.getIdFromDB())) {
-				vista.limpiarCamposTexto();
-				JOptionPane.showMessageDialog(null, "correcto!");
-			}else System.out.println("No se ha guardado detalle actividad");
-		}else System.out.println("No se ha guardado registro");	
+				vista.limpiarCamposTexto(getActividadSelecionada());
+				JOptionPane.showMessageDialog(null, "Registrado con exito!");
+			}else JOptionPane.showMessageDialog(null, "Ha ocurrido un error guardando.");
+		}else JOptionPane.showMessageDialog(null, "Ha ocurrido un error guardando.");	
 	}
 	
 	public void cerrarSesion() {
@@ -103,5 +94,9 @@ public class ControladorActividades {
 	public String[] opcionesActividades() {
 		this.actividades = this.daoActividad.getListaActividades();
 		return this.actividades;
+	}
+	
+	private int getActividadSelecionada() {
+		return this.vista.getActividadSelecionada();
 	}
 }
