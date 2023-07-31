@@ -12,4 +12,6 @@ public interface VistaActividades {
 
 	int getActividadSelecionada();
 
+	void validarTipoBicicleta(int actividad, String mensajeError);
+
 }

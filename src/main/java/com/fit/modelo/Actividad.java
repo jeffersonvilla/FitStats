@@ -8,10 +8,6 @@ public abstract class Actividad {
 	
 	private int id;
 
-	public Actividad() {
-		super();
-	}
-
 	public Actividad(int id) {
 		super();
 		this.id = id;
@@ -31,6 +27,5 @@ public abstract class Actividad {
 		return "Actividad [id=" + id + "]";
 	}
 
-	public abstract boolean guardarEnDB_AsociadoConRegistro(int regstroId);
-	
+	public abstract boolean guardarEnDB_AsociadoConRegistro(int registroId);	
 }

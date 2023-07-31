@@ -4,8 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.sql.Timestamp;
 import java.util.GregorianCalendar;
 
 import com.fit.dao.conexion.MysqlConnection;
@@ -23,7 +22,7 @@ public class DaoSesion {
 		try {
 			String query = "insert into sesion (fecha_inicio, idUsuario) values (?, ?)";
 			PreparedStatement preparedStatement = conexion.prepareStatement(query);
-			preparedStatement.setString(1, sesion.getFechaIncioComoString());
+			preparedStatement.setTimestamp(1, new Timestamp(sesion.getFechaInicio().getTimeInMillis()));
 			preparedStatement.setInt(2, sesion.getIdUsuario());
 			return preparedStatement.executeUpdate() > 0;
 		}catch(SQLException e){
@@ -39,15 +38,11 @@ public class DaoSesion {
 			preparedStatement.setInt(1, idUsuario);
 			ResultSet resultado = preparedStatement.executeQuery();
 			if(resultado.next()) {
-				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				GregorianCalendar fechaIncio = new GregorianCalendar();
-				fechaIncio.setTime(dateFormat.parse(resultado.getString("fecha_inicio")));
+				fechaIncio.setTimeInMillis(resultado.getTimestamp("fecha_inicio").getTime());
 				return new Sesion(resultado.getInt("idSesion"), fechaIncio, resultado.getInt("idUsuario"));
 			}else return null;		
 		}catch(SQLException e){
-			e.printStackTrace();
-			return null;
-		} catch (ParseException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -57,7 +52,7 @@ public class DaoSesion {
 		try {
 			String query = "update sesion set fecha_fin = ? where idSesion = ?";
 			PreparedStatement preparedStatement = conexion.prepareStatement(query);
-			preparedStatement.setString(1, sesion.getFechaFinComoString());
+			preparedStatement.setTimestamp(1, new Timestamp(sesion.getFechaFin().getTimeInMillis()));
 			preparedStatement.setInt(2, sesion.getIdSesion());
 			return preparedStatement.executeUpdate() > 0;
 		} catch (SQLException e) {

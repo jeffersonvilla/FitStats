@@ -19,7 +19,7 @@ public class ControladorPrincipal {
 	private ControladorRegistroUsuario controladorRegistroUsuario;
 	private VentanaRegistroUsuario ventanaRegistroUsuario;
 	
-	private ControladorActividades controladorActividades;
+	private ControladorActividad controladorActividades;
 	private VentanaActividades ventanaActividades;
 	
 	private DaoSesion daoSesion;
@@ -55,7 +55,7 @@ public class ControladorPrincipal {
 
 	public void abrirVentanaActividades(Sesion sesionUsuario) {
 		cerrarVentanaInicioSesion();
-		this.controladorActividades = new ControladorActividades(this, sesionUsuario);
+		this.controladorActividades = new ControladorActividad(this, sesionUsuario);
 		this.ventanaActividades = new VentanaActividades(controladorActividades);
 		this.controladorActividades.setVista(ventanaActividades);
 		this.ventanaPrincipal.setVisible(false);

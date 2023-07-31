@@ -24,13 +24,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
-import com.fit.controlador.ControladorActividades;
+import com.fit.controlador.ControladorActividad;
 
 public class VentanaActividades extends JFrame implements VistaActividades{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private ControladorActividades controlador;
+	private ControladorActividad controlador;
 	
 	private JMenuBar barraMenu;
 	
@@ -46,7 +46,7 @@ public class VentanaActividades extends JFrame implements VistaActividades{
 
 	private int actividadSelecionada;
 	
-	public VentanaActividades(final ControladorActividades controlador) {
+	public VentanaActividades(final ControladorActividad controlador) {
 		this.controlador = controlador;
 		
 		this.opcionesActividad = controlador.opcionesActividades();
@@ -107,7 +107,6 @@ public class VentanaActividades extends JFrame implements VistaActividades{
 				JComboBox opciones = (JComboBox) e.getSource();
 				actividadSelecionada = opciones.getSelectedIndex();
 				cardLayout.show(panelFormularioActividad, opcionesActividad[opciones.getSelectedIndex()]);
-				
 			}
 		});	
 		panelSeleccionActividades.add(listaOpcionesActividad);
@@ -122,6 +121,9 @@ public class VentanaActividades extends JFrame implements VistaActividades{
 		
 		PanelFormularioCarrera panelFormCarrera = new PanelFormularioCarrera(this.controlador);
 		panelFormularioActividad.add(panelFormCarrera, this.opcionesActividad[1]);
+		
+		PanelFormularioCiclismo panelFormCiclismo = new PanelFormularioCiclismo(this.controlador);
+		panelFormularioActividad.add(panelFormCiclismo, this.opcionesActividad[2]);
 		
 		return panelFormularioActividad;
 	}
@@ -157,6 +159,8 @@ public class VentanaActividades extends JFrame implements VistaActividades{
 			((PanelFormularioCaminata) componente).mostrarErrorCampoDistancia(mensajeError);
 		else if (componente instanceof PanelFormularioCarrera)
 			((PanelFormularioCarrera) componente).mostrarErrorCampoDistancia(mensajeError);
+		else if(componente instanceof PanelFormularioCiclismo)
+			((PanelFormularioCiclismo) componente).mostrarErrorCampoDistancia(mensajeError);
 	}
 
 	@Override
@@ -164,6 +168,13 @@ public class VentanaActividades extends JFrame implements VistaActividades{
 		Component componente = this.panelFormularioActividad.getComponent(actividad); 
 		if (componente instanceof PanelFormularioCarrera)
 			((PanelFormularioCarrera) componente).mostrarErrorCampoRitmoPromedio(mensajeError);
+	}
+	
+	@Override
+	public void validarTipoBicicleta(int actividad, String mensajeError) {
+		Component componente = this.panelFormularioActividad.getComponent(actividad);
+		if(componente instanceof PanelFormularioCiclismo)
+			((PanelFormularioCiclismo) componente).mostrarErrorCampoTipoBicicleta(mensajeError);
 	}
 
 	@Override
@@ -173,7 +184,9 @@ public class VentanaActividades extends JFrame implements VistaActividades{
 			((PanelFormularioCaminata) componente).limpiarCamposTexto();
 		else if (componente instanceof PanelFormularioCarrera)
 			((PanelFormularioCarrera) componente).limpiarCamposTexto();
-	}	
+		else if(componente instanceof PanelFormularioCiclismo)
+			((PanelFormularioCiclismo) componente).limpiarCamposTexto();
+	}		
 }
 
 class PanelFormularioCaminata extends JPanel{
@@ -186,7 +199,7 @@ class PanelFormularioCaminata extends JPanel{
 	
 	private GridBagConstraints constraints;
 	
-	public PanelFormularioCaminata(final ControladorActividades controlador) {
+	public PanelFormularioCaminata(final ControladorActividad controlador) {
 		setLayout(new GridBagLayout());
 		
 		this.constraints = new GridBagConstraints();
@@ -211,6 +224,7 @@ class PanelFormularioCaminata extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				limpiarCamposError();
 				controlador.registrarCaminata(textFieldDistancia.getText());
 			}
 		});
@@ -263,7 +277,7 @@ class PanelFormularioCarrera extends JPanel{
 	
 	private GridBagConstraints constraints;
 	
-	public PanelFormularioCarrera(final ControladorActividades controlador) {
+	public PanelFormularioCarrera(final ControladorActividad controlador) {
 		setLayout(new GridBagLayout());
 		
 		this.constraints = new GridBagConstraints();
@@ -300,6 +314,7 @@ class PanelFormularioCarrera extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				limpiarCamposError();
 				controlador.registrarCarrera(textFieldDistancia.getText(), textFieldRitmoPromedio.getText());;
 			}
 		});
@@ -349,4 +364,104 @@ class PanelFormularioCarrera extends JPanel{
 	}
 }
 
+class PanelFormularioCiclismo extends JPanel{
+
+	private static final long serialVersionUID = 1L;
+	
+	private JTextField textFieldDistancia;
+	
+	private JLabel labelErrorDistancia;
+	
+	private JTextField textFieldTipoBicicleta;
+	
+	private JLabel labelErrorTipoBicicleta;
+	
+	private GridBagConstraints constraints;
+	
+	public PanelFormularioCiclismo(final ControladorActividad controlador) {
+		setLayout(new GridBagLayout());
+		
+		constraints = new GridBagConstraints();
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.anchor = GridBagConstraints.WEST;
+		
+		ajustarConstraints(0, 0, 1, 1);
+		add(new JLabel("Distancia (km):"), constraints);
+		
+		ajustarConstraints(1, 0, 1, 1);
+		this.textFieldDistancia = new JTextField(15);
+		add(this.textFieldDistancia, constraints);
+		
+		ajustarConstraints(0, 1, 2, 1);
+		//horizontal
+		this.labelErrorDistancia = getLabelError();
+		add(this.labelErrorDistancia, constraints);
+		
+		ajustarConstraints(0, 2, 1, 1);
+		add(new JLabel("Tipo bicicleta: "), constraints);
+		
+		ajustarConstraints(1, 2, 1, 1);
+		this.textFieldTipoBicicleta = new JTextField(15);
+		add(this.textFieldTipoBicicleta, constraints);
+		
+		ajustarConstraints(0, 3, 2, 1);
+		this.labelErrorTipoBicicleta = getLabelError();
+		add(this.labelErrorTipoBicicleta, constraints);
+		
+		ajustarConstraints(0, 4, 2, 1);
+		JButton botonGuardarCiclismo = new JButton("Guardar");
+		add(botonGuardarCiclismo, constraints);
+		botonGuardarCiclismo.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				limpiarCamposError();
+				controlador.registrarCiclismo(textFieldDistancia.getText(), textFieldTipoBicicleta.getText());
+			}
+		});
+	}
+
+	private JLabel getLabelError() {
+		JLabel labelError = new JLabel(" ");
+		labelError.setForeground(Color.RED);
+		return labelError;
+	}
+	
+	private void ajustarConstraints(int x , int y, int w, int h) {
+		this.constraints.gridx = x;
+		this.constraints.gridy = y;
+		this.constraints.gridwidth = w;
+		this.constraints.gridheight = h;
+	}
+	
+	public void limpiarCamposError() {
+		limpiarCampoErrorDistancia();
+		limpiarCampoErrorTipoBicicleta();
+	}
+
+	public void limpiarCamposTexto() {
+		this.textFieldDistancia.setText("");
+		this.textFieldTipoBicicleta.setText("");
+	}
+	
+	public void mostrarErrorCampoDistancia(String mensajeError) {
+		this.labelErrorDistancia.setText(mensajeError);
+		this.textFieldDistancia.setBorder(BorderFactory.createLineBorder(Color.RED));
+	}
+	
+	private void limpiarCampoErrorDistancia() {
+		this.labelErrorDistancia.setText(" ");
+		this.textFieldDistancia.setBorder(UIManager.getBorder("TextField.border"));
+	}
+	
+	public void mostrarErrorCampoTipoBicicleta(String mensajeError) {
+		this.labelErrorTipoBicicleta.setText(mensajeError);
+		this.textFieldTipoBicicleta.setBorder(BorderFactory.createLineBorder(Color.RED));
+	}
+	
+	private void limpiarCampoErrorTipoBicicleta() {
+		this.labelErrorTipoBicicleta.setText(" ");
+		this.textFieldTipoBicicleta.setBorder(UIManager.getBorder("TextField.border"));
+	}
+}
 

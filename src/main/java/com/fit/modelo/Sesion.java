@@ -46,7 +46,7 @@ public class Sesion {
 	}
 	
 	public String getFechaIncioComoString() {
-		return ConversorFecha.convertirGregorianCalendarEnFormatoDateTimeMySql(this.fechaInicio);
+		return ConversorFecha.convertirGregorianCalendarEnString(this.fechaInicio);
 	}
 
 	public void setFechaInicio(GregorianCalendar fechaInicio) {
@@ -61,8 +61,8 @@ public class Sesion {
 		this.fechaFin = fechaFin;
 	}
 	
-	public String getFechaFinComoString() {
-		return ConversorFecha.convertirGregorianCalendarEnFormatoDateTimeMySql(this.fechaFin);
+	private String getFechaFinComoString() {
+		return ConversorFecha.convertirGregorianCalendarEnString(this.fechaFin);
 	}
 
 	public int getIdUsuario() {

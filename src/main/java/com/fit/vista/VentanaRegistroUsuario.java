@@ -94,13 +94,15 @@ class PanelFormularioRegistroUsuario extends JPanel{
 		
 		this.constraints = new GridBagConstraints();
 		this.constraints.fill = GridBagConstraints.HORIZONTAL;
+		this.constraints.anchor = GridBagConstraints.WEST;
 		
 		agregarCamposNombre();
 		agregarCamposEmail();
 		agregarCamposPassword();
 		
 		
-		ajustarConstraints(0, 6, 2, 1, GridBagConstraints.CENTER);
+		ajustarConstraints(0, 6, 2, 1);
+		this.constraints.anchor = GridBagConstraints.CENTER;
 		JButton botonRegitrarUsuario = new JButton("Registrar");
 		
 		botonRegitrarUsuario.addActionListener(new ActionListener() {
@@ -112,7 +114,7 @@ class PanelFormularioRegistroUsuario extends JPanel{
 		
 		add(botonRegitrarUsuario, this.constraints);
 		
-		ajustarConstraints(0, 7, 2, 1, GridBagConstraints.CENTER);
+		ajustarConstraints(0, 7, 2, 1);
 		JButton botonCancelar = new JButton("Cancelar");
 		
 		botonCancelar.addActionListener(new ActionListener() {
@@ -128,16 +130,16 @@ class PanelFormularioRegistroUsuario extends JPanel{
 	}
 	
 	private void agregarCamposNombre() {
-		ajustarConstraints(0, 0, 1, 1, GridBagConstraints.EAST);
-		this.labelNombre = new JLabel("Nombre:",  JLabel.RIGHT);
+		ajustarConstraints(0, 0, 1, 1);
+		this.labelNombre = new JLabel("Nombre:");
 		add(this.labelNombre, this.constraints);
 		
-		ajustarConstraints(1, 0, 1, 1, GridBagConstraints.WEST);
+		ajustarConstraints(1, 0, 1, 1);
 		this.textFieldNombre = new JTextField(10);
 		this.labelNombre.setLabelFor(this.textFieldNombre);
 		add(this.textFieldNombre, this.constraints);
 		
-		ajustarConstraints(0, 1, 2, 1, GridBagConstraints.WEST);
+		ajustarConstraints(0, 1, 2, 1);
 		this.labelErrorNombre = new JLabel(" ");
 		this.labelErrorNombre.setForeground(Color.RED);
 		add(this.labelErrorNombre, this.constraints);
@@ -145,16 +147,16 @@ class PanelFormularioRegistroUsuario extends JPanel{
 	}
 	
 	private void agregarCamposEmail() {
-		ajustarConstraints(0, 2, 1, 1, GridBagConstraints.EAST);
-		this.labelEmail = new JLabel("Email:",  JLabel.RIGHT);
+		ajustarConstraints(0, 2, 1, 1);
+		this.labelEmail = new JLabel("Email:");
 		add(this.labelEmail, this.constraints);
 		
-		ajustarConstraints(1, 2, 1, 1, GridBagConstraints.WEST);
+		ajustarConstraints(1, 2, 1, 1);
 		this.textFieldEmail = new JTextField(10);
 		this.labelEmail.setLabelFor(this.textFieldEmail);
 		add(this.textFieldEmail, this.constraints);
 		
-		ajustarConstraints(0, 3, 2, 1, GridBagConstraints.WEST);
+		ajustarConstraints(0, 3, 2, 1);
 		this.constraints.anchor = GridBagConstraints.WEST;
 		this.labelErrorEmail = new JLabel(" ");
 		this.labelErrorEmail.setForeground(Color.RED);
@@ -163,27 +165,26 @@ class PanelFormularioRegistroUsuario extends JPanel{
 	}
 
 	private void agregarCamposPassword() {
-		ajustarConstraints(0, 4, 1, 1, GridBagConstraints.EAST);
-		this.labelPassword = new JLabel("Contraseña:", JLabel.RIGHT);
+		ajustarConstraints(0, 4, 1, 1);
+		this.labelPassword = new JLabel("Contraseña:");
 		add(this.labelPassword, this.constraints);
 		
-		ajustarConstraints(1, 4, 1, 1, GridBagConstraints.WEST);
+		ajustarConstraints(1, 4, 1, 1);
 		this.passFieldPassword = new JPasswordField(10);
 		this.labelPassword.setLabelFor(this.passFieldPassword);
 		add(this.passFieldPassword, this.constraints);
 		
-		ajustarConstraints(0, 5, 2, 1, GridBagConstraints.WEST);
+		ajustarConstraints(0, 5, 2, 1);
 		this.labelErrorPassword = new JLabel(" ");
 		this.labelErrorPassword.setForeground(Color.RED);
 		add(this.labelErrorPassword, this.constraints);
 	}
 	
-	private void ajustarConstraints(int x , int y, int w, int h, int a) {
+	private void ajustarConstraints(int x , int y, int w, int h) {
 		this.constraints.gridx = x;
 		this.constraints.gridy = y;
 		this.constraints.gridwidth = w;
 		this.constraints.gridheight = h;
-		if(a != -1) this.constraints.anchor = a;
 	}
 	
 	public void limpiarTodosLosTextAndPassFields() {

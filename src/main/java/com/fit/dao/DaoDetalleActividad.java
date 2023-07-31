@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import com.fit.dao.conexion.MysqlConnection;
 import com.fit.modelo.Caminata;
 import com.fit.modelo.Carrera;
+import com.fit.modelo.Ciclismo;
 
 public class DaoDetalleActividad {
 
@@ -37,6 +38,20 @@ public class DaoDetalleActividad {
 			statement.setInt(1, registroId);
 			statement.setFloat(2, carrera.getDistancia());
 			statement.setFloat(3, carrera.getRitmo_promedio());
+			return statement.executeUpdate() > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public boolean guardarCiclismo(int registroId, Ciclismo ciclismo) {
+		try {
+			String query = "insert into detalles_ciclismo (registro_id, distancia, tipo_bicicleta) values (?, ?, ?);";
+			PreparedStatement statement = this.conexion.prepareStatement(query);
+			statement.setInt(1, registroId);
+			statement.setFloat(2, ciclismo.getDistancia());
+			statement.setString(3, ciclismo.getTipo_bicicleta());
 			return statement.executeUpdate() > 0;
 		} catch (SQLException e) {
 			e.printStackTrace();

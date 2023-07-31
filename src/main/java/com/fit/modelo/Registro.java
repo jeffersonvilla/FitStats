@@ -77,11 +77,11 @@ public class Registro {
 	}
 	
 	public String getFechaInicioComoString() {
-		return ConversorFecha.convertirGregorianCalendarEnFormatoDateTimeMySql(this.fechaInicio);
+		return ConversorFecha.convertirGregorianCalendarEnString(this.fechaInicio);
 	}
 	
 	public String getFechaFinComoString() {
-		return ConversorFecha.convertirGregorianCalendarEnFormatoDateTimeMySql(this.fechaFin);
+		return ConversorFecha.convertirGregorianCalendarEnString(this.fechaFin);
 	}
 
 	@Override
@@ -94,13 +94,8 @@ public class Registro {
 				+ "]";
 	}
 	
-	public boolean guardarEnDB() {
-		return this.daoRegistro.guardarRegistro(this);
-	}
-	
-	public int getIdFromDB() {
-		this.id = this.daoRegistro.getRegistroId(this);
+	public int guardarEnDB() {
+		this.id = this.daoRegistro.guardarRegistro(this);
 		return this.id;
-	}
-	
+	}	
 }

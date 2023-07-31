@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import com.fit.dao.conexion.MysqlConnection;
 import com.fit.modelo.Registro;
@@ -16,7 +17,7 @@ public class DaoRegistro {
 		this.conexion = MysqlConnection.getConnection();
 	}
 	
-	public boolean guardarRegistro(Registro registro) {
+	public int guardarRegistro(Registro registro) {
 		try {
 			String query = "";
 			boolean tieneFechaFin = false;
@@ -27,29 +28,20 @@ public class DaoRegistro {
 			PreparedStatement statement = this.conexion.prepareStatement(query);
 			statement.setInt(1, registro.getUserId());
 			statement.setInt(2, registro.getActividadId());
-			statement.setString(3, registro.getFechaInicioComoString());
-			if(tieneFechaFin) statement.setString(4, registro.getFechaFinComoString());
-			return statement.executeUpdate() > 0;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	public int getRegistroId(Registro registro) {
-		try {
-			String query = "select registro_id from registro where user_id = ? and activity_id = ? and fecha_inicio = ?;";
-			PreparedStatement statement = this.conexion.prepareStatement(query);
-			statement.setInt(1, registro.getUserId());
-			statement.setInt(2, registro.getActividadId());
-			statement.setString(3, registro.getFechaInicioComoString());
-			ResultSet resultado = statement.executeQuery();
-			if(resultado.next()) return resultado.getInt("registro_id");
+			statement.setTimestamp(3, new Timestamp(registro.getFechaInicio().getTimeInMillis()));
+			if(tieneFechaFin) statement.setTimestamp(4, new Timestamp(registro.getFechaFin().getTimeInMillis()));
+			if(statement.executeUpdate() > 0) {
+				PreparedStatement statementForId = this.conexion.prepareStatement("select last_insert_id();");
+				ResultSet resultadoRegistroId = statementForId.executeQuery(); 
+				if(resultadoRegistroId.next()) {
+					return resultadoRegistroId.getInt(1);
+				}
+				return -1;
+			}
 			return -1;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return -1;
 		}
 	}
-
 }
