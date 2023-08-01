@@ -110,7 +110,7 @@ public class ControladorActividad {
 	
 	private boolean validarTipoBicicleta(String tipoBicicleta) {
 		if(!validarCampoNoVacio(tipoBicicleta)) return false;
-		if(tipoBicicleta.length() < 50) return true;
+		if(tipoBicicleta.length() < Ciclismo.TAMANIO_MAXIMO_TIPO_BICICLETA) return true;
 		vista.validarTipoBicicleta(getActividadSelecionada(), MENSAJE_MAXIMO_49_CARACTERES);
 		return false;
 	}

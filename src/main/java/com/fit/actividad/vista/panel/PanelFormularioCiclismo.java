@@ -2,23 +2,19 @@ package com.fit.actividad.vista.panel;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 import com.fit.actividad.ControladorActividad;
-import com.fit.actividad.vista.interfaces.LimpiadorCamposError;
-import com.fit.actividad.vista.interfaces.LimpiadorCamposTexto;
 import com.fit.actividad.vista.interfaces.ValidadorCampoDistancia;
 
-public class PanelFormularioCiclismo extends JPanel implements LimpiadorCamposTexto, LimpiadorCamposError, ValidadorCampoDistancia{
+public class PanelFormularioCiclismo extends PanelFormulario implements ValidadorCampoDistancia{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -30,12 +26,9 @@ public class PanelFormularioCiclismo extends JPanel implements LimpiadorCamposTe
 	
 	private JLabel labelErrorTipoBicicleta;
 	
-	private GridBagConstraints constraints;
-	
 	public PanelFormularioCiclismo(final ControladorActividad controlador) {
-		setLayout(new GridBagLayout());
+		super();
 		
-		constraints = new GridBagConstraints();
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		constraints.anchor = GridBagConstraints.WEST;
 		
@@ -105,18 +98,5 @@ public class PanelFormularioCiclismo extends JPanel implements LimpiadorCamposTe
 	private void limpiarCampoErrorTipoBicicleta() {
 		this.labelErrorTipoBicicleta.setText(" ");
 		this.textFieldTipoBicicleta.setBorder(UIManager.getBorder("TextField.border"));
-	}
-	
-	private JLabel getLabelError() {
-		JLabel labelError = new JLabel(" ");
-		labelError.setForeground(Color.RED);
-		return labelError;
-	}
-	
-	private void ajustarConstraints(int x , int y, int w, int h) {
-		this.constraints.gridx = x;
-		this.constraints.gridy = y;
-		this.constraints.gridwidth = w;
-		this.constraints.gridheight = h;
 	}
 }

@@ -4,6 +4,8 @@ import com.fit.actividad.modelo.Actividad;
 
 public class Ciclismo extends Actividad {
 
+	public static final int TAMANIO_MAXIMO_TIPO_BICICLETA = 50;
+
 	private float distancia;
 	
 	private String tipo_bicicleta;

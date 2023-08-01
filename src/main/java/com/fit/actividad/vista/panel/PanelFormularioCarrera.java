@@ -2,25 +2,20 @@ package com.fit.actividad.vista.panel;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 import com.fit.actividad.ControladorActividad;
-import com.fit.actividad.vista.interfaces.LimpiadorCamposError;
-import com.fit.actividad.vista.interfaces.LimpiadorCamposTexto;
 import com.fit.actividad.vista.interfaces.ValidadorCampoDistancia;
 import com.fit.actividad.vista.interfaces.ValidadorCampoRitmoPromedio;
 
-public class PanelFormularioCarrera extends JPanel 
-	implements LimpiadorCamposTexto, LimpiadorCamposError, ValidadorCampoDistancia, ValidadorCampoRitmoPromedio{
+public class PanelFormularioCarrera extends PanelFormulario implements ValidadorCampoDistancia, ValidadorCampoRitmoPromedio{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -32,13 +27,10 @@ public class PanelFormularioCarrera extends JPanel
 	
 	private JLabel labelErrorRitmoPromedio;
 	
-	private GridBagConstraints constraints;
-	
 	public PanelFormularioCarrera(final ControladorActividad controlador) {
-		setLayout(new GridBagLayout());
+		super();
 		
-		this.constraints = new GridBagConstraints();
-		this.constraints.anchor = GridBagConstraints.WEST;
+		super.constraints.anchor = GridBagConstraints.WEST;
 		
 		ajustarConstraints(0, 0, 1, 1);
 		add(new JLabel("Distancia (km):"), constraints);
@@ -109,18 +101,5 @@ public class PanelFormularioCarrera extends JPanel
 	private void limpiarCampoErrorRitmoPromedio() {
 		this.labelErrorRitmoPromedio.setText(" ");
 		this.textFieldRitmoPromedio.setBorder(UIManager.getBorder("TextField.border"));
-	}
-	
-	private JLabel getLabelError() {
-		JLabel labelError = new JLabel(" ");
-		labelError.setForeground(Color.RED);
-		return labelError;
-	}
-	
-	private void ajustarConstraints(int x , int y, int w, int h) {
-		this.constraints.gridx = x;
-		this.constraints.gridy = y;
-		this.constraints.gridwidth = w;
-		this.constraints.gridheight = h;
 	}
 }

@@ -2,23 +2,19 @@ package com.fit.actividad.vista.panel;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 import com.fit.actividad.ControladorActividad;
-import com.fit.actividad.vista.interfaces.LimpiadorCamposError;
-import com.fit.actividad.vista.interfaces.LimpiadorCamposTexto;
 import com.fit.actividad.vista.interfaces.ValidadorCampoDistancia;
 
-public class PanelFormularioCaminata extends JPanel implements  LimpiadorCamposError, LimpiadorCamposTexto, ValidadorCampoDistancia{
+public class PanelFormularioCaminata extends PanelFormulario implements ValidadorCampoDistancia{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -26,13 +22,10 @@ public class PanelFormularioCaminata extends JPanel implements  LimpiadorCamposE
 	
 	private JLabel labelErrorDistancia;
 	
-	private GridBagConstraints constraints;
-	
 	public PanelFormularioCaminata(final ControladorActividad controlador) {
-		setLayout(new GridBagLayout());
+		super();
 		
-		this.constraints = new GridBagConstraints();
-		this.constraints.anchor = GridBagConstraints.WEST;
+		constraints.anchor = GridBagConstraints.WEST;
 		
 		ajustarConstraints(0, 0, 1, 1);
 		add(new JLabel("Distancia (km):"), constraints);
@@ -58,11 +51,6 @@ public class PanelFormularioCaminata extends JPanel implements  LimpiadorCamposE
 			}
 		});	
 	}
-
-	@Override
-	public void limpiarCamposError() {
-		limpiarCampoErrorDistancia();
-	}
 	
 	@Override
 	public void limpiarCamposTexto() {
@@ -70,22 +58,14 @@ public class PanelFormularioCaminata extends JPanel implements  LimpiadorCamposE
 	}
 	
 	@Override
+	public void limpiarCamposError() {
+		limpiarCampoErrorDistancia();
+	}
+	
+	@Override
 	public void mostrarErrorCampoDistancia(String mensajeError) {
 		this.labelErrorDistancia.setText(mensajeError);
 		this.textFieldDistancia.setBorder(BorderFactory.createLineBorder(Color.RED));
-	}
-	
-	private JLabel getLabelError() {
-		JLabel labelError = new JLabel(" ");
-		labelError.setForeground(Color.RED);
-		return labelError;
-	}
-	
-	private void ajustarConstraints(int x , int y, int w, int h) {
-		this.constraints.gridx = x;
-		this.constraints.gridy = y;
-		this.constraints.gridwidth = w;
-		this.constraints.gridheight = h;
 	}
 	
 	private void limpiarCampoErrorDistancia() {

@@ -17,11 +17,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import com.fit.actividad.ControladorActividad;
-import com.fit.actividad.vista.interfaces.LimpiadorCamposError;
-import com.fit.actividad.vista.interfaces.LimpiadorCamposTexto;
 import com.fit.actividad.vista.interfaces.ValidadorCampoDistancia;
 import com.fit.actividad.vista.interfaces.ValidadorCampoRitmoPromedio;
 import com.fit.actividad.vista.interfaces.VistaActividades;
+import com.fit.actividad.vista.panel.PanelFormulario;
 import com.fit.actividad.vista.panel.PanelFormularioCaminata;
 import com.fit.actividad.vista.panel.PanelFormularioCarrera;
 import com.fit.actividad.vista.panel.PanelFormularioCiclismo;
@@ -142,15 +141,15 @@ public class VentanaActividades extends JFrame implements VistaActividades{
 	@Override
 	public void limpiarCamposTexto(int actividad) {
 		Component componente = this.panelFormularioActividad.getComponent(actividad); 
-		if(componente instanceof LimpiadorCamposTexto)
-			((LimpiadorCamposTexto) componente).limpiarCamposTexto();
+		if(componente instanceof PanelFormulario)
+			((PanelFormulario) componente).limpiarCamposTexto();
 	}
 
 	@Override
 	public void limpiarCamposError(int actividad) {
 		Component componente = this.panelFormularioActividad.getComponent(actividad); 
-		if(componente instanceof LimpiadorCamposError)
-			((LimpiadorCamposError) componente).limpiarCamposError();
+		if(componente instanceof PanelFormulario)
+			((PanelFormulario) componente).limpiarCamposError();
 	}
 
 	@Override
