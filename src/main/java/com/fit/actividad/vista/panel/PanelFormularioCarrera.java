@@ -1,7 +1,6 @@
 package com.fit.actividad.vista.panel;
 
 import java.awt.Color;
-import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -30,8 +29,6 @@ public class PanelFormularioCarrera extends PanelFormulario implements Validador
 	public PanelFormularioCarrera(final ControladorActividad controlador) {
 		super();
 		
-		super.constraints.anchor = GridBagConstraints.WEST;
-		
 		ajustarConstraints(0, 0, 1, 1);
 		add(new JLabel("Distancia (km):"), constraints);
 		
@@ -40,19 +37,18 @@ public class PanelFormularioCarrera extends PanelFormulario implements Validador
 		add(this.textFieldDistancia, constraints);
 		
 		ajustarConstraints(0, 1, 2, 1);
-		constraints.fill = GridBagConstraints.HORIZONTAL;
+		
 		this.labelErrorDistancia = getLabelError();
 		add(this.labelErrorDistancia, constraints);
 		
 		ajustarConstraints(0, 2, 1, 1);
-		add(new JLabel("Ritmo promedio (min por km):"), constraints);
+		add(new JLabel("Ritmo promedio (minutos por km):"), constraints);
 		
 		ajustarConstraints(1, 2, 1, 1);
 		this.textFieldRitmoPromedio = new JTextField(15);
 		add(this.textFieldRitmoPromedio, constraints);
 		
 		ajustarConstraints(0, 3, 2, 1);
-		constraints.fill = GridBagConstraints.HORIZONTAL;
 		this.labelErrorRitmoPromedio = getLabelError();
 		add(this.labelErrorRitmoPromedio, constraints);
 		

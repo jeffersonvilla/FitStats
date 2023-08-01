@@ -20,11 +20,15 @@ import com.fit.actividad.ControladorActividad;
 import com.fit.actividad.vista.interfaces.ValidadorCampoDistancia;
 import com.fit.actividad.vista.interfaces.ValidadorCampoRitmoPromedio;
 import com.fit.actividad.vista.interfaces.VistaActividades;
+import com.fit.actividad.vista.panel.PanelFomularioEntrenamientoGimnasio;
 import com.fit.actividad.vista.panel.PanelFormulario;
 import com.fit.actividad.vista.panel.PanelFormularioCaminata;
 import com.fit.actividad.vista.panel.PanelFormularioCarrera;
 import com.fit.actividad.vista.panel.PanelFormularioCiclismo;
+import com.fit.actividad.vista.panel.PanelFormularioDeporteEquipo;
 import com.fit.actividad.vista.panel.PanelFormularioNatacion;
+import com.fit.actividad.vista.panel.PanelFormularioOtraActividad;
+import com.fit.actividad.vista.panel.PanelFormularioYoga;
 import com.fit.util.Pantalla;
 
 public class VentanaActividades extends JFrame implements VistaActividades{
@@ -119,7 +123,11 @@ public class VentanaActividades extends JFrame implements VistaActividades{
 		panelFormularioActividad.add(new PanelFormularioCaminata(this.controlador), this.opcionesActividad[0]);
 		panelFormularioActividad.add(new PanelFormularioCarrera(this.controlador), this.opcionesActividad[1]);
 		panelFormularioActividad.add(new PanelFormularioCiclismo(this.controlador), this.opcionesActividad[2]);
-		panelFormularioActividad.add(new PanelFormularioNatacion(this.controlador), this.opcionesActividad[3]);		
+		panelFormularioActividad.add(new PanelFormularioNatacion(this.controlador), this.opcionesActividad[3]);	
+		panelFormularioActividad.add(new PanelFomularioEntrenamientoGimnasio(this.controlador), this.opcionesActividad[4]);
+		panelFormularioActividad.add(new PanelFormularioYoga(this.controlador), this.opcionesActividad[5]);
+		panelFormularioActividad.add(new PanelFormularioDeporteEquipo(this.controlador), this.opcionesActividad[6]);
+		panelFormularioActividad.add(new PanelFormularioOtraActividad(this.controlador), this.opcionesActividad[7]);
 		return panelFormularioActividad;
 	}
 
@@ -178,9 +186,26 @@ public class VentanaActividades extends JFrame implements VistaActividades{
 		Component componente = this.panelFormularioActividad.getComponent(actividad);
 		if(componente instanceof PanelFormularioNatacion)
 			((PanelFormularioNatacion) componente).mostrarErrorCampoEstiloNatacion(mensajeError);
+	}
+
+	@Override
+	public void validarNombreDeporte(int actividad, String mensajeError) {
+		Component componente = this.panelFormularioActividad.getComponent(actividad);
+		if(componente instanceof PanelFormularioDeporteEquipo)
+			((PanelFormularioDeporteEquipo) componente).mostrarErrorCampoNombreDeporte(mensajeError);
+	}
+
+	@Override
+	public void validarResultadoDelPartido(int actividad, String mensajeError) {
+		Component componente = this.panelFormularioActividad.getComponent(actividad);
+		if(componente instanceof PanelFormularioDeporteEquipo)
+			((PanelFormularioDeporteEquipo) componente).mostrarErrorCampoResultadoDelPartido(mensajeError);
+	}
+
+	@Override
+	public void validarDuracionDelPartido(int actividad, String mensajeError) {
+		Component componente = this.panelFormularioActividad.getComponent(actividad);
+		if(componente instanceof PanelFormularioDeporteEquipo)
+			((PanelFormularioDeporteEquipo) componente).mostrarErrorCampoDuracionDelPartido(mensajeError);
 	}	
 }
-
-
-
-

@@ -1,7 +1,6 @@
 package com.fit.actividad.vista.panel;
 
 import java.awt.Color;
-import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -28,9 +27,6 @@ public class PanelFormularioNatacion extends PanelFormulario implements Validado
 	
 	public PanelFormularioNatacion(final ControladorActividad controlador) {
 		super();
-		
-		constraints.fill = GridBagConstraints.HORIZONTAL;
-		constraints.anchor = GridBagConstraints.WEST;
 		
 		ajustarConstraints(0, 0, 1, 1);
 		add(new JLabel("Distancia (metros):"), constraints);

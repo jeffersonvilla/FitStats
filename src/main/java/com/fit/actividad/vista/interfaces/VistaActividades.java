@@ -16,4 +16,9 @@ public interface VistaActividades {
 
 	void validarEstiloNatacion(int actividad, String mensajeError);
 
+	void validarNombreDeporte(int actividad, String mensajeError);
+
+	void validarResultadoDelPartido(int actividad, String mensajeError);
+
+	void validarDuracionDelPartido(int actividad, String mensajeError);
 }

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import com.fit.actividad.modelo.detalle_actividad.Caminata;
 import com.fit.actividad.modelo.detalle_actividad.Carrera;
 import com.fit.actividad.modelo.detalle_actividad.Ciclismo;
+import com.fit.actividad.modelo.detalle_actividad.DeporteEquipo;
 import com.fit.actividad.modelo.detalle_actividad.Natacion;
 import com.fit.util.MysqlConnection;
 
@@ -67,6 +68,21 @@ public class DaoDetalleActividad {
 			statement.setInt(1, registroId);
 			statement.setFloat(2, natacion.getDistancia());
 			statement.setString(3, natacion.getEstiloNatacion());
+			return statement.executeUpdate() > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public boolean guardarDeporteEquipo(int registroId, DeporteEquipo deporteEquipo) {
+		try {
+			String query = "insert into detalles_deporte_equipo (registro_id, nombre_equipo, resultado_partido, duracion_partido) values (?, ? ,? ,?);";
+			PreparedStatement statement = this.conexion.prepareStatement(query);
+			statement.setInt(1, registroId);
+			statement.setString(2, deporteEquipo.getNombreDeporte());
+			statement.setString(3, deporteEquipo.getResultadoDelPartido());
+			statement.setInt(4, deporteEquipo.getDuracionDelPartido());
 			return statement.executeUpdate() > 0;
 		} catch (SQLException e) {
 			e.printStackTrace();

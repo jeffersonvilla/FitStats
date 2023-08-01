@@ -16,6 +16,9 @@ public abstract class PanelFormulario extends JPanel {
 	public PanelFormulario() {
 		setLayout(new GridBagLayout());
 		this.constraints = new GridBagConstraints();
+		
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.anchor = GridBagConstraints.WEST;
 	}
 	
 	protected JLabel getLabelError() {

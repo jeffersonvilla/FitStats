@@ -4,7 +4,9 @@ import com.fit.actividad.modelo.Actividad;
 
 public class Natacion extends Actividad {
 
-	public static final int TAMANIO_MAXIMO_ESTILO_NATACION = 51;
+	public static final int TAMANIO_MAXIMO_ESTILO_NATACION = 50;
+	
+	public static final String MENSAJE_TAMANIO_MAXIMO_ESTILO_NATACION = "Máximo " + TAMANIO_MAXIMO_ESTILO_NATACION + " caracteres";
 
 	private float distancia;
 	

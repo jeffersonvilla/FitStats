@@ -6,6 +6,8 @@ public class Ciclismo extends Actividad {
 
 	public static final int TAMANIO_MAXIMO_TIPO_BICICLETA = 50;
 
+	public static final String MENSAJE_TAMANIO_MAXIMO_TIPO_BICICLETA = "Máximo " + TAMANIO_MAXIMO_TIPO_BICICLETA + " caracteres";
+
 	private float distancia;
 	
 	private String tipo_bicicleta;

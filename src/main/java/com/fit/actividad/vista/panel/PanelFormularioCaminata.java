@@ -1,7 +1,6 @@
 package com.fit.actividad.vista.panel;
 
 import java.awt.Color;
-import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -25,8 +24,6 @@ public class PanelFormularioCaminata extends PanelFormulario implements Validado
 	public PanelFormularioCaminata(final ControladorActividad controlador) {
 		super();
 		
-		constraints.anchor = GridBagConstraints.WEST;
-		
 		ajustarConstraints(0, 0, 1, 1);
 		add(new JLabel("Distancia (km):"), constraints);
 		
@@ -35,7 +32,6 @@ public class PanelFormularioCaminata extends PanelFormulario implements Validado
 		add(this.textFieldDistancia, constraints);
 		
 		ajustarConstraints(0, 1, 2, 1);
-		constraints.fill = GridBagConstraints.HORIZONTAL;
 		this.labelErrorDistancia = getLabelError();
 		add(this.labelErrorDistancia, constraints);
 		
