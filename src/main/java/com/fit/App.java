@@ -1,6 +1,6 @@
 package com.fit;
 
-import com.fit.controlador.ControladorPrincipal;
+import com.fit.principal.ControladorPrincipal;
 
 public class App 
 {
