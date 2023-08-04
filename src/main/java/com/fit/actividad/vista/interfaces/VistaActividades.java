@@ -1,5 +1,7 @@
 package com.fit.actividad.vista.interfaces;
 
+import java.util.List;
+
 public interface VistaActividades {
 	
 	int getActividadSelecionada();
@@ -21,4 +23,8 @@ public interface VistaActividades {
 	void validarResultadoDelPartido(int actividad, String mensajeError);
 
 	void validarDuracionDelPartido(int actividad, String mensajeError);
+
+	void actualizarListaActividades(List<Object[]> listaActividades);
+
+	void verListaActividades();
 }

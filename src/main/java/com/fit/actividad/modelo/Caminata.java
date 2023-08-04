@@ -1,8 +1,6 @@
-package com.fit.actividad.modelo.detalle_actividad;
+package com.fit.actividad.modelo;
 
-import com.fit.actividad.modelo.Actividad;
-
-public class Caminata extends Actividad{
+public class Caminata extends DetalleActividad{
 	
 	private float distancia;
 

@@ -1,8 +1,6 @@
-package com.fit.actividad.modelo.detalle_actividad;
+package com.fit.actividad.modelo;
 
-import com.fit.actividad.modelo.Actividad;
-
-public class DeporteEquipo extends Actividad{
+public class DeporteEquipo extends DetalleActividad{
 	
 	public static final int TAMANIO_MAXIMO_NOMBRE_DEPORTE = 50;
 	

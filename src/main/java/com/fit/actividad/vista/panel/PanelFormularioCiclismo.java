@@ -58,7 +58,7 @@ public class PanelFormularioCiclismo extends PanelFormulario implements Validado
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				limpiarCamposError();
-				controlador.registrarCiclismo(textFieldDistancia.getText(), textFieldTipoBicicleta.getText());
+				//controlador.registrarCiclismo(textFieldDistancia.getText(), textFieldTipoBicicleta.getText());
 			}
 		});
 	}

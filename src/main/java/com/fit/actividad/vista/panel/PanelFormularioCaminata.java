@@ -1,11 +1,8 @@
 package com.fit.actividad.vista.panel;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
@@ -25,27 +22,20 @@ public class PanelFormularioCaminata extends PanelFormulario implements Validado
 		super();
 		
 		ajustarConstraints(0, 0, 1, 1);
-		add(new JLabel("Distancia (km):"), constraints);
+		add(new JLabel("Distancia"), constraints);
 		
 		ajustarConstraints(1, 0, 1, 1);
 		this.textFieldDistancia = new JTextField(15);
+		this.textFieldDistancia.setText("0.0");
 		add(this.textFieldDistancia, constraints);
 		
 		ajustarConstraints(0, 1, 2, 1);
 		this.labelErrorDistancia = getLabelError();
 		add(this.labelErrorDistancia, constraints);
-		
-		ajustarConstraints(0, 2, 2, 1);
-		JButton botonGuardarCarrera = new JButton("Guardar");
-		add(botonGuardarCarrera, constraints);
-		botonGuardarCarrera.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				limpiarCamposError();
-				controlador.registrarCaminata(textFieldDistancia.getText());
-			}
-		});	
+	}
+	
+	public String getDistancia() {
+		return this.textFieldDistancia.getText();
 	}
 	
 	@Override

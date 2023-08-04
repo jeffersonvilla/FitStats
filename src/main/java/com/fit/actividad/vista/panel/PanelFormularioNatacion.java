@@ -58,7 +58,7 @@ public class PanelFormularioNatacion extends PanelFormulario implements Validado
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				limpiarCamposError();
-				controlador.registrarNatacion(textFieldDistancia.getText(), textFieldEstiloNatacion.getText());
+				//controlador.registrarNatacion(textFieldDistancia.getText(), textFieldEstiloNatacion.getText());
 			}
 		});
 	}

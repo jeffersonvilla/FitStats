@@ -1,18 +1,24 @@
 package com.fit.actividad;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
 import com.fit.actividad.dao.DaoActividad;
+import com.fit.actividad.dao.DaoTipoActividad;
 import com.fit.actividad.modelo.Actividad;
-import com.fit.actividad.modelo.Registro;
-import com.fit.actividad.modelo.detalle_actividad.Caminata;
-import com.fit.actividad.modelo.detalle_actividad.Carrera;
-import com.fit.actividad.modelo.detalle_actividad.Ciclismo;
-import com.fit.actividad.modelo.detalle_actividad.DeporteEquipo;
-import com.fit.actividad.modelo.detalle_actividad.Natacion;
+import com.fit.actividad.modelo.Caminata;
+import com.fit.actividad.modelo.Carrera;
+import com.fit.actividad.modelo.Ciclismo;
+import com.fit.actividad.modelo.DeporteEquipo;
+import com.fit.actividad.modelo.DetalleActividad;
+import com.fit.actividad.modelo.Natacion;
 import com.fit.actividad.vista.interfaces.VistaActividades;
 import com.fit.principal.ControladorPrincipal;
 import com.fit.usuario.login.Sesion;
@@ -23,6 +29,8 @@ public class ControladorActividad {
 	
 	private VistaActividades vista;
 
+	private DaoTipoActividad daoTipoActividad;
+	
 	private DaoActividad daoActividad;
 	
 	private Sesion sesion;
@@ -43,6 +51,7 @@ public class ControladorActividad {
 		this.controladorPrincipal = controladorPrincipal;
 		this.sesion = sesion;
 		
+		this.daoTipoActividad = new DaoTipoActividad();
 		this.daoActividad = new DaoActividad();
 	}
 	
@@ -50,12 +59,34 @@ public class ControladorActividad {
 		this.vista = vista;
 	}
 	
-	public void registrarCaminata(String distanciaString) {
-		if(validarDistancia(distanciaString)) 
-			registrarActividad(new Caminata(getActividadSelecionada() + 1, Float.parseFloat(distanciaString)));
+	private void registrarActividad(Actividad actividad, DetalleActividad detalleActividad) {
+		int idActividad = actividad.guardarEnDB();
+		if(idActividad != -1 && detalleActividad.guardarEnDB_AsociadoConRegistro(idActividad)) {
+			vista.limpiarCamposTexto(getActividadSelecionada());
+			vista.actualizarListaActividades(getListaActividades());
+			vista.verListaActividades();
+			JOptionPane.showMessageDialog(null, "Registrado con exito!");
+		}else JOptionPane.showMessageDialog(null, "Ha ocurrido un error guardando.");	
 	}
 	
-	public void registrarCarrera(String distanciaString, String ritmoString) {
+	public void registrarCaminata(Timestamp fecha, Time duracion, String ubicacion, String distanciaString) {
+		if(validarDatosActividad(fecha, duracion, ubicacion)) {			
+			if(validarDistancia(distanciaString))
+				registrarActividad(
+						new Actividad
+						.ActividadBuilder()
+						.setUserId(this.sesion.getIdUsuario())
+						.setTipoActividadId(getActividadSelecionada() + 1)
+						.setFechaHora(fecha)
+						.setDuracion(duracion)
+						.setUbicación(ubicacion)
+						.build() ,
+						new Caminata(getActividadSelecionada() + 1, Float.parseFloat(distanciaString))
+						);
+		}
+	}
+
+	/*public void registrarCarrera(String distanciaString, String ritmoString) {
 		if(validarDatosCarrera(distanciaString, ritmoString)) {
 			float distancia = Float.parseFloat(distanciaString);
 			float ritmo = Float.parseFloat(ritmoString);
@@ -80,8 +111,13 @@ public class ControladorActividad {
 	public void registrarDeporteEquipo(String nombreDeporte, String resultadoDelPartido, String duracionDelPartido) {
 		if(validarDatosDeporteEquipo(nombreDeporte, resultadoDelPartido, duracionDelPartido))
 			registrarActividad(new DeporteEquipo(getActividadSelecionada(), nombreDeporte, resultadoDelPartido, Integer.parseInt(duracionDelPartido)));
-	}
+	}*/
 
+
+	private boolean validarDatosActividad(Timestamp fecha, Time duracion, String ubicacion) {
+		return true;
+	}
+	
 	private boolean validarDatosCarrera(String distancia, String ritmo) {
 		boolean distanciaValida = validarDistancia(distancia);
 		boolean ritmoValido = validarRitmo(ritmo);
@@ -161,23 +197,30 @@ public class ControladorActividad {
 		vista.validarDuracionDelPartido(getActividadSelecionada(), DeporteEquipo.MENSAJE_VALIDACION_DURACION_DEL_PARTIDO);
 		return false;
 	}
-
-	private void registrarActividad(Actividad actividad) {
-		Registro registro = new Registro(this.sesion.getIdUsuario(),actividad.getId(),new GregorianCalendar(),null);
-		int idRegistro = registro.guardarEnDB();
-		if(idRegistro != -1 && actividad.guardarEnDB_AsociadoConRegistro(registro.getId())) {
-			vista.limpiarCamposTexto(getActividadSelecionada());
-			JOptionPane.showMessageDialog(null, "Registrado con exito!");
-		}else JOptionPane.showMessageDialog(null, "Ha ocurrido un error guardando.");	
-	}
 	
 	public void cerrarSesion() {
 		this.controladorPrincipal.cerrarSesion(this.sesion);
 	}
 
 	public String[] opcionesActividades() {
-		this.actividades = this.daoActividad.getListaActividades();
+		this.actividades = this.daoTipoActividad.getListaActividades();
 		return this.actividades;
+	}
+	
+	public List<Object[]> getListaActividades() {
+		List<Actividad> actividades = daoActividad.leerListaActividadesPorUsuarioId(sesion.getIdUsuario());
+		List<Object[]> actividadesObjectos = new ArrayList<>();
+		if(actividades != null) {
+			for(Actividad actividad: actividades) {
+				actividadesObjectos.add(new Object[] {
+						this.actividades[actividad.getTipoActividadId()-1],
+						actividad.getFechaHora(),
+						actividad.getDuracion(),
+						actividad.getUbicación()
+				});
+			}
+		}
+		return actividadesObjectos;
 	}
 	
 	private int getActividadSelecionada() {

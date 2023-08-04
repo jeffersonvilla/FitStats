@@ -1,8 +1,6 @@
-package com.fit.actividad.modelo.detalle_actividad;
+package com.fit.actividad.modelo;
 
-import com.fit.actividad.modelo.Actividad;
-
-public class Natacion extends Actividad {
+public class Natacion extends DetalleActividad {
 
 	public static final int TAMANIO_MAXIMO_ESTILO_NATACION = 50;
 	

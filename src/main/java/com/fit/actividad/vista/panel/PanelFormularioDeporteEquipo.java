@@ -72,11 +72,11 @@ public class PanelFormularioDeporteEquipo extends PanelFormulario {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				limpiarCamposError();
-				controlador.registrarDeporteEquipo(
+				/*controlador.registrarDeporteEquipo(
 						textFieldNombreDeporte.getText(),
 						textFieldResultadoDelPartido.getText(),
 						textFieldDuracionDelPartido.getText()
-						);
+						);*/
 			}
 		});
 	}

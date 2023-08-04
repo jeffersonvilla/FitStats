@@ -1,8 +1,6 @@
-package com.fit.actividad.modelo.detalle_actividad;
+package com.fit.actividad.modelo;
 
-import com.fit.actividad.modelo.Actividad;
-
-public class Ciclismo extends Actividad {
+public class Ciclismo extends DetalleActividad {
 
 	public static final int TAMANIO_MAXIMO_TIPO_BICICLETA = 50;
 
