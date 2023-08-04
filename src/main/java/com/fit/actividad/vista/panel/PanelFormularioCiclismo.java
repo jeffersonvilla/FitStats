@@ -1,11 +1,8 @@
 package com.fit.actividad.vista.panel;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
@@ -29,10 +26,11 @@ public class PanelFormularioCiclismo extends PanelFormulario implements Validado
 		super();
 		
 		ajustarConstraints(0, 0, 1, 1);
-		add(new JLabel("Distancia (km):"), constraints);
+		add(new JLabel("Distancia"), constraints);
 		
 		ajustarConstraints(1, 0, 1, 1);
 		this.textFieldDistancia = new JTextField(15);
+		this.textFieldDistancia.setText("0.0");
 		add(this.textFieldDistancia, constraints);
 		
 		ajustarConstraints(0, 1, 2, 1);
@@ -40,7 +38,7 @@ public class PanelFormularioCiclismo extends PanelFormulario implements Validado
 		add(this.labelErrorDistancia, constraints);
 		
 		ajustarConstraints(0, 2, 1, 1);
-		add(new JLabel("Tipo bicicleta: "), constraints);
+		add(new JLabel("Tipo bicicleta"), constraints);
 		
 		ajustarConstraints(1, 2, 1, 1);
 		this.textFieldTipoBicicleta = new JTextField(15);
@@ -49,23 +47,11 @@ public class PanelFormularioCiclismo extends PanelFormulario implements Validado
 		ajustarConstraints(0, 3, 2, 1);
 		this.labelErrorTipoBicicleta = getLabelError();
 		add(this.labelErrorTipoBicicleta, constraints);
-		
-		ajustarConstraints(0, 4, 2, 1);
-		JButton botonGuardarCiclismo = new JButton("Guardar");
-		add(botonGuardarCiclismo, constraints);
-		botonGuardarCiclismo.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				limpiarCamposError();
-				//controlador.registrarCiclismo(textFieldDistancia.getText(), textFieldTipoBicicleta.getText());
-			}
-		});
 	}
 
 	@Override
 	public void limpiarCamposTexto() {
-		this.textFieldDistancia.setText("");
+		this.textFieldDistancia.setText("0.0");
 		this.textFieldTipoBicicleta.setText("");
 	}
 	
@@ -94,5 +80,13 @@ public class PanelFormularioCiclismo extends PanelFormulario implements Validado
 	private void limpiarCampoErrorTipoBicicleta() {
 		this.labelErrorTipoBicicleta.setText(" ");
 		this.textFieldTipoBicicleta.setBorder(UIManager.getBorder("TextField.border"));
+	}
+
+	public String getDistancia() {
+		return this.textFieldDistancia.getText();
+	}
+
+	public String getTipoBicicleta() {
+		return this.textFieldTipoBicicleta.getText();
 	}
 }

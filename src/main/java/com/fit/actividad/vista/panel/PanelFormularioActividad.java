@@ -1,5 +1,6 @@
 package com.fit.actividad.vista.panel;
 
+import java.awt.Color;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -8,11 +9,13 @@ import java.util.Date;
 import java.util.Properties;
 
 import javax.swing.JFormattedTextField.AbstractFormatter;
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.border.Border;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -41,6 +44,8 @@ public class PanelFormularioActividad extends PanelFormulario {
 	private JTextField textFieldUbicacion;
 	
 	private JLabel labelErrorUbicacion;
+
+	private Border borderDefault;
 	
 	public PanelFormularioActividad() {
 		super();
@@ -50,6 +55,7 @@ public class PanelFormularioActividad extends PanelFormulario {
 		
 		ajustarConstraints(1, 0, 1, 1);
 		this.selectorFecha = getSelectorFecha();
+		this.borderDefault = this.selectorFecha.getBorder();
 		add(this.selectorFecha, constraints);
 		
 		ajustarConstraints(0, 1, 2, 1);
@@ -129,17 +135,19 @@ public class PanelFormularioActividad extends PanelFormulario {
 	@Override
 	public void limpiarCamposTexto() {
 		this.textFieldUbicacion.setText("");
-		this.duracionHoras.getModel().setValue(0);
-		this.duracionHoras.getModel().setValue(0);
 	}
 
 	@Override
 	public void limpiarCamposError() {
-
+		this.labelErrorFecha.setText(" ");
+		this.selectorFecha.setBorder(this.borderDefault);
 	}
 	
 	public Timestamp getFecha() {
         Date fecha = (Date) this.selectorFecha.getModel().getValue();
+        
+        if(fecha == null) return null;
+        
         Date hora = (Date) this.selectorHora.getModel().getValue();
 
         Calendar calendar = Calendar.getInstance();
@@ -189,5 +197,10 @@ public class PanelFormularioActividad extends PanelFormulario {
 	        }
 	        return "";
 	    }
+	}
+
+	public void mostrarErrorCampoFecha(String mensajeError) {
+		this.labelErrorFecha.setText(mensajeError);
+		this.selectorFecha.setBorder(BorderFactory.createLineBorder(Color.RED));
 	}	
 }

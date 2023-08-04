@@ -2,29 +2,29 @@ package com.fit.actividad.modelo;
 
 public class DeporteEquipo extends DetalleActividad{
 	
-	public static final int TAMANIO_MAXIMO_NOMBRE_DEPORTE = 50;
+	public static final int TAMANIO_MAXIMO_NOMBRE_DEPORTE = 20;
+	
+	public static final int TAMANIO_MAXIMO_NOMBRE_EQUIPOS = 20;
 	
 	public static final int TAMANIO_MAXIMO_RESULTADO_PARTIDO = 20;
-	
-	public static final String FORMATO_DURACION_DEL_PARTIDO = "^[1-9][0-9]*$";
 
 	public static final String MENSAJE_TAMANIO_MAXIMO_NOMBRE_DEPORTE = "Máximo " + TAMANIO_MAXIMO_NOMBRE_DEPORTE + " caracteres";
 	
+	public static final String MENSAJE_TAMANIO_MAXIMO_NOMBRE_EQUIPOS = "Máximo " + TAMANIO_MAXIMO_NOMBRE_EQUIPOS+ " caracteres";
+
 	public static final String MENSAJE_TAMANIO_MAXIMO_RESULTADO_PARTIDO = "Máximo " + TAMANIO_MAXIMO_RESULTADO_PARTIDO + " caracteres";
 	
-	public static final String MENSAJE_VALIDACION_DURACION_DEL_PARTIDO = "Solo valores numericos mayores a cero";
-
 	private String nombreDeporte;
 	
+	private String nombreEquipos;
+
 	private String resultadoDelPartido;
 	
-	private int duracionDelPartido;
-	
-	public DeporteEquipo(int id, String nombreDeporte, String resultadoDelPartido, int duracionDelPartido) {
+	public DeporteEquipo(int id, String nombreDeporte, String nombreEquipos, String resultadoDelPartido) {
 		super(id);
 		this.nombreDeporte = nombreDeporte;
+		this.nombreEquipos = nombreEquipos;
 		this.resultadoDelPartido = resultadoDelPartido;
-		this.duracionDelPartido = duracionDelPartido;
 	}
 
 	public String getNombreDeporte() {
@@ -35,6 +35,14 @@ public class DeporteEquipo extends DetalleActividad{
 		this.nombreDeporte = nombreDeporte;
 	}
 
+	public String getNombreEquipos() {
+		return nombreEquipos;
+	}
+
+	public void setNombreEquipos(String nombreEquipos) {
+		this.nombreEquipos = nombreEquipos;
+	}
+
 	public String getResultadoDelPartido() {
 		return resultadoDelPartido;
 	}
@@ -43,18 +51,10 @@ public class DeporteEquipo extends DetalleActividad{
 		this.resultadoDelPartido = resultadoDelPartido;
 	}
 
-	public int getDuracionDelPartido() {
-		return duracionDelPartido;
-	}
-
-	public void setDuracionDelPartido(int duracionDelPartido) {
-		this.duracionDelPartido = duracionDelPartido;
-	}
-
 	@Override
 	public String toString() {
-		return "DeporteEquipo [nombreDeporte=" + nombreDeporte + ", resultadoDelPartido=" + resultadoDelPartido
-				+ ", duracionDelPartido=" + duracionDelPartido + ", id=  " + super.getId() + "]";
+		return "DeporteEquipo [nombreDeporte=" + nombreDeporte + ", nombreEquipos=" + nombreEquipos
+				+ ", resultadoDelPartido=" + resultadoDelPartido + " id=" + super.getId() + "]";
 	}
 
 	@Override

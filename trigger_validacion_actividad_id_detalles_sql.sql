@@ -24,4 +24,30 @@ signal sqlstate '45000'
 set MESSAGE_TEXT = "Solo se pueden ingresar actividades de tipo 'Ciclismo'"; 
 end if; 
 end;$$ 
+
+create trigger verificando_detalles_natacion 
+before insert on detalles_natacion
+for each row begin
+declare x varchar(50);
+set x = (select nombre_actividad from tipo_actividad t 
+		join actividad a on t.tipo_actividad_id = a.tipo_actividad_id 
+        where a.actividad_id = new.actividad_id);
+if x != 'Natacion' then 
+signal sqlstate '45000' 
+set MESSAGE_TEXT = "Solo se pueden ingresar actividades de tipo 'Natacion'"; 
+end if; 
+end;$$
+
+create trigger verificando_detalles_deportes_equipo
+before insert on detalles_deporte_equipo
+for each row begin
+declare x varchar(50);
+set x = (select nombre_actividad from tipo_actividad t 
+		join actividad a on t.tipo_actividad_id = a.tipo_actividad_id 
+        where a.actividad_id = new.actividad_id);
+if x != 'Deportes de equipo' then 
+signal sqlstate '45000' 
+set MESSAGE_TEXT = "Solo se pueden ingresar actividades de tipo 'Deportes de equipo'"; 
+end if; 
+end;$$  
 delimiter ;

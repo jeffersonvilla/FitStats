@@ -8,12 +8,12 @@ public class Natacion extends DetalleActividad {
 
 	private float distancia;
 	
-	private String estiloNatacion;
-	
-	public Natacion(int id, float distancia, String estiloNatacion) {
+	private String estilosNatacion;
+
+	public Natacion(int id, float distancia, String estilosNatacion) {
 		super(id);
 		this.distancia = distancia;
-		this.estiloNatacion = estiloNatacion;
+		this.estilosNatacion = estilosNatacion;
 	}
 
 	public float getDistancia() {
@@ -24,17 +24,21 @@ public class Natacion extends DetalleActividad {
 		this.distancia = distancia;
 	}
 
-	public String getEstiloNatacion() {
-		return estiloNatacion;
+	public void setEstilosNatacion(String estilosNatacion) {
+		this.estilosNatacion = estilosNatacion;
+	}
+
+	public String getEstilosNatacion() {
+		return estilosNatacion;
 	}
 
 	public void setEstiloNatacion(String estiloNatacion) {
-		this.estiloNatacion = estiloNatacion;
+		this.estilosNatacion = estiloNatacion;
 	}
 
 	@Override
 	public String toString() {
-		return "Natacion [distancia=" + distancia + ", estiloNatacion=" + estiloNatacion + ", idRegistro= " + super.getId() + "]";
+		return "Natacion [distancia=" + distancia + ", estiloNatacion=" + estilosNatacion + ", idRegistro= " + super.getId() + "]";
 	}
 
 	@Override

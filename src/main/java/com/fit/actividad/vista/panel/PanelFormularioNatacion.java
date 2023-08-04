@@ -1,11 +1,8 @@
 package com.fit.actividad.vista.panel;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
@@ -29,10 +26,11 @@ public class PanelFormularioNatacion extends PanelFormulario implements Validado
 		super();
 		
 		ajustarConstraints(0, 0, 1, 1);
-		add(new JLabel("Distancia (metros):"), constraints);
+		add(new JLabel("Distancia"), constraints);
 		
 		ajustarConstraints(1, 0, 1, 1);
 		this.textFieldDistancia = new JTextField(15);
+		this.textFieldDistancia.setText("0.0");
 		add(this.textFieldDistancia, constraints);
 		
 		ajustarConstraints(0, 1, 2, 1);
@@ -40,7 +38,7 @@ public class PanelFormularioNatacion extends PanelFormulario implements Validado
 		add(this.labelErrorDistancia, constraints);
 		
 		ajustarConstraints(0, 2, 1, 1);
-		add(new JLabel("Estilo natación: "), constraints);
+		add(new JLabel("Estilos natación"), constraints);
 		
 		ajustarConstraints(1, 2, 1, 1);
 		this.textFieldEstiloNatacion = new JTextField(15);
@@ -49,23 +47,11 @@ public class PanelFormularioNatacion extends PanelFormulario implements Validado
 		ajustarConstraints(0, 3, 2, 1);
 		this.labelErrorEstiloNatacion = getLabelError();
 		add(this.labelErrorEstiloNatacion, constraints);
-		
-		ajustarConstraints(0, 4, 2, 1);
-		JButton botonGuardarNatacion = new JButton("Guardar");
-		add(botonGuardarNatacion, constraints);
-		botonGuardarNatacion.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				limpiarCamposError();
-				//controlador.registrarNatacion(textFieldDistancia.getText(), textFieldEstiloNatacion.getText());
-			}
-		});
 	}
 	
 	@Override
 	public void limpiarCamposTexto() {
-		this.textFieldDistancia.setText("");
+		this.textFieldDistancia.setText("0.0");
 		this.textFieldEstiloNatacion.setText("");
 	}
 	
@@ -81,7 +67,7 @@ public class PanelFormularioNatacion extends PanelFormulario implements Validado
 		this.textFieldDistancia.setBorder(BorderFactory.createLineBorder(Color.RED));
 	}
 	
-	public void mostrarErrorCampoEstiloNatacion(String mensajeError) {
+	public void mostrarErrorCampoEstilosNatacion(String mensajeError) {
 		this.labelErrorEstiloNatacion.setText(mensajeError);
 		this.textFieldEstiloNatacion.setBorder(BorderFactory.createLineBorder(Color.RED));
 	}
@@ -94,5 +80,13 @@ public class PanelFormularioNatacion extends PanelFormulario implements Validado
 	private void limpiarCampoErrorEstiloNatacion() {
 		this.labelErrorEstiloNatacion.setText(" ");
 		this.textFieldEstiloNatacion.setBorder(UIManager.getBorder("TextField.border"));
+	}
+
+	public String getDistancia() {
+		return this.textFieldDistancia.getText();
+	}
+
+	public String getEstiloNatacion() {
+		return this.textFieldEstiloNatacion.getText();
 	}
 }

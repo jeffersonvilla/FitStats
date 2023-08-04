@@ -40,7 +40,7 @@ public class PanelFormularioCaminata extends PanelFormulario implements Validado
 	
 	@Override
 	public void limpiarCamposTexto() {
-		this.textFieldDistancia.setText("");
+		this.textFieldDistancia.setText("0.0");
 	}
 	
 	@Override
@@ -55,7 +55,7 @@ public class PanelFormularioCaminata extends PanelFormulario implements Validado
 	}
 	
 	private void limpiarCampoErrorDistancia() {
-		this.labelErrorDistancia.setText("0.0");
+		this.labelErrorDistancia.setText(" ");
 		this.textFieldDistancia.setBorder(UIManager.getBorder("TextField.border"));
 	}	
 }

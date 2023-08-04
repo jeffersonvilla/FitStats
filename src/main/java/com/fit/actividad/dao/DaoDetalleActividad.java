@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import com.fit.actividad.modelo.Caminata;
-import com.fit.actividad.modelo.Carrera;
 import com.fit.actividad.modelo.Ciclismo;
 import com.fit.actividad.modelo.DeporteEquipo;
 import com.fit.actividad.modelo.Natacion;
@@ -33,20 +32,6 @@ public class DaoDetalleActividad {
 		
 	}
 
-	public boolean guardarCarrera(int actividadId, Carrera carrera) {
-		try {
-			String query = "insert into detalles_carrera (actividad_id, distancia, ritmo_promedio) values(?, ?, ?);";
-			PreparedStatement statement = this.conexion.prepareStatement(query);
-			statement.setInt(1, actividadId);
-			statement.setFloat(2, carrera.getDistancia());
-			statement.setFloat(3, carrera.getRitmo_promedio());
-			return statement.executeUpdate() > 0;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-
 	public boolean guardarCiclismo(int actividadId, Ciclismo ciclismo) {
 		try {
 			String query = "insert into detalles_ciclismo (actividad_id, distancia, tipo_bicicleta) values (?, ?, ?);";
@@ -63,11 +48,11 @@ public class DaoDetalleActividad {
 
 	public boolean guardarNatacion(int actividadId, Natacion natacion) {
 		try {
-			String query = "insert into detalles_natacion (actividad_id, distancia, tipo_estilo_natacion) values (?, ?, ?);";
+			String query = "insert into detalles_natacion (actividad_id, distancia, estilos_natacion) values (?, ?, ?);";
 			PreparedStatement statement = this.conexion.prepareStatement(query);
 			statement.setInt(1, actividadId);
 			statement.setFloat(2, natacion.getDistancia());
-			statement.setString(3, natacion.getEstiloNatacion());
+			statement.setString(3, natacion.getEstilosNatacion());
 			return statement.executeUpdate() > 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -77,12 +62,12 @@ public class DaoDetalleActividad {
 
 	public boolean guardarDeporteEquipo(int actividadId, DeporteEquipo deporteEquipo) {
 		try {
-			String query = "insert into detalles_deporte_equipo (actividad_id, nombre_equipo, resultado_partido, duracion_partido) values (?, ? ,? ,?);";
+			String query = "insert into detalles_deporte_equipo (actividad_id, nombre_deporte, nombre_equipo, resultado_partido) values (?, ? ,? ,?);";
 			PreparedStatement statement = this.conexion.prepareStatement(query);
 			statement.setInt(1, actividadId);
 			statement.setString(2, deporteEquipo.getNombreDeporte());
-			statement.setString(3, deporteEquipo.getResultadoDelPartido());
-			statement.setInt(4, deporteEquipo.getDuracionDelPartido());
+			statement.setString(3, deporteEquipo.getNombreEquipos());
+			statement.setString(4, deporteEquipo.getResultadoDelPartido());
 			return statement.executeUpdate() > 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
