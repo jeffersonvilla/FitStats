@@ -15,7 +15,7 @@ public class DaoTipoActividad {
 		conexion = MysqlConnection.getConnection();
 	}
 
-	public String[] getListaActividades() {
+	public String[] getListaTipoActividades() {
 		String[] actividades = new String[getNumeroActividades()];
 		try {
 			String query = "select nombre_actividad from tipo_actividad;";

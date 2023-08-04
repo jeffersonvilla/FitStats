@@ -68,7 +68,7 @@ public class PanelFormularioActividad extends PanelFormulario {
 		add(this.labelErrorHora, constraints);
 		
 		ajustarConstraints(2, 0, 1, 1);
-        add(new JLabel("Duracion", JLabel.CENTER), constraints);
+        add(new JLabel("Duracion"), constraints);
         
         ajustarConstraints(3, 0, 1, 1);
         add(new JLabel("hora(s):"), constraints);

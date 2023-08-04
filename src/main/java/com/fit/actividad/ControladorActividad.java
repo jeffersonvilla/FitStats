@@ -35,7 +35,7 @@ public class ControladorActividad {
 	
 	private Sesion sesion;
 	
-	private String[] actividades;
+	private String[] tipoActividades;
 	
 	private final String FORMATO_DISTANCIA = "^(?=\\d{1,10}(\\.\\d{0,5})?$)\\d+(\\.\\d+)?$";
 	
@@ -202,9 +202,9 @@ public class ControladorActividad {
 		this.controladorPrincipal.cerrarSesion(this.sesion);
 	}
 
-	public String[] opcionesActividades() {
-		this.actividades = this.daoTipoActividad.getListaActividades();
-		return this.actividades;
+	public String[] getOpcionesTipoActividad() {
+		this.tipoActividades = this.daoTipoActividad.getListaTipoActividades();
+		return this.tipoActividades;
 	}
 	
 	public List<Object[]> getListaActividades() {
@@ -213,7 +213,7 @@ public class ControladorActividad {
 		if(actividades != null) {
 			for(Actividad actividad: actividades) {
 				actividadesObjectos.add(new Object[] {
-						this.actividades[actividad.getTipoActividadId()-1],
+						this.tipoActividades[actividad.getTipoActividadId()-1],
 						actividad.getFechaHora(),
 						actividad.getDuracion(),
 						actividad.getUbicación()
