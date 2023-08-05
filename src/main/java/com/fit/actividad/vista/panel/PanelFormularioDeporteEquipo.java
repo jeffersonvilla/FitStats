@@ -7,8 +7,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
-import com.fit.actividad.ControladorActividad;
-
 public class PanelFormularioDeporteEquipo extends PanelFormulario {
 
 	private static final long serialVersionUID = 1L;
@@ -25,7 +23,7 @@ public class PanelFormularioDeporteEquipo extends PanelFormulario {
 	
 	private JLabel labelErrorResultadoDelPartido;
 	
-	public PanelFormularioDeporteEquipo(final ControladorActividad controlador) {
+	public PanelFormularioDeporteEquipo() {
 		super();
 		
 		ajustarConstraints(0, 0, 1, 1);

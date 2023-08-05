@@ -1,10 +1,8 @@
 package com.fit.actividad.vista.panel;
 
-import com.fit.actividad.ControladorActividad;
-
 public class PanelFormularioYoga extends PanelFormulario {
 
-	public PanelFormularioYoga(final ControladorActividad controlador) {
+	public PanelFormularioYoga() {
 		
 	}
 	

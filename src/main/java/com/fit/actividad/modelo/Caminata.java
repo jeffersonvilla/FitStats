@@ -23,7 +23,7 @@ public class Caminata extends DetalleActividad{
 	}
 
 	@Override
-	public boolean guardarEnDB_AsociadoConRegistro(int registroId) {
-		return super.daoDetalleActividad.guardarCaminata(registroId, this);
+	public boolean guardarEnDB_AsociadoConRegistro(int actividadId) {
+		return super.daoDetalleActividad.guardarCaminata(actividadId, this);
 	}
 }

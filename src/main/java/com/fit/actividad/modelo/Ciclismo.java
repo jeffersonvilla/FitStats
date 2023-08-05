@@ -38,7 +38,7 @@ public class Ciclismo extends DetalleActividad {
 	}
 
 	@Override
-	public boolean guardarEnDB_AsociadoConRegistro(int registroId) {
-		return daoDetalleActividad.guardarCiclismo(registroId, this);
+	public boolean guardarEnDB_AsociadoConRegistro(int actividadId) {
+		return daoDetalleActividad.guardarCiclismo(actividadId, this);
 	}	
 }

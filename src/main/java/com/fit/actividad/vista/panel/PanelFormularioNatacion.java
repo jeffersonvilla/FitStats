@@ -7,7 +7,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
-import com.fit.actividad.ControladorActividad;
 import com.fit.actividad.vista.interfaces.ValidadorCampoDistancia;
 
 public class PanelFormularioNatacion extends PanelFormulario implements ValidadorCampoDistancia{
@@ -22,7 +21,7 @@ public class PanelFormularioNatacion extends PanelFormulario implements Validado
 	
 	private JLabel labelErrorEstiloNatacion;
 	
-	public PanelFormularioNatacion(final ControladorActividad controlador) {
+	public PanelFormularioNatacion() {
 		super();
 		
 		ajustarConstraints(0, 0, 1, 1);

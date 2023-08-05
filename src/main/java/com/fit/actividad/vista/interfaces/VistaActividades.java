@@ -9,6 +9,8 @@ public interface VistaActividades {
 	void limpiarCamposTexto(int actividad);
 
 	void limpiarCamposError(int actividad);
+	
+	void validarFechaActividad(String mensajeError);
 
 	void validarDistancia(int actividad, String mensajeError);
 	
@@ -21,8 +23,10 @@ public interface VistaActividades {
 	void validarResultadoDelPartido(int actividad, String mensajeError);
 
 	void validarNombreEquipos(int actividad, String mensajeError);
-
-	void validarFechaActividad(String mensajeError);
+	
+	void validarDescansosEntreEjercicios(int actividad, String mensajeError);
+	
+	void validarDescansosEntreSeries(int actividad, String mensajeError);
 
 	void actualizarListaActividades(List<Object[]> listaActividades);
 

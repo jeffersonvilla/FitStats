@@ -27,6 +27,7 @@ import javax.swing.table.DefaultTableModel;
 import com.fit.actividad.ControladorActividad;
 import com.fit.actividad.vista.interfaces.ValidadorCampoDistancia;
 import com.fit.actividad.vista.interfaces.VistaActividades;
+import com.fit.actividad.vista.panel.PanelFomularioEntrenamientoGimnasio;
 import com.fit.actividad.vista.panel.PanelFormulario;
 import com.fit.actividad.vista.panel.PanelFormularioActividad;
 import com.fit.actividad.vista.panel.PanelFormularioCaminata;
@@ -242,12 +243,12 @@ public class VentanaActividades extends JFrame implements VistaActividades{
 
 	private JPanel getPanelFormularioActividad() {
 		JPanel panelFormularioActividad = new JPanel(this.cardLayout);
-		panelFormularioActividad.add(new PanelFormularioCaminata(this.controlador), this.opcionesTipoActividad[0]);
-		panelFormularioActividad.add(new PanelFormularioCiclismo(this.controlador), this.opcionesTipoActividad[1]);
-		panelFormularioActividad.add(new PanelFormularioNatacion(this.controlador), this.opcionesTipoActividad[2]);	
-		panelFormularioActividad.add(new PanelFormularioDeporteEquipo(this.controlador), this.opcionesTipoActividad[3]);
-		/*panelFormularioActividad.add(new PanelFomularioEntrenamientoGimnasio(this.controlador), this.opcionesActividad[3]);
-		panelFormularioActividad.add(new PanelFormularioYoga(this.controlador), this.opcionesActividad[4]);
+		panelFormularioActividad.add(new PanelFormularioCaminata(), this.opcionesTipoActividad[0]);
+		panelFormularioActividad.add(new PanelFormularioCiclismo(), this.opcionesTipoActividad[1]);
+		panelFormularioActividad.add(new PanelFormularioNatacion(), this.opcionesTipoActividad[2]);	
+		panelFormularioActividad.add(new PanelFormularioDeporteEquipo(), this.opcionesTipoActividad[3]);
+		panelFormularioActividad.add(new PanelFomularioEntrenamientoGimnasio(), this.opcionesTipoActividad[4]);
+		/*panelFormularioActividad.add(new PanelFormularioYoga(this.controlador), this.opcionesActividad[4]);
 		panelFormularioActividad.add(new PanelFormularioOtraActividad(this.controlador), this.opcionesActividad[6]);
 		*/return panelFormularioActividad;
 	}
@@ -310,6 +311,16 @@ public class VentanaActividades extends JFrame implements VistaActividades{
 							panelDeporteEquipo.getNombreDeporte(),
 							panelDeporteEquipo.getNombreEquipos(),
 							panelDeporteEquipo.getResultadoDelPartido());
+				}
+				if(componente instanceof PanelFomularioEntrenamientoGimnasio) {
+					PanelFomularioEntrenamientoGimnasio panelEntrenamiento = (PanelFomularioEntrenamientoGimnasio) componente;
+					controlador.registrarEntrenamientoGimnasio(
+							panelActividad.getFecha(), 
+							panelActividad.getDuracion(), 
+							panelActividad.getUbicacion(), 
+							panelEntrenamiento.getEjerciciosRealizados(),
+							panelEntrenamiento.getDescansosEntreEjercicios(),
+							panelEntrenamiento.getDescansosEntreSeries());
 				}
 			}
 		});
@@ -406,6 +417,20 @@ public class VentanaActividades extends JFrame implements VistaActividades{
 	}
 
 	@Override
+	public void validarDescansosEntreEjercicios(int actividad, String mensajeError) {
+		Component componente = this.panelFormularioActividad.getComponent(actividad);
+		if(componente instanceof PanelFomularioEntrenamientoGimnasio)
+			((PanelFomularioEntrenamientoGimnasio) componente).mostrarErrorCampoDescansoEntreEjercicios(mensajeError);
+	}
+	
+	@Override
+	public void validarDescansosEntreSeries(int actividad, String mensajeError) {
+		Component componente = this.panelFormularioActividad.getComponent(actividad);
+		if(componente instanceof PanelFomularioEntrenamientoGimnasio)
+			((PanelFomularioEntrenamientoGimnasio) componente).mostrarErrorCampoDescansosEntreSeries(mensajeError);
+	}	
+
+	@Override
 	public void actualizarListaActividades(List<Object[]> listaActividades) {
 		this.modeloTablaActividades.setRowCount(0);
 		for(Object[] actividad: listaActividades) this.modeloTablaActividades.addRow(actividad);
@@ -416,5 +441,5 @@ public class VentanaActividades extends JFrame implements VistaActividades{
 	public void verListaActividades() {
 		cardLayout.show(panelContenedor, PANEL_VISUALIZACION_ACTIVIDADES);
 		botonRegistrarActividad.setVisible(true);
-	}	
+	}
 }

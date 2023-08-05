@@ -56,3 +56,28 @@ CREATE TABLE `detalles_ciclismo` (
   CONSTRAINT `fk_detalles_ciclismo_registros` FOREIGN KEY (`actividad_id`) REFERENCES `actividad` (`actividad_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+CREATE TABLE `detalles_natacion` (
+  `actividad_id` int NOT NULL,
+  `distancia` decimal(10,2) DEFAULT NULL,
+  `estilos_natacion` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`actividad_id`),
+  CONSTRAINT `fk_detalles_natacion_registros` FOREIGN KEY (`actividad_id`) REFERENCES `actividad` (`actividad_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `detalles_deporte_equipo` (
+  `actividad_id` int NOT NULL,
+  `nombre_equipo` varchar(20) DEFAULT NULL,
+  `resultado_partido` varchar(20) DEFAULT NULL,
+  `nombre_deporte` varchar(20) NOT NULL,
+  PRIMARY KEY (`actividad_id`),
+  CONSTRAINT `fk_detalles_deporte_equipo_registros` FOREIGN KEY (`actividad_id`) REFERENCES `actividad` (`actividad_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `detalles_entrenamiento` (
+  `actividad_id` int NOT NULL,
+  `ejercicios_realizados` text,
+  `descanso_entre_ejercicios` varchar(10) DEFAULT NULL,
+  `descanso_entre_series` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`actividad_id`),
+  CONSTRAINT `fk_detalles_entrenamiento_registros` FOREIGN KEY (`actividad_id`) REFERENCES `actividad` (`actividad_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

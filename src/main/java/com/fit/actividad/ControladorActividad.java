@@ -15,6 +15,7 @@ import com.fit.actividad.modelo.Caminata;
 import com.fit.actividad.modelo.Ciclismo;
 import com.fit.actividad.modelo.DeporteEquipo;
 import com.fit.actividad.modelo.DetalleActividad;
+import com.fit.actividad.modelo.EntrenamientoGimnasio;
 import com.fit.actividad.modelo.Natacion;
 import com.fit.actividad.vista.interfaces.VistaActividades;
 import com.fit.principal.ControladorPrincipal;
@@ -94,6 +95,17 @@ public class ControladorActividad {
 		}
 	}
 	
+	public void registrarEntrenamientoGimnasio(Timestamp fecha, Time duracion, String  ubicacion, String ejerciciosRealizados, String descansosEntreEjercicios, String descansosEntreSeries) {
+		if(validarFecha(fecha)) {
+			if(validarDatosEntrenamientoGimnasio(descansosEntreEjercicios, descansosEntreSeries)) {				
+				registrarActividad(
+						getActividad(fecha, duracion, ubicacion), 
+						new EntrenamientoGimnasio(getActividadSelecionada() + 1, ejerciciosRealizados, descansosEntreEjercicios, descansosEntreSeries)
+						);
+			}
+		}
+	}
+
 	private Actividad getActividad(Timestamp fecha, Time duracion, String  ubicacion) {
 		return new Actividad
 				.ActividadBuilder()
@@ -179,6 +191,24 @@ public class ControladorActividad {
 		return false;
 	}
 	
+	private boolean validarDatosEntrenamientoGimnasio(String descansosEntreEjercicios, String descansosEntreSeries) {
+		boolean ejerciciosValido = validarDescansosEjercicios(descansosEntreEjercicios);
+		boolean seriesValido = validarDescansosSeries(descansosEntreSeries);
+		return ejerciciosValido && seriesValido;
+	}
+	
+	private boolean validarDescansosEjercicios(String descansosEntreEjercicios) {
+		if(descansosEntreEjercicios.length() <= EntrenamientoGimnasio.TAMANIO_MAXIMO_DESCANSO_ENTRE_EJERCICIOS) return true;
+		vista.validarDescansosEntreEjercicios(getActividadSelecionada(), EntrenamientoGimnasio.MENSAJE_TAMANIO_MAXIMO_DESCANSO_EJERCICIOS);
+		return false;
+	}
+
+	private boolean validarDescansosSeries(String descansosEntreSeries) {
+		if(descansosEntreSeries.length() <= EntrenamientoGimnasio.TAMANIO_MAXIMO_DESCANSO_ENTRE_SERIES) return true;
+		vista.validarDescansosEntreSeries(getActividadSelecionada(), EntrenamientoGimnasio.MENSAJE_TAMANIO_MAXIMO_DESCANSO_SERIES);
+		return false;
+	}
+
 	public void cerrarSesion() {
 		this.controladorPrincipal.cerrarSesion(this.sesion);
 	}

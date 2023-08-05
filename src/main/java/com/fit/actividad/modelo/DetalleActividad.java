@@ -27,5 +27,5 @@ public abstract class DetalleActividad {
 		return "Actividad [id=" + id + "]";
 	}
 
-	public abstract boolean guardarEnDB_AsociadoConRegistro(int registroId);	
+	public abstract boolean guardarEnDB_AsociadoConRegistro(int actividadId);	
 }

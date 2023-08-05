@@ -42,7 +42,7 @@ public class Natacion extends DetalleActividad {
 	}
 
 	@Override
-	public boolean guardarEnDB_AsociadoConRegistro(int registroId) {
-		return daoDetalleActividad.guardarNatacion(registroId, this);
+	public boolean guardarEnDB_AsociadoConRegistro(int actividadId) {
+		return daoDetalleActividad.guardarNatacion(actividadId, this);
 	}
 }
