@@ -73,12 +73,12 @@ public class PanelFormularioNatacion extends PanelFormulario implements Validado
 	
 	private void limpiarCampoErrorDistancia() {
 		this.labelErrorDistancia.setText(" ");
-		this.textFieldDistancia.setBorder(UIManager.getBorder("TextField.border"));
+		this.textFieldDistancia.setBorder(UIManager.getBorder(textField_border_key));
 	}
 	
 	private void limpiarCampoErrorEstiloNatacion() {
 		this.labelErrorEstiloNatacion.setText(" ");
-		this.textFieldEstiloNatacion.setBorder(UIManager.getBorder("TextField.border"));
+		this.textFieldEstiloNatacion.setBorder(UIManager.getBorder(textField_border_key));
 	}
 
 	public String getDistancia() {

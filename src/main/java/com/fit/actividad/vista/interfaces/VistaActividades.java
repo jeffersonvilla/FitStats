@@ -27,6 +27,12 @@ public interface VistaActividades {
 	void validarDescansosEntreEjercicios(int actividad, String mensajeError);
 	
 	void validarDescansosEntreSeries(int actividad, String mensajeError);
+	
+	void validarTipoSesionEstiramientos(int actividad, String mensajeError);
+
+	void validarNivelDificultadEstiramientos(int actividad, String mensajeError);
+	
+	void validarDescripcionOtraActividad(int actividad, String mensajeError);
 
 	void actualizarListaActividades(List<Object[]> listaActividades);
 

@@ -91,17 +91,17 @@ public class PanelFormularioDeporteEquipo extends PanelFormulario {
 	
 	private void limpiarCampoErrorNombreDeporte() {
 		this.labelErrorNombreDeporte.setText(" ");
-		this.textFieldNombreDeporte.setBorder(UIManager.getBorder("TextField.border"));
+		this.textFieldNombreDeporte.setBorder(UIManager.getBorder(textField_border_key));
 	}
 
 	private void limpiarCampoErrorNombreEquipos() {
 		this.labelErrorNombreEquipos.setText(" ");
-		this.textFieldNombreEquipos.setBorder(UIManager.getBorder("TextField.border"));
+		this.textFieldNombreEquipos.setBorder(UIManager.getBorder(textField_border_key));
 	}
 	
 	private void limpiarCampoErrorResultadoDelPartido() {
 		this.labelErrorResultadoDelPartido.setText(" ");
-		this.textFieldResultadoDelPartido.setBorder(UIManager.getBorder("TextField.border"));
+		this.textFieldResultadoDelPartido.setBorder(UIManager.getBorder(textField_border_key));
 	}
 
 	public String getNombreDeporte() {

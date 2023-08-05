@@ -1,4 +1,5 @@
 delimiter $$ 
+
 create trigger verificando_detalles_caminata_carrera 
 before insert on detalles_caminata_carrera 
 for each row begin
@@ -63,5 +64,30 @@ signal sqlstate '45000'
 set MESSAGE_TEXT = "Solo se pueden ingresar actividades de tipo 'Entrenamiento en el Gimnasio'"; 
 end if; 
 end;$$  
- 
+
+create trigger verificando_detalles_yoga_estiramientos
+before insert on detalles_yoga_estiramientos
+for each row begin
+declare x varchar(50);
+set x = (select nombre_actividad from tipo_actividad t 
+		join actividad a on t.tipo_actividad_id = a.tipo_actividad_id 
+        where a.actividad_id = new.actividad_id);
+if x != 'Yoga/estiramientos/pilates' then 
+signal sqlstate '45000' 
+set MESSAGE_TEXT = "Solo se pueden ingresar actividades de tipo 'Yoga/estiramientos/pilates'"; 
+end if; 
+end;$$  
+
+create trigger verificando_detalles_otra_actividad
+before insert on detalles_otra_actividad
+for each row begin
+declare x varchar(50);
+set x = (select nombre_actividad from tipo_actividad t 
+		join actividad a on t.tipo_actividad_id = a.tipo_actividad_id 
+        where a.actividad_id = new.actividad_id);
+if x != 'Otra actividad' then 
+signal sqlstate '45000' 
+set MESSAGE_TEXT = "Solo se pueden ingresar actividades de tipo 'Otra actividad'"; 
+end if; 
+end;$$
 delimiter ;

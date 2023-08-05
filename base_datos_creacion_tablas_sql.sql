@@ -81,3 +81,18 @@ CREATE TABLE `detalles_entrenamiento` (
   PRIMARY KEY (`actividad_id`),
   CONSTRAINT `fk_detalles_entrenamiento_registros` FOREIGN KEY (`actividad_id`) REFERENCES `actividad` (`actividad_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `detalles_yoga_estiramientos` (
+  `actividad_id` int NOT NULL,
+  `tipo_sesion` varchar(50) NOT NULL,
+  `nivel_dificultad` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`actividad_id`),
+  CONSTRAINT `fk_detalles_yoga_estiramientos_registros` FOREIGN KEY (`actividad_id`) REFERENCES `actividad` (`actividad_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `detalles_otra_actividad` (
+  `actividad_id` int NOT NULL,
+  `descripcion` varchar(150) NOT NULL,
+  PRIMARY KEY (`actividad_id`),
+  CONSTRAINT `fk_detalles_otra_actividad_registros` FOREIGN KEY (`actividad_id`) REFERENCES `actividad` (`actividad_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

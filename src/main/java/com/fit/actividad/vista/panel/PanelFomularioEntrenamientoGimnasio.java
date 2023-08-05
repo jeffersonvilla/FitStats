@@ -65,9 +65,9 @@ public class PanelFomularioEntrenamientoGimnasio extends PanelFormulario {
 	@Override
 	public void limpiarCamposError() {
 		this.labelErrorDescansosEntreEjercicios.setText(" ");
-		this.textFieldDescansosEntreEjercicios.setBorder(UIManager.getBorder("TextField.border"));
+		this.textFieldDescansosEntreEjercicios.setBorder(UIManager.getBorder(textField_border_key));
 		this.labelErrorDescansosEntreSeries.setText(" ");
-		this.textFieldDescansosEntreSeries.setBorder(UIManager.getBorder("TextField.border"));
+		this.textFieldDescansosEntreSeries.setBorder(UIManager.getBorder(textField_border_key));
 	}
 
 	public String getEjerciciosRealizados() {

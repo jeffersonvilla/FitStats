@@ -73,12 +73,12 @@ public class PanelFormularioCiclismo extends PanelFormulario implements Validado
 	
 	private void limpiarCampoErrorDistancia() {
 		this.labelErrorDistancia.setText(" ");
-		this.textFieldDistancia.setBorder(UIManager.getBorder("TextField.border"));
+		this.textFieldDistancia.setBorder(UIManager.getBorder(textField_border_key));
 	}
 	
 	private void limpiarCampoErrorTipoBicicleta() {
 		this.labelErrorTipoBicicleta.setText(" ");
-		this.textFieldTipoBicicleta.setBorder(UIManager.getBorder("TextField.border"));
+		this.textFieldTipoBicicleta.setBorder(UIManager.getBorder(textField_border_key));
 	}
 
 	public String getDistancia() {

@@ -16,7 +16,9 @@ import com.fit.actividad.modelo.Ciclismo;
 import com.fit.actividad.modelo.DeporteEquipo;
 import com.fit.actividad.modelo.DetalleActividad;
 import com.fit.actividad.modelo.EntrenamientoGimnasio;
+import com.fit.actividad.modelo.Estiramientos;
 import com.fit.actividad.modelo.Natacion;
+import com.fit.actividad.modelo.OtraActividad;
 import com.fit.actividad.vista.interfaces.VistaActividades;
 import com.fit.principal.ControladorPrincipal;
 import com.fit.usuario.login.Sesion;
@@ -101,6 +103,28 @@ public class ControladorActividad {
 				registrarActividad(
 						getActividad(fecha, duracion, ubicacion), 
 						new EntrenamientoGimnasio(getActividadSelecionada() + 1, ejerciciosRealizados, descansosEntreEjercicios, descansosEntreSeries)
+						);
+			}
+		}
+	}
+	
+	public void registrarEstiramientos(Timestamp fecha, Time duracion, String  ubicacion, String tipoSesion, String nivelDificultad) {
+		if(validarFecha(fecha)) {
+			if(validarDatosEstiramientos(tipoSesion, nivelDificultad)) {
+				registrarActividad(
+						getActividad(fecha, duracion, ubicacion), 
+						new Estiramientos(getActividadSelecionada() + 1, tipoSesion, nivelDificultad)
+						);
+			}
+		}
+	}
+	
+	public void registrarOtraActividad(Timestamp fecha, Time duracion, String  ubicacion, String descripcion) {
+		if(validarFecha(fecha)) {
+			if(validarDescripcion(descripcion)) {
+				registrarActividad(
+						getActividad(fecha, duracion, ubicacion), 
+						new OtraActividad(getActividadSelecionada() + 1, descripcion)
 						);
 			}
 		}
@@ -206,6 +230,36 @@ public class ControladorActividad {
 	private boolean validarDescansosSeries(String descansosEntreSeries) {
 		if(descansosEntreSeries.length() <= EntrenamientoGimnasio.TAMANIO_MAXIMO_DESCANSO_ENTRE_SERIES) return true;
 		vista.validarDescansosEntreSeries(getActividadSelecionada(), EntrenamientoGimnasio.MENSAJE_TAMANIO_MAXIMO_DESCANSO_SERIES);
+		return false;
+	}
+	
+	private boolean validarDatosEstiramientos(String tipoSesion, String nivelDificultad) {
+		boolean tipoSesionValida = validarTipoSesion(tipoSesion);
+		boolean nivelDificultadValida = validarNivelDificultad(nivelDificultad);
+		return tipoSesionValida && nivelDificultadValida;
+	}
+
+	private boolean validarTipoSesion(String tipoSesion) {
+		if(tipoSesion.isEmpty()) {
+			vista.validarTipoSesionEstiramientos(getActividadSelecionada(), MENSAJE_VALIDACION_CAMPO_VACIO);
+			return false;
+		} else if(tipoSesion.length() <= Estiramientos.TAMANIO_MAXIMO_TIPO_SESION) return true;
+		vista.validarTipoSesionEstiramientos(getActividadSelecionada(), Estiramientos.MENSAJE_TAMANIO_MAXIMO_TIPO_SESION);
+		return false;
+	}
+
+	private boolean validarNivelDificultad(String nivelDificultad) {
+		if(nivelDificultad.length() <= Estiramientos.TAMANIO_MAXIMO_TIPO_SESION) return true;
+		vista.validarNivelDificultadEstiramientos(getActividadSelecionada(), Estiramientos.MENSAJE_TAMANIO_MAXIMO_NIVEL_DIFICULTAD);
+		return false;
+	}
+	
+	private boolean validarDescripcion(String descripcion) {
+		if(descripcion.isEmpty()) {
+			vista.validarDescripcionOtraActividad(getActividadSelecionada(), MENSAJE_VALIDACION_CAMPO_VACIO);
+			return false;
+		} else if(descripcion.length() <= OtraActividad.TAMANIO_MAXIMO_DESCRIPCION) return true;
+		vista.validarDescripcionOtraActividad(getActividadSelecionada(), OtraActividad.MENSAJE_TAMANIO_MAXIMO_DESCRIPCION);
 		return false;
 	}
 

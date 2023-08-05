@@ -13,6 +13,8 @@ public abstract class PanelFormulario extends JPanel {
 	
 	protected GridBagConstraints constraints;
 	
+	protected final String textField_border_key = "TextField.border";
+	
 	public PanelFormulario() {
 		setLayout(new GridBagLayout());
 		this.constraints = new GridBagConstraints();

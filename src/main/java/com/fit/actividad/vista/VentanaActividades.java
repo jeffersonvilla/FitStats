@@ -33,7 +33,9 @@ import com.fit.actividad.vista.panel.PanelFormularioActividad;
 import com.fit.actividad.vista.panel.PanelFormularioCaminata;
 import com.fit.actividad.vista.panel.PanelFormularioCiclismo;
 import com.fit.actividad.vista.panel.PanelFormularioDeporteEquipo;
+import com.fit.actividad.vista.panel.PanelFormularioEstiramientos;
 import com.fit.actividad.vista.panel.PanelFormularioNatacion;
+import com.fit.actividad.vista.panel.PanelFormularioOtraActividad;
 import com.fit.util.Pantalla;
 
 public class VentanaActividades extends JFrame implements VistaActividades{
@@ -248,9 +250,9 @@ public class VentanaActividades extends JFrame implements VistaActividades{
 		panelFormularioActividad.add(new PanelFormularioNatacion(), this.opcionesTipoActividad[2]);	
 		panelFormularioActividad.add(new PanelFormularioDeporteEquipo(), this.opcionesTipoActividad[3]);
 		panelFormularioActividad.add(new PanelFomularioEntrenamientoGimnasio(), this.opcionesTipoActividad[4]);
-		/*panelFormularioActividad.add(new PanelFormularioYoga(this.controlador), this.opcionesActividad[4]);
-		panelFormularioActividad.add(new PanelFormularioOtraActividad(this.controlador), this.opcionesActividad[6]);
-		*/return panelFormularioActividad;
+		panelFormularioActividad.add(new PanelFormularioEstiramientos(), this.opcionesTipoActividad[5]);
+		panelFormularioActividad.add(new PanelFormularioOtraActividad(), this.opcionesTipoActividad[6]);
+		return panelFormularioActividad;
 	}
 	
 	private JPanel getPanelBotonesRegistroActividad(GridBagConstraints constraints) {
@@ -321,6 +323,23 @@ public class VentanaActividades extends JFrame implements VistaActividades{
 							panelEntrenamiento.getEjerciciosRealizados(),
 							panelEntrenamiento.getDescansosEntreEjercicios(),
 							panelEntrenamiento.getDescansosEntreSeries());
+				}
+				if(componente instanceof PanelFormularioEstiramientos) {
+					PanelFormularioEstiramientos panelEstiramientos = (PanelFormularioEstiramientos) componente;
+					controlador.registrarEstiramientos(
+							panelActividad.getFecha(), 
+							panelActividad.getDuracion(), 
+							panelActividad.getUbicacion(), 
+							panelEstiramientos.getTipoSesion(),
+							panelEstiramientos.getNivelDificultad());
+				}
+				if(componente instanceof PanelFormularioOtraActividad) {
+					PanelFormularioOtraActividad panelOtraActividad = (PanelFormularioOtraActividad) componente;
+					controlador.registrarOtraActividad(
+							panelActividad.getFecha(), 
+							panelActividad.getDuracion(), 
+							panelActividad.getUbicacion(), 
+							panelOtraActividad.getDescripcion());
 				}
 			}
 		});
@@ -430,6 +449,27 @@ public class VentanaActividades extends JFrame implements VistaActividades{
 			((PanelFomularioEntrenamientoGimnasio) componente).mostrarErrorCampoDescansosEntreSeries(mensajeError);
 	}	
 
+	@Override
+	public void validarTipoSesionEstiramientos(int actividad, String mensajeError) {
+		Component componente = this.panelFormularioActividad.getComponent(actividad);
+		if(componente instanceof PanelFormularioEstiramientos)
+			((PanelFormularioEstiramientos) componente).mostrarErrorCampoTipoSesion(mensajeError);
+	}
+
+	@Override
+	public void validarNivelDificultadEstiramientos(int actividad, String mensajeError) {
+		Component componente = this.panelFormularioActividad.getComponent(actividad);
+		if(componente instanceof PanelFormularioEstiramientos)
+			((PanelFormularioEstiramientos) componente).mostrarErrorCampoNivelDificultad(mensajeError);
+	}
+	
+	@Override
+	public void validarDescripcionOtraActividad(int actividad, String mensajeError) {
+		Component componente = this.panelFormularioActividad.getComponent(actividad);
+		if(componente instanceof PanelFormularioOtraActividad)
+			((PanelFormularioOtraActividad) componente).mostrarErrorCampoDescripcion(mensajeError);
+	}
+	
 	@Override
 	public void actualizarListaActividades(List<Object[]> listaActividades) {
 		this.modeloTablaActividades.setRowCount(0);

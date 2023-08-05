@@ -9,6 +9,8 @@ import com.fit.actividad.modelo.Ciclismo;
 import com.fit.actividad.modelo.DeporteEquipo;
 import com.fit.actividad.modelo.EntrenamientoGimnasio;
 import com.fit.actividad.modelo.Natacion;
+import com.fit.actividad.modelo.OtraActividad;
+import com.fit.actividad.modelo.Estiramientos;
 import com.fit.util.MysqlConnection;
 
 public class DaoDetalleActividad {
@@ -84,6 +86,33 @@ public class DaoDetalleActividad {
 			statement.setString(2, entrenamientoGimnasio.getEjerciciosRealizados());
 			statement.setString(3, entrenamientoGimnasio.getDescansoEntreEjercicios());
 			statement.setString(4, entrenamientoGimnasio.getDescansoEntreSeries());
+			return statement.executeUpdate() > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public boolean guardarEstiramientos(int actividadId, Estiramientos estiramientos) {
+		try {
+			String query = "insert into detalles_yoga_estiramientos(actividad_id, tipo_sesion, nivel_dificultad) values(?, ?, ?);";
+			PreparedStatement statement = this.conexion.prepareStatement(query);
+			statement.setInt(1, actividadId);
+			statement.setString(2, estiramientos.getTipoSesion());
+			statement.setString(3, estiramientos.getNivelDificultad());
+			return statement.executeUpdate() > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public boolean guardarOtraActividad(int actividadId, OtraActividad otraActividad) {
+		try {
+			String query = "insert into detalles_otra_actividad(actividad_id, descripcion) values(?, ?);";
+			PreparedStatement statement = this.conexion.prepareStatement(query);
+			statement.setInt(1, actividadId);
+			statement.setString(2, otraActividad.getDescripcion());
 			return statement.executeUpdate() > 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
