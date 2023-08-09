@@ -22,20 +22,21 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import com.fit.actividad.ControladorActividad;
 import com.fit.actividad.vista.interfaces.ValidadorCampoDistancia;
 import com.fit.actividad.vista.interfaces.VistaActividades;
-import com.fit.actividad.vista.panel.PanelFomularioEntrenamientoGimnasio;
-import com.fit.actividad.vista.panel.PanelFormulario;
-import com.fit.actividad.vista.panel.PanelFormularioActividad;
-import com.fit.actividad.vista.panel.PanelFormularioCaminata;
-import com.fit.actividad.vista.panel.PanelFormularioCiclismo;
-import com.fit.actividad.vista.panel.PanelFormularioDeporteEquipo;
-import com.fit.actividad.vista.panel.PanelFormularioEstiramientos;
-import com.fit.actividad.vista.panel.PanelFormularioNatacion;
-import com.fit.actividad.vista.panel.PanelFormularioOtraActividad;
+import com.fit.actividad.vista.panelFormulario.PanelFomularioEntrenamientoGimnasio;
+import com.fit.actividad.vista.panelFormulario.PanelFormulario;
+import com.fit.actividad.vista.panelFormulario.PanelFormularioActividad;
+import com.fit.actividad.vista.panelFormulario.PanelFormularioCaminata;
+import com.fit.actividad.vista.panelFormulario.PanelFormularioCiclismo;
+import com.fit.actividad.vista.panelFormulario.PanelFormularioDeporteEquipo;
+import com.fit.actividad.vista.panelFormulario.PanelFormularioEstiramientos;
+import com.fit.actividad.vista.panelFormulario.PanelFormularioNatacion;
+import com.fit.actividad.vista.panelFormulario.PanelFormularioOtraActividad;
 import com.fit.util.Pantalla;
 
 public class VentanaActividades extends JFrame implements VistaActividades{
@@ -50,6 +51,10 @@ public class VentanaActividades extends JFrame implements VistaActividades{
 	
 	private JPanel panelContenedor;
 	
+	private JTable tablaActividades;
+	
+	private JPanel panelBotonesCrudActividad;
+	
 	private JPanel panelSeleccionActividad;
 
 	private PanelFormularioActividad panelActividad;
@@ -57,6 +62,8 @@ public class VentanaActividades extends JFrame implements VistaActividades{
 	private JPanel panelFormularioActividad;
 	
 	private JButton botonRegistrarActividad;
+	
+	private JButton botonVerDetallesActividad;
 	
 	private CardLayout cardLayout;
 	
@@ -119,46 +126,83 @@ public class VentanaActividades extends JFrame implements VistaActividades{
 	private JPanel getPanelCrudActividades() {
 		JPanel panelCrud = new JPanel(new BorderLayout());
 		
+		this.panelBotonesCrudActividad = getPanelBotonesCrudActividad();
+		panelCrud.add(this.panelBotonesCrudActividad, BorderLayout.SOUTH);
+		
 		this.panelContenedor = getPanelContenedor();
 		panelCrud.add(this.panelContenedor, BorderLayout.CENTER);
-		
-		this.botonRegistrarActividad = getBotonRegistrarActividad();
-		panelCrud.add(this.botonRegistrarActividad, BorderLayout.SOUTH);
 		
 		return panelCrud;
 	}
 
-	private JPanel getPanelContenedor() {
-		JPanel panelContenedor = new JPanel(this.cardLayout);
-		panelContenedor.add(getPanelVisualizacionActividades(), PANEL_VISUALIZACION_ACTIVIDADES);
-		panelContenedor.add(getPanelRegistroActividad(), PANEL_REGISTRO_ACTIVIDAD);
-		return panelContenedor;
+	private JPanel getPanelBotonesCrudActividad() {
+		JPanel panelBotonesCrud = new JPanel(new GridBagLayout());
+		
+		GridBagConstraints constraints = getGridBagConstraints();
+		
+		this.botonRegistrarActividad = getBotonRegistrarActividad();
+		panelBotonesCrud.add(this.botonRegistrarActividad, constraints);
+		
+		constraints.gridx = 1;
+		this.botonVerDetallesActividad = getBotonVerDetallesActividad();
+		panelBotonesCrud.add(this.botonVerDetallesActividad, constraints);
+		
+		return panelBotonesCrud;
 	}
 
 	private JButton getBotonRegistrarActividad() {
-		JButton botonRegistrarActividad = new JButton("Registrar actividad");
+		JButton botonRegistrarActividad = new JButton("Registrar nueva actividad");
 		botonRegistrarActividad.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cardLayout.show(panelContenedor, PANEL_REGISTRO_ACTIVIDAD);
 				botonRegistrarActividad.setVisible(false);
+				botonVerDetallesActividad.setVisible(false);
 			}
 		});
 		return botonRegistrarActividad;
+	}
+	
+	private JButton getBotonVerDetallesActividad() {
+		JButton botonVerDetallesActividad = new JButton("Ver detalles actividad seleccionada");
+		botonVerDetallesActividad.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controlador.verDetallesActividadSeleccionada(tablaActividades.getSelectedRow());
+			}
+		});
+		return botonVerDetallesActividad;
+	}
+	
+	private JPanel getPanelContenedor() {
+		JPanel panelContenedor = new JPanel(this.cardLayout);
+		panelContenedor.add(getPanelVisualizacionActividades(), PANEL_VISUALIZACION_ACTIVIDADES);
+		panelContenedor.add(getPanelRegistroActividad(), PANEL_REGISTRO_ACTIVIDAD);
+		return panelContenedor;
 	}
 	
 	private JPanel getPanelVisualizacionActividades() {
 		JPanel panelVisualizacionActividades = new JPanel(new BorderLayout());
 		this.modeloTablaActividades = getModeloTabla();
 		actualizarListaActividades(controlador.getListaActividades());
-		JTable tablaActividades = new JTable(this.modeloTablaActividades);
-		panelVisualizacionActividades.add(new JScrollPane(tablaActividades), BorderLayout.CENTER);
+		this.tablaActividades = new JTable(this.modeloTablaActividades);
+		this.tablaActividades.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		panelVisualizacionActividades.add(new JScrollPane(this.tablaActividades), BorderLayout.CENTER);
 		return panelVisualizacionActividades;
 	}
 	
 	private DefaultTableModel getModeloTabla() {
-		DefaultTableModel modeloTablaActividades = new DefaultTableModel();
+		DefaultTableModel modeloTablaActividades = new DefaultTableModel() {
+			
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {				
+				return false;
+			}
+		};
 		modeloTablaActividades.addColumn("Tipo de actividad");
 		modeloTablaActividades.addColumn("Fecha y hora de inicio");
 		modeloTablaActividades.addColumn("Duracion (horas:minutos:segundos)");
@@ -481,5 +525,6 @@ public class VentanaActividades extends JFrame implements VistaActividades{
 	public void verListaActividades() {
 		cardLayout.show(panelContenedor, PANEL_VISUALIZACION_ACTIVIDADES);
 		botonRegistrarActividad.setVisible(true);
+		botonVerDetallesActividad.setVisible(true);
 	}
 }

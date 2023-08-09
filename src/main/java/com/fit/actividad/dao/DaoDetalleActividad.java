@@ -2,6 +2,7 @@ package com.fit.actividad.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.fit.actividad.modelo.Caminata;
@@ -12,6 +13,7 @@ import com.fit.actividad.modelo.Natacion;
 import com.fit.actividad.modelo.OtraActividad;
 import com.fit.actividad.modelo.Estiramientos;
 import com.fit.util.MysqlConnection;
+import com.mysql.cj.x.protobuf.MysqlxPrepare.Prepare;
 
 public class DaoDetalleActividad {
 
@@ -117,6 +119,107 @@ public class DaoDetalleActividad {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
+		}
+	}
+	
+	public Caminata leerDetallesCaminata(int actividadId) {
+		try {
+			String query = "select * from detalles_caminata_carrera where actividad_id = ?;";
+			PreparedStatement statement = this.conexion.prepareStatement(query);
+			statement.setInt(1, actividadId);
+			ResultSet resultado = statement.executeQuery();
+			if(resultado.next()) return new Caminata(resultado.getInt("actividad_id"), resultado.getFloat("distancia"));
+			return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public Ciclismo leerDetallesCiclismo(int actividadId) {
+		try {
+			String query = "select * from detalles_ciclismo where actividad_id = ?;";
+			PreparedStatement statement = this.conexion.prepareStatement(query);
+			statement.setInt(1, actividadId);
+			ResultSet resultado = statement.executeQuery();
+			if(resultado.next()) 
+				return new Ciclismo(resultado.getInt("actividad_id"), resultado.getFloat("distancia"), resultado.getString("tipo_bicicleta"));
+			return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public Natacion leerDetallesNatacion(int actividadId) {
+		try {
+			String query = "select * from detalles_natacion where actividad_id = ?;";
+			PreparedStatement statement = this.conexion.prepareStatement(query);
+			statement.setInt(1, actividadId);
+			ResultSet resultado = statement.executeQuery();
+			if(resultado.next()) return new Natacion(resultado.getInt("actividad_id"), resultado.getFloat("distancia"), resultado.getString("estilos_natacion"));
+			return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public DeporteEquipo leerDetallesDeporteEquipo(int actividadId) {
+		try {
+			String query = "select * from detalles_deporte_equipo where actividad_id = ?;";
+			PreparedStatement statement = this.conexion.prepareStatement(query);
+			statement.setInt(1, actividadId);
+			ResultSet resultado = statement.executeQuery();
+			if(resultado.next()) 
+				return new DeporteEquipo(resultado.getInt("actividad_id"), resultado.getString("nombre_deporte"), resultado.getString("nombre_equipo"), resultado.getString("resultado_partido"));
+			return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public EntrenamientoGimnasio leerDetallesEntrenamientoGimnasio(int actividadId) {
+		try {
+			String query = "select * from detalles_entrenamiento where actividad_id = ?;";
+			PreparedStatement statement = this.conexion.prepareStatement(query);
+			statement.setInt(1, actividadId);
+			ResultSet resultado = statement.executeQuery();
+			if(resultado.next()) 
+				return new EntrenamientoGimnasio(resultado.getInt("actividad_id"), resultado.getString("ejercicios_realizados"), resultado.getString("descanso_entre_ejercicios"), resultado.getString("descanso_entre_series"));
+			return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public Estiramientos leerDetallesEstiramientos(int actividadId) {
+		try {
+			String query ="select * from detalles_yoga_estiramientos where actividad_id = ?;";
+			PreparedStatement statement = this.conexion.prepareStatement(query);
+			statement.setInt(1, actividadId);
+			ResultSet resultado = statement.executeQuery();
+			if(resultado.next()) return new Estiramientos(resultado.getInt("actividad_id"), resultado.getString("tipo_sesion"), resultado.getString("nivel_dificultad"));
+			return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public OtraActividad leerDetallesOtraActividad(int actividadId) {
+		try {
+			String query = "select * from detalles_otra_actividad where actividad_id = ?;";
+			PreparedStatement statement = this.conexion.prepareStatement(query);
+			statement.setInt(1, actividadId);
+			ResultSet resultado = statement.executeQuery();
+			if(resultado.next()) return new OtraActividad(resultado.getInt("actividad_id"), resultado.getString("descripcion"));
+			return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 }

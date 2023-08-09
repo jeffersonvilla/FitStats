@@ -1,4 +1,4 @@
-package com.fit.actividad.vista.panel;
+package com.fit.actividad.vista.panelFormulario;
 
 import java.awt.Color;
 
@@ -9,7 +9,7 @@ import javax.swing.UIManager;
 
 import com.fit.actividad.vista.interfaces.ValidadorCampoDistancia;
 
-public class PanelFormularioNatacion extends PanelFormulario implements ValidadorCampoDistancia{
+public class PanelFormularioCaminata extends PanelFormulario implements ValidadorCampoDistancia{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -17,11 +17,7 @@ public class PanelFormularioNatacion extends PanelFormulario implements Validado
 	
 	private JLabel labelErrorDistancia;
 	
-	private JTextField textFieldEstiloNatacion;
-	
-	private JLabel labelErrorEstiloNatacion;
-	
-	public PanelFormularioNatacion() {
+	public PanelFormularioCaminata() {
 		super();
 		
 		ajustarConstraints(0, 0, 1, 1);
@@ -35,29 +31,20 @@ public class PanelFormularioNatacion extends PanelFormulario implements Validado
 		ajustarConstraints(0, 1, 2, 1);
 		this.labelErrorDistancia = getLabelError();
 		add(this.labelErrorDistancia, constraints);
-		
-		ajustarConstraints(0, 2, 1, 1);
-		add(new JLabel("Estilos natación"), constraints);
-		
-		ajustarConstraints(1, 2, 1, 1);
-		this.textFieldEstiloNatacion = new JTextField(15);
-		add(this.textFieldEstiloNatacion, constraints);
-		
-		ajustarConstraints(0, 3, 2, 1);
-		this.labelErrorEstiloNatacion = getLabelError();
-		add(this.labelErrorEstiloNatacion, constraints);
+	}
+	
+	public String getDistancia() {
+		return this.textFieldDistancia.getText();
 	}
 	
 	@Override
 	public void limpiarCamposTexto() {
 		this.textFieldDistancia.setText("0.0");
-		this.textFieldEstiloNatacion.setText("");
 	}
 	
 	@Override
 	public void limpiarCamposError() {
 		limpiarCampoErrorDistancia();
-		limpiarCampoErrorEstiloNatacion();
 	}
 	
 	@Override
@@ -66,26 +53,8 @@ public class PanelFormularioNatacion extends PanelFormulario implements Validado
 		this.textFieldDistancia.setBorder(BorderFactory.createLineBorder(Color.RED));
 	}
 	
-	public void mostrarErrorCampoEstilosNatacion(String mensajeError) {
-		this.labelErrorEstiloNatacion.setText(mensajeError);
-		this.textFieldEstiloNatacion.setBorder(BorderFactory.createLineBorder(Color.RED));
-	}
-	
 	private void limpiarCampoErrorDistancia() {
 		this.labelErrorDistancia.setText(" ");
 		this.textFieldDistancia.setBorder(UIManager.getBorder(textField_border_key));
-	}
-	
-	private void limpiarCampoErrorEstiloNatacion() {
-		this.labelErrorEstiloNatacion.setText(" ");
-		this.textFieldEstiloNatacion.setBorder(UIManager.getBorder(textField_border_key));
-	}
-
-	public String getDistancia() {
-		return this.textFieldDistancia.getText();
-	}
-
-	public String getEstiloNatacion() {
-		return this.textFieldEstiloNatacion.getText();
-	}
+	}	
 }

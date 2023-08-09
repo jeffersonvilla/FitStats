@@ -131,7 +131,7 @@ class PanelFormularioRegistroUsuario extends JPanel{
 	
 	private void agregarCamposNombre() {
 		ajustarConstraints(0, 0, 1, 1);
-		this.labelNombre = new JLabel("Nombre:");
+		this.labelNombre = new JLabel("Nombre completo:");
 		add(this.labelNombre, this.constraints);
 		
 		ajustarConstraints(1, 0, 1, 1);

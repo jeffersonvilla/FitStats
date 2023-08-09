@@ -1,4 +1,4 @@
-package com.fit.actividad.vista.panel;
+package com.fit.actividad.vista.panelFormulario;
 
 import java.awt.Color;
 import java.sql.Time;

@@ -1,4 +1,4 @@
-package com.fit.actividad.vista.panel;
+package com.fit.actividad.vista.panelFormulario;
 
 import java.awt.Color;
 
@@ -34,7 +34,7 @@ public class PanelFormularioEstiramientos extends PanelFormulario {
 		add(this.labelErrorTipoSesion, constraints);
 		
 		ajustarConstraints(0, 2, 1, 1);
-		add(new JLabel("Nivel dificultad"), constraints);
+		add(new JLabel("Nivel de dificultad"), constraints);
 	
 		ajustarConstraints(1, 2, 1, 1);
 		this.textFieldNivelDificultad = new JTextField(15);

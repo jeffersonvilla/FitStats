@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 import com.fit.actividad.dao.DaoActividad;
+import com.fit.actividad.dao.DaoDetalleActividad;
 import com.fit.actividad.dao.DaoTipoActividad;
 import com.fit.actividad.modelo.Actividad;
 import com.fit.actividad.modelo.Caminata;
@@ -19,6 +20,13 @@ import com.fit.actividad.modelo.EntrenamientoGimnasio;
 import com.fit.actividad.modelo.Estiramientos;
 import com.fit.actividad.modelo.Natacion;
 import com.fit.actividad.modelo.OtraActividad;
+import com.fit.actividad.vista.frameDetalles.VentanaDetallesCaminata;
+import com.fit.actividad.vista.frameDetalles.VentanaDetallesCiclismo;
+import com.fit.actividad.vista.frameDetalles.VentanaDetallesNatacion;
+import com.fit.actividad.vista.frameDetalles.VentanaDetallesOtraActividad;
+import com.fit.actividad.vista.frameDetalles.VentanaDetallesDeporteEquipo;
+import com.fit.actividad.vista.frameDetalles.VentanaDetallesEntrenamientoGimnasio;
+import com.fit.actividad.vista.frameDetalles.VentanaDetallesEstiramientos;
 import com.fit.actividad.vista.interfaces.VistaActividades;
 import com.fit.principal.ControladorPrincipal;
 import com.fit.usuario.login.Sesion;
@@ -31,11 +39,15 @@ public class ControladorActividad {
 
 	private DaoTipoActividad daoTipoActividad;
 	
+	private DaoDetalleActividad daoDetalleActividad;
+	
 	private DaoActividad daoActividad;
 	
 	private Sesion sesion;
 	
 	private String[] tipoActividades;
+	
+	private List<Actividad> actividades;
 	
 	private final String FORMATO_DISTANCIA = "^(?=\\d{1,10}(\\.\\d{0,5})?$)\\d+(\\.\\d+)?$";
 	
@@ -49,6 +61,7 @@ public class ControladorActividad {
 		
 		this.daoTipoActividad = new DaoTipoActividad();
 		this.daoActividad = new DaoActividad();
+		this.daoDetalleActividad = new DaoDetalleActividad();
 	}
 	
 	public void setVista(VistaActividades vista) {
@@ -263,6 +276,42 @@ public class ControladorActividad {
 		return false;
 	}
 
+	public void verDetallesActividadSeleccionada(int actividadSeleccionada) {
+		Actividad actividad = this.actividades.get(actividadSeleccionada);
+		switch (actividad.getTipoActividadId()) {
+		case 1 -> {
+			Caminata caminata = this.daoDetalleActividad.leerDetallesCaminata(actividad.getId());
+			new VentanaDetallesCaminata(String.valueOf(caminata.getDistancia()));
+		}
+		case 2 -> {
+			Ciclismo ciclismo = this.daoDetalleActividad.leerDetallesCiclismo(actividad.getId());
+			new VentanaDetallesCiclismo(String.valueOf(ciclismo.getDistancia()), ciclismo.getTipo_bicicleta());
+		}
+		case 3 -> {
+			Natacion natacion = this.daoDetalleActividad.leerDetallesNatacion(actividad.getId());
+			new VentanaDetallesNatacion(String.valueOf(natacion.getDistancia()), natacion.getEstilosNatacion());
+		}
+		case 4 -> {
+			DeporteEquipo deporteEquipo = this.daoDetalleActividad.leerDetallesDeporteEquipo(actividad.getId());
+			new VentanaDetallesDeporteEquipo(deporteEquipo.getNombreDeporte(), deporteEquipo.getNombreEquipos(), deporteEquipo.getResultadoDelPartido());
+		}
+		case 5 -> {
+			EntrenamientoGimnasio entrenamiento = this.daoDetalleActividad.leerDetallesEntrenamientoGimnasio(actividad.getId());
+			new VentanaDetallesEntrenamientoGimnasio(entrenamiento.getEjerciciosRealizados(), entrenamiento.getDescansoEntreEjercicios(), entrenamiento.getDescansoEntreSeries());
+		}
+		case 6 -> {
+			Estiramientos estiramientos = this.daoDetalleActividad.leerDetallesEstiramientos(actividad.getId());
+			new VentanaDetallesEstiramientos(estiramientos.getTipoSesion(), estiramientos.getNivelDificultad());
+		}
+		case 7 -> {
+			OtraActividad otraActividad = this.daoDetalleActividad.leerDetallesOtraActividad(actividad.getId());
+			new VentanaDetallesOtraActividad(otraActividad.getDescripcion());
+		}
+		default ->
+			throw new IllegalArgumentException("Valor inesperado: " + actividadSeleccionada);
+		}
+	}
+	
 	public void cerrarSesion() {
 		this.controladorPrincipal.cerrarSesion(this.sesion);
 	}
@@ -273,10 +322,10 @@ public class ControladorActividad {
 	}
 	
 	public List<Object[]> getListaActividades() {
-		List<Actividad> actividades = daoActividad.leerListaActividadesPorUsuarioId(sesion.getIdUsuario());
+		this.actividades = daoActividad.leerListaActividadesPorUsuarioId(sesion.getIdUsuario());
 		List<Object[]> actividadesObjectos = new ArrayList<>();
 		if(actividades != null) {
-			for(Actividad actividad: actividades) {
+			for(Actividad actividad: this.actividades) {
 				actividadesObjectos.add(new Object[] {
 						this.tipoActividades[actividad.getTipoActividadId()-1],
 						actividad.getFechaHora(),
