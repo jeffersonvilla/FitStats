@@ -65,6 +65,8 @@ public class VentanaActividades extends JFrame implements VistaActividades{
 	
 	private JButton botonVerDetallesActividad;
 	
+	private JButton botonEliminarActividad;
+	
 	private CardLayout cardLayout;
 	
 	private String[] opcionesTipoActividad;
@@ -147,6 +149,10 @@ public class VentanaActividades extends JFrame implements VistaActividades{
 		this.botonVerDetallesActividad = getBotonVerDetallesActividad();
 		panelBotonesCrud.add(this.botonVerDetallesActividad, constraints);
 		
+		constraints.gridx = 2;
+		this.botonEliminarActividad = getBotonEliminarActividad(); 
+		panelBotonesCrud.add(this.botonEliminarActividad, constraints);
+		
 		return panelBotonesCrud;
 	}
 
@@ -157,13 +163,12 @@ public class VentanaActividades extends JFrame implements VistaActividades{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cardLayout.show(panelContenedor, PANEL_REGISTRO_ACTIVIDAD);
-				botonRegistrarActividad.setVisible(false);
-				botonVerDetallesActividad.setVisible(false);
+				setVisibilidadBotonesCrudActividades(false);
 			}
 		});
 		return botonRegistrarActividad;
 	}
-	
+
 	private JButton getBotonVerDetallesActividad() {
 		JButton botonVerDetallesActividad = new JButton("Ver detalles actividad seleccionada");
 		botonVerDetallesActividad.addActionListener(new ActionListener() {
@@ -174,6 +179,18 @@ public class VentanaActividades extends JFrame implements VistaActividades{
 			}
 		});
 		return botonVerDetallesActividad;
+	}
+	
+	private JButton getBotonEliminarActividad() {
+		JButton botonEliminarActividad = new JButton("Eliminar actividad seleccionada");
+		botonEliminarActividad.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controlador.eliminarActividad(tablaActividades.getSelectedRow());
+			}
+		});
+		return botonEliminarActividad;
 	}
 	
 	private JPanel getPanelContenedor() {
@@ -524,7 +541,12 @@ public class VentanaActividades extends JFrame implements VistaActividades{
 	@Override
 	public void verListaActividades() {
 		cardLayout.show(panelContenedor, PANEL_VISUALIZACION_ACTIVIDADES);
-		botonRegistrarActividad.setVisible(true);
-		botonVerDetallesActividad.setVisible(true);
+		setVisibilidadBotonesCrudActividades(true);
+	}
+	
+	private void setVisibilidadBotonesCrudActividades(boolean visibilidad) {
+		this.botonRegistrarActividad.setVisible(visibilidad);
+		this.botonVerDetallesActividad.setVisible(visibilidad);
+		this.botonEliminarActividad.setVisible(visibilidad);
 	}
 }

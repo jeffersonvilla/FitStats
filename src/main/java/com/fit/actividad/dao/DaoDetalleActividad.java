@@ -13,7 +13,6 @@ import com.fit.actividad.modelo.Natacion;
 import com.fit.actividad.modelo.OtraActividad;
 import com.fit.actividad.modelo.Estiramientos;
 import com.fit.util.MysqlConnection;
-import com.mysql.cj.x.protobuf.MysqlxPrepare.Prepare;
 
 public class DaoDetalleActividad {
 

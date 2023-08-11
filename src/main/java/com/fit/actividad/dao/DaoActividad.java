@@ -39,6 +39,18 @@ public class DaoActividad {
 		}
 	}
 	
+	public boolean eliminarActividadPorId(int idActividad) {
+		try {
+			String query = "delete from actividad where actividad_id = ?;";
+			PreparedStatement statement = this.conexion.prepareStatement(query);
+			statement.setInt(1, idActividad);
+			return statement.executeUpdate() > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	public List<Actividad> leerListaActividadesPorUsuarioId(int usuarioId) {
 		try {
 			String query = 

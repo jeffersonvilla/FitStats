@@ -312,6 +312,16 @@ public class ControladorActividad {
 		}
 	}
 	
+	public void eliminarActividad(int actividadSeleccionada) {
+		int opcionElegida = JOptionPane.showConfirmDialog(null, "Seguro desea eliminar esta actividad?", "Eliminar actividad", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+		if(opcionElegida == JOptionPane.YES_OPTION) {
+			Actividad actividad = this.actividades.get(actividadSeleccionada);
+			if(this.daoActividad.eliminarActividadPorId(actividad.getId())) 
+				vista.actualizarListaActividades(getListaActividades());
+				JOptionPane.showMessageDialog(null, "Actividad eliminada.");			
+		}
+ 	}
+	
 	public void cerrarSesion() {
 		this.controladorPrincipal.cerrarSesion(this.sesion);
 	}
