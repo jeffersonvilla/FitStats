@@ -47,9 +47,21 @@ public class PanelFormularioActividad extends PanelFormulario {
 
 	private Border borderDefault;
 	
+	private Timestamp fechaHora;
+	
 	public PanelFormularioActividad() {
 		super();
 		
+		inicializarCampos();
+	}
+	
+	public PanelFormularioActividad(Timestamp fechaHora){
+		super();
+		this.fechaHora = fechaHora;
+		inicializarCampos();
+	}
+	
+	private void inicializarCampos() {
 		ajustarConstraints(0, 0, 1, 1);
 		add(new JLabel("Fecha"), constraints);
 		
@@ -113,6 +125,7 @@ public class PanelFormularioActividad extends PanelFormulario {
 	private JDatePickerImpl getSelectorFecha() {
 		UtilDateModel model = new UtilDateModel();
 		Calendar calendar = Calendar.getInstance();
+		if(this.fechaHora != null) calendar.setTimeInMillis(this.fechaHora.getTime());
 		model.setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         model.setSelected(true);
         return new JDatePickerImpl(new JDatePanelImpl(model, new Properties()), new DateLabelFormatter());

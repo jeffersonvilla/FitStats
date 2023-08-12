@@ -28,6 +28,7 @@ import com.fit.actividad.vista.frameDetalles.VentanaDetallesDeporteEquipo;
 import com.fit.actividad.vista.frameDetalles.VentanaDetallesEntrenamientoGimnasio;
 import com.fit.actividad.vista.frameDetalles.VentanaDetallesEstiramientos;
 import com.fit.actividad.vista.interfaces.VistaActividades;
+import com.fit.actividad.vista.panelFormulario.PanelFormularioActividad;
 import com.fit.principal.ControladorPrincipal;
 import com.fit.usuario.login.Sesion;
 
@@ -310,6 +311,12 @@ public class ControladorActividad {
 		default ->
 			throw new IllegalArgumentException("Valor inesperado: " + actividadSeleccionada);
 		}
+	}
+	
+	public void actualizarActividad(int actividadSeleccionada) {
+		Actividad actividad = actividades.get(actividadSeleccionada);
+		PanelFormularioActividad panelActividad = new PanelFormularioActividad(actividad.getFechaHora());
+		vista.mostrarPanelActualizacionActividad(panelActividad);
 	}
 	
 	public void eliminarActividad(int actividadSeleccionada) {
