@@ -12,39 +12,39 @@ public class PanelFormularioEstiramientos extends PanelFormulario {
 	private static final long serialVersionUID = 1L;
 
 	private JTextField textFieldTipoSesion;
-	
+
 	private JLabel labelErrorTipoSesion;
-	
+
 	private JTextField textFieldNivelDificultad;
-	
+
 	private JLabel labelErrorNivelDificultad;
-	
+
 	public PanelFormularioEstiramientos() {
 		super();
-		
+
 		ajustarConstraints(0, 0, 1, 1);
 		add(new JLabel("Tipo de sesion"), constraints);
-		
+
 		ajustarConstraints(1, 0, 1, 1);
 		this.textFieldTipoSesion = new JTextField(15);
 		add(this.textFieldTipoSesion, constraints);
-		
+
 		ajustarConstraints(0, 1, 2, 1);
 		this.labelErrorTipoSesion = getLabelError();
 		add(this.labelErrorTipoSesion, constraints);
-		
+
 		ajustarConstraints(0, 2, 1, 1);
 		add(new JLabel("Nivel de dificultad"), constraints);
-	
+
 		ajustarConstraints(1, 2, 1, 1);
 		this.textFieldNivelDificultad = new JTextField(15);
 		add(this.textFieldNivelDificultad, constraints);
-		
+
 		ajustarConstraints(0, 3, 2, 1);
 		this.labelErrorNivelDificultad = getLabelError();
 		add(this.labelErrorNivelDificultad, constraints);
 	}
-	
+
 	@Override
 	public void limpiarCamposTexto() {
 		this.textFieldTipoSesion.setText("");

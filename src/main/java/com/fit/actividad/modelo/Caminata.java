@@ -1,7 +1,7 @@
 package com.fit.actividad.modelo;
 
-public class Caminata extends DetalleActividad{
-	
+public class Caminata extends DetalleActividad {
+
 	private float distancia;
 
 	public Caminata(int id, float distancia) {

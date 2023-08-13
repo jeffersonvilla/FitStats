@@ -8,13 +8,13 @@ import java.sql.SQLException;
 import com.fit.util.MysqlConnection;
 
 public class DaoUsuario {
-	
-	private Connection con ;
-	
+
+	private Connection con;
+
 	public DaoUsuario() {
 		this.con = MysqlConnection.getConnection();
 	}
-	
+
 	public boolean crearUsuario(Usuario usuario) {
 		try {
 			String query = "insert into usuario (nombre, email, password) values (?, ?, ? )";
@@ -28,41 +28,45 @@ public class DaoUsuario {
 			return false;
 		}
 	}
-	
+
 	public String leerPassUsuarioPorEmail(String email) {
 		try {
 			String query = "select password from usuario where email = ?";
 			PreparedStatement preparedStatement = this.con.prepareStatement(query);
 			preparedStatement.setString(1, email);
 			ResultSet result = preparedStatement.executeQuery();
-			if(result.next()) return result.getString("password");
-			else return null;
-		}catch(SQLException e) {
+			if (result.next())
+				return result.getString("password");
+			else
+				return null;
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
+
 	public Usuario leerUsuarioPorEmail(String email) {
 		try {
 			String query = "select id, nombre, email from usuario where email = ?";
 			PreparedStatement preparedStatement = this.con.prepareStatement(query);
 			preparedStatement.setString(1, email);
 			ResultSet result = preparedStatement.executeQuery();
-			if(result.next()) return new Usuario(result.getInt("id"), result.getString("nombre"), result.getString("email"));
-			else return null;
-		}catch(SQLException e) {
+			if (result.next())
+				return new Usuario(result.getInt("id"), result.getString("nombre"), result.getString("email"));
+			else
+				return null;
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
+
 	public void actualizarUsuario(Usuario usuario) {
-		
+
 	}
-	
+
 	public void eliminarUsuario(Usuario usuario) {
-		
+
 	}
 
 	public boolean validarEmailDisponible(String email) {
@@ -72,7 +76,8 @@ public class DaoUsuario {
 			PreparedStatement preparedStatement = con.prepareStatement(query);
 			preparedStatement.setString(1, email);
 			ResultSet result = preparedStatement.executeQuery();
-			if(result.next()) return false; 
+			if (result.next())
+				return false;
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();

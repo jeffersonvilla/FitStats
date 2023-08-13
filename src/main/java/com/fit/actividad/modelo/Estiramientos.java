@@ -3,17 +3,19 @@ package com.fit.actividad.modelo;
 public class Estiramientos extends DetalleActividad {
 
 	private String tipoSesion;
-	
+
 	private String nivelDificultad;
-	
+
 	public static final int TAMANIO_MAXIMO_TIPO_SESION = 50;
-	
+
 	public static final int TAMANIO_MAXIMO_NIVEL_DIFICULTAD = 20;
 
-	public static final String MENSAJE_TAMANIO_MAXIMO_TIPO_SESION = "Máximo " + TAMANIO_MAXIMO_TIPO_SESION + " caracteres";
-	
-	public static final String MENSAJE_TAMANIO_MAXIMO_NIVEL_DIFICULTAD = "Máximo " + TAMANIO_MAXIMO_NIVEL_DIFICULTAD+ " caracteres";
-	
+	public static final String MENSAJE_TAMANIO_MAXIMO_TIPO_SESION = "Máximo " + TAMANIO_MAXIMO_TIPO_SESION
+			+ " caracteres";
+
+	public static final String MENSAJE_TAMANIO_MAXIMO_NIVEL_DIFICULTAD = "Máximo " + TAMANIO_MAXIMO_NIVEL_DIFICULTAD
+			+ " caracteres";
+
 	public Estiramientos(int id, String tipoSesion, String nivelDificultad) {
 		super(id);
 		this.tipoSesion = tipoSesion;
@@ -38,8 +40,8 @@ public class Estiramientos extends DetalleActividad {
 
 	@Override
 	public String toString() {
-		return "Estiramientos [tipoSesion=" + tipoSesion + ", nivelDificultad=" + nivelDificultad + 
-				" id=" + super.getId() + "]";
+		return "Estiramientos [tipoSesion=" + tipoSesion + ", nivelDificultad=" + nivelDificultad + " id="
+				+ super.getId() + "]";
 	}
 
 	@Override

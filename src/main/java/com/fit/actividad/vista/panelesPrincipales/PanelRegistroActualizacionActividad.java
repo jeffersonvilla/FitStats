@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 
 import com.fit.actividad.vista.VentanaActividades;
 
-public class PanelRegistroActualizacionActividad extends JPanel{
+public class PanelRegistroActualizacionActividad extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 

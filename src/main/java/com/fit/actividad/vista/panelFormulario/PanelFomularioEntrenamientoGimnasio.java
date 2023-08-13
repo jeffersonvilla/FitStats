@@ -13,48 +13,48 @@ public class PanelFomularioEntrenamientoGimnasio extends PanelFormulario {
 	private static final long serialVersionUID = 1L;
 
 	private JTextArea textAreaEjerciciosRealizados;
-	
+
 	private JTextField textFieldDescansosEntreEjercicios;
-	
+
 	private JLabel labelErrorDescansosEntreEjercicios;
-	
+
 	private JTextField textFieldDescansosEntreSeries;
-	
+
 	private JLabel labelErrorDescansosEntreSeries;
-	
+
 	public PanelFomularioEntrenamientoGimnasio() {
 		super();
-		
+
 		ajustarConstraints(0, 0, 1, 1);
 		add(new JLabel("Ejercicios realizados"), constraints);
-		
+
 		ajustarConstraints(1, 0, 1, 1);
 		this.textAreaEjerciciosRealizados = new JTextArea(3, 10);
 		add(this.textAreaEjerciciosRealizados, constraints);
-		
+
 		ajustarConstraints(0, 1, 1, 1);
 		add(new JLabel("Descansos entre ejercicios"), constraints);
-		
+
 		ajustarConstraints(1, 1, 1, 1);
 		this.textFieldDescansosEntreEjercicios = new JTextField(10);
 		add(this.textFieldDescansosEntreEjercicios, constraints);
-		
+
 		ajustarConstraints(0, 2, 2, 1);
 		this.labelErrorDescansosEntreEjercicios = getLabelError();
 		add(this.labelErrorDescansosEntreEjercicios, constraints);
-		
+
 		ajustarConstraints(0, 3, 1, 1);
 		add(new JLabel("Descansos entre series"), constraints);
-		
+
 		ajustarConstraints(1, 3, 1, 1);
 		this.textFieldDescansosEntreSeries = new JTextField(10);
 		add(this.textFieldDescansosEntreSeries, constraints);
-		
+
 		ajustarConstraints(0, 4, 2, 1);
 		this.labelErrorDescansosEntreSeries = getLabelError();
 		add(this.labelErrorDescansosEntreSeries, constraints);
 	}
-	
+
 	@Override
 	public void limpiarCamposTexto() {
 		this.textAreaEjerciciosRealizados.setText("");
@@ -81,12 +81,12 @@ public class PanelFomularioEntrenamientoGimnasio extends PanelFormulario {
 	public String getDescansosEntreSeries() {
 		return this.textFieldDescansosEntreSeries.getText();
 	}
-	
+
 	public void mostrarErrorCampoDescansoEntreEjercicios(String mensajeError) {
 		this.labelErrorDescansosEntreEjercicios.setText(mensajeError);
 		this.textFieldDescansosEntreEjercicios.setBorder(BorderFactory.createLineBorder(Color.RED));
 	}
-	
+
 	public void mostrarErrorCampoDescansosEntreSeries(String mensajeError) {
 		this.labelErrorDescansosEntreSeries.setText(mensajeError);
 		this.textFieldDescansosEntreSeries.setBorder(BorderFactory.createLineBorder(Color.RED));

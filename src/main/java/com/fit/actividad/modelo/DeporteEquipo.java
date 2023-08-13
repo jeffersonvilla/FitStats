@@ -1,25 +1,28 @@
 package com.fit.actividad.modelo;
 
-public class DeporteEquipo extends DetalleActividad{
-	
+public class DeporteEquipo extends DetalleActividad {
+
 	public static final int TAMANIO_MAXIMO_NOMBRE_DEPORTE = 20;
-	
+
 	public static final int TAMANIO_MAXIMO_NOMBRE_EQUIPOS = 20;
-	
+
 	public static final int TAMANIO_MAXIMO_RESULTADO_PARTIDO = 20;
 
-	public static final String MENSAJE_TAMANIO_MAXIMO_NOMBRE_DEPORTE = "Máximo " + TAMANIO_MAXIMO_NOMBRE_DEPORTE + " caracteres";
-	
-	public static final String MENSAJE_TAMANIO_MAXIMO_NOMBRE_EQUIPOS = "Máximo " + TAMANIO_MAXIMO_NOMBRE_EQUIPOS+ " caracteres";
+	public static final String MENSAJE_TAMANIO_MAXIMO_NOMBRE_DEPORTE = "Máximo " + TAMANIO_MAXIMO_NOMBRE_DEPORTE
+			+ " caracteres";
 
-	public static final String MENSAJE_TAMANIO_MAXIMO_RESULTADO_PARTIDO = "Máximo " + TAMANIO_MAXIMO_RESULTADO_PARTIDO + " caracteres";
-	
+	public static final String MENSAJE_TAMANIO_MAXIMO_NOMBRE_EQUIPOS = "Máximo " + TAMANIO_MAXIMO_NOMBRE_EQUIPOS
+			+ " caracteres";
+
+	public static final String MENSAJE_TAMANIO_MAXIMO_RESULTADO_PARTIDO = "Máximo " + TAMANIO_MAXIMO_RESULTADO_PARTIDO
+			+ " caracteres";
+
 	private String nombreDeporte;
-	
+
 	private String nombreEquipos;
 
 	private String resultadoDelPartido;
-	
+
 	public DeporteEquipo(int id, String nombreDeporte, String nombreEquipos, String resultadoDelPartido) {
 		super(id);
 		this.nombreDeporte = nombreDeporte;

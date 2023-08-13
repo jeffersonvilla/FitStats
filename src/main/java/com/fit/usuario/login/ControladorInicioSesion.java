@@ -11,41 +11,42 @@ import jakarta.mail.internet.AddressException;
 import jakarta.mail.internet.InternetAddress;
 
 public class ControladorInicioSesion {
-	
+
 	private ControladorPrincipal controladorPrincipal;
 
 	private VistaInicioSesion vista;
-	
+
 	private DaoUsuario daoUsuario;
-	
+
 	private DaoSesion daoSesion;
-	
+
 	private Sesion sesionUsuario;
-	
+
 	public ControladorInicioSesion(ControladorPrincipal controladorPrincipal) {
 		this.controladorPrincipal = controladorPrincipal;
 		this.daoUsuario = new DaoUsuario();
 		this.daoSesion = new DaoSesion();
 	}
-	
+
 	public void setVista(VistaInicioSesion vista) {
 		this.vista = vista;
 	}
-	
+
 	public void iniciarSesion(String email, char[] password) {
-		if(validarDatos(email, password)) {
-			String passwordEncriptado =  daoUsuario.leerPassUsuarioPorEmail(email);
-			if(passwordEncriptado != null) {
-				if(!BCrypt.verifyer().verify(password,passwordEncriptado).verified) 
+		if (validarDatos(email, password)) {
+			String passwordEncriptado = daoUsuario.leerPassUsuarioPorEmail(email);
+			if (passwordEncriptado != null) {
+				if (!BCrypt.verifyer().verify(password, passwordEncriptado).verified)
 					vista.validarPassword(Usuario.MENSAJE_PASSWORD_INCORRECTO);
 				else {
 					crearSesion(email);
 					this.controladorPrincipal.abrirVentanaActividades(this.sesionUsuario);
 				}
-			}else vista.validarEmail(Usuario.MENSAJE_EMAIL_NO_REGISTRADO);
+			} else
+				vista.validarEmail(Usuario.MENSAJE_EMAIL_NO_REGISTRADO);
 		}
 	}
-	
+
 	private boolean validarDatos(String email, char[] password) {
 		boolean emailValido = validarEmail(email);
 		boolean passwordValido = validarPassword(password);
@@ -53,13 +54,15 @@ public class ControladorInicioSesion {
 	}
 
 	private boolean validarEmail(String email) {
-		if(emailTieneFormatoValido(email)) return true;
+		if (emailTieneFormatoValido(email))
+			return true;
 		vista.validarEmail(Usuario.MENSAJE_EMAIL_NO_VALIDO);
 		return false;
 	}
 
 	private boolean validarPassword(char[] password) {
-		if(passwordNoEstaVacio(password)) return true;
+		if (passwordNoEstaVacio(password))
+			return true;
 		vista.validarPassword(Usuario.MENSAJE_CAMPO_VACIO);
 		return false;
 	}
@@ -72,7 +75,7 @@ public class ControladorInicioSesion {
 			return false;
 		}
 	}
-	
+
 	private boolean passwordNoEstaVacio(char[] password) {
 		return password.length != 0;
 	}
@@ -80,7 +83,7 @@ public class ControladorInicioSesion {
 	private void crearSesion(String email) {
 		Usuario usuario = daoUsuario.leerUsuarioPorEmail(email);
 		this.sesionUsuario = daoSesion.sesionAbiertaPorIdUsuario(usuario.getId());
-		if(this.sesionUsuario == null) {			
+		if (this.sesionUsuario == null) {
 			daoSesion.crearSesion(new Sesion(new GregorianCalendar(), usuario.getId()));
 			this.sesionUsuario = daoSesion.sesionAbiertaPorIdUsuario(usuario.getId());
 		}

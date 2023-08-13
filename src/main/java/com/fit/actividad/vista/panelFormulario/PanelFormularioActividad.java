@@ -26,123 +26,124 @@ public class PanelFormularioActividad extends PanelFormulario {
 	private static final long serialVersionUID = 1L;
 
 	private JDatePickerImpl selectorFecha;
-	
+
 	private JLabel labelErrorFecha;
-	
+
 	private JSpinner selectorHora;
-	
+
 	private JLabel labelErrorHora;
-	
+
 	private JSpinner duracionHoras;
-	
+
 	private JLabel labelErrorDuracionHora;
-	
+
 	private JSpinner duracionMinutos;
-	
+
 	private JLabel labelErrorDuracionMinuto;
-	
+
 	private JTextField textFieldUbicacion;
-	
+
 	private JLabel labelErrorUbicacion;
 
 	private Border borderDefault;
-	
+
 	private Timestamp fechaHora;
-	
+
 	public PanelFormularioActividad() {
 		super();
-		
+
 		inicializarCampos();
 	}
-	
-	public PanelFormularioActividad(Timestamp fechaHora){
+
+	public PanelFormularioActividad(Timestamp fechaHora) {
 		super();
 		this.fechaHora = fechaHora;
 		inicializarCampos();
 	}
-	
+
 	private void inicializarCampos() {
 		ajustarConstraints(0, 0, 1, 1);
 		add(new JLabel("Fecha"), constraints);
-		
+
 		ajustarConstraints(1, 0, 1, 1);
 		this.selectorFecha = getSelectorFecha();
 		this.borderDefault = this.selectorFecha.getBorder();
 		add(this.selectorFecha, constraints);
-		
+
 		ajustarConstraints(0, 1, 2, 1);
 		this.labelErrorFecha = getLabelError();
 		add(this.labelErrorFecha, constraints);
-		
+
 		ajustarConstraints(0, 2, 1, 1);
 		add(new JLabel("Hora"), constraints);
-		
+
 		ajustarConstraints(1, 2, 1, 1);
 		this.selectorHora = getSelectorHoraIncio();
 		add(this.selectorHora, constraints);
-        
+
 		ajustarConstraints(0, 3, 2, 1);
 		this.labelErrorHora = getLabelError();
 		add(this.labelErrorHora, constraints);
-		
+
 		ajustarConstraints(2, 0, 1, 1);
-        add(new JLabel("Duracion"), constraints);
-        
-        ajustarConstraints(3, 0, 1, 1);
-        add(new JLabel("hora(s):"), constraints);
-        
-        ajustarConstraints(4, 0, 1, 1);
-        this.duracionHoras = getSelectorDuracion(23);
-        add(this.duracionHoras, constraints);
-        
-        ajustarConstraints(5, 0, 1, 1);
-        add(new JLabel("minutos"), constraints);
-        
-        ajustarConstraints(6, 0, 1, 1);
-        this.duracionMinutos = getSelectorDuracion(59);
-        add(this.duracionMinutos, constraints);
-        
-        ajustarConstraints(1, 1, 3, 1);
-        this.labelErrorDuracionHora = getLabelError();
-        add(this.labelErrorDuracionHora, constraints);
-        
-        ajustarConstraints(2, 1, 2, 1);
-        this.labelErrorDuracionMinuto = getLabelError();
-        add(this.labelErrorDuracionMinuto, constraints);
-        	
-        ajustarConstraints(2, 2, 1, 1);
-        add(new JLabel("Ubicacion"), constraints);
-        
-        ajustarConstraints(3, 2, 4, 1);
-        this.textFieldUbicacion = new JTextField(10);
-        add(this.textFieldUbicacion, constraints);
-        
-        ajustarConstraints(0, 3, 6, 1);
-        this.labelErrorUbicacion = getLabelError();
-        add(this.labelErrorUbicacion, constraints);
+		add(new JLabel("Duracion"), constraints);
+
+		ajustarConstraints(3, 0, 1, 1);
+		add(new JLabel("hora(s):"), constraints);
+
+		ajustarConstraints(4, 0, 1, 1);
+		this.duracionHoras = getSelectorDuracion(23);
+		add(this.duracionHoras, constraints);
+
+		ajustarConstraints(5, 0, 1, 1);
+		add(new JLabel("minutos"), constraints);
+
+		ajustarConstraints(6, 0, 1, 1);
+		this.duracionMinutos = getSelectorDuracion(59);
+		add(this.duracionMinutos, constraints);
+
+		ajustarConstraints(1, 1, 3, 1);
+		this.labelErrorDuracionHora = getLabelError();
+		add(this.labelErrorDuracionHora, constraints);
+
+		ajustarConstraints(2, 1, 2, 1);
+		this.labelErrorDuracionMinuto = getLabelError();
+		add(this.labelErrorDuracionMinuto, constraints);
+
+		ajustarConstraints(2, 2, 1, 1);
+		add(new JLabel("Ubicacion"), constraints);
+
+		ajustarConstraints(3, 2, 4, 1);
+		this.textFieldUbicacion = new JTextField(10);
+		add(this.textFieldUbicacion, constraints);
+
+		ajustarConstraints(0, 3, 6, 1);
+		this.labelErrorUbicacion = getLabelError();
+		add(this.labelErrorUbicacion, constraints);
 	}
-	
+
 	private JDatePickerImpl getSelectorFecha() {
 		UtilDateModel model = new UtilDateModel();
 		Calendar calendar = Calendar.getInstance();
-		if(this.fechaHora != null) calendar.setTimeInMillis(this.fechaHora.getTime());
+		if (this.fechaHora != null)
+			calendar.setTimeInMillis(this.fechaHora.getTime());
 		model.setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-        model.setSelected(true);
-        return new JDatePickerImpl(new JDatePanelImpl(model, new Properties()), new DateLabelFormatter());
+		model.setSelected(true);
+		return new JDatePickerImpl(new JDatePanelImpl(model, new Properties()), new DateLabelFormatter());
 	}
 
 	private JSpinner getSelectorHoraIncio() {
 		SpinnerDateModel modelo = new SpinnerDateModel();
-        JSpinner selectorHora = new JSpinner(modelo);
-        JSpinner.DateEditor editor = new JSpinner.DateEditor(selectorHora, "HH:mm");
-        selectorHora.setEditor(editor);
-        selectorHora.setValue(new Date());
-        return selectorHora;
+		JSpinner selectorHora = new JSpinner(modelo);
+		JSpinner.DateEditor editor = new JSpinner.DateEditor(selectorHora, "HH:mm");
+		selectorHora.setEditor(editor);
+		selectorHora.setValue(new Date());
+		return selectorHora;
 	}
-	
+
 	private JSpinner getSelectorDuracion(int maximo) {
-        JSpinner spinner = new JSpinner(new SpinnerNumberModel(0, 0, maximo, 1));
-        return spinner;
+		JSpinner spinner = new JSpinner(new SpinnerNumberModel(0, 0, maximo, 1));
+		return spinner;
 	}
 
 	@Override
@@ -155,30 +156,31 @@ public class PanelFormularioActividad extends PanelFormulario {
 		this.labelErrorFecha.setText(" ");
 		this.selectorFecha.setBorder(this.borderDefault);
 	}
-	
+
 	public Timestamp getFecha() {
-        Date fecha = (Date) this.selectorFecha.getModel().getValue();
-        
-        if(fecha == null) return null;
-        
-        Date hora = (Date) this.selectorHora.getModel().getValue();
+		Date fecha = (Date) this.selectorFecha.getModel().getValue();
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(fecha);
+		if (fecha == null)
+			return null;
 
-        Calendar timeCalendar = Calendar.getInstance();
-        timeCalendar.setTime(hora);
-        int hour = timeCalendar.get(Calendar.HOUR_OF_DAY);
-        int minute = timeCalendar.get(Calendar.MINUTE);
+		Date hora = (Date) this.selectorHora.getModel().getValue();
 
-        calendar.set(Calendar.HOUR_OF_DAY, hour);
-        calendar.set(Calendar.MINUTE, minute);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fecha);
 
-        return new Timestamp(calendar.getTimeInMillis());
-    }
-	
+		Calendar timeCalendar = Calendar.getInstance();
+		timeCalendar.setTime(hora);
+		int hour = timeCalendar.get(Calendar.HOUR_OF_DAY);
+		int minute = timeCalendar.get(Calendar.MINUTE);
+
+		calendar.set(Calendar.HOUR_OF_DAY, hour);
+		calendar.set(Calendar.MINUTE, minute);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+
+		return new Timestamp(calendar.getTimeInMillis());
+	}
+
 	public Time getDuracion() {
 		int horas = (int) this.duracionHoras.getModel().getValue();
 		int horaDefault = 19;
@@ -191,29 +193,29 @@ public class PanelFormularioActividad extends PanelFormulario {
 	}
 
 	private class DateLabelFormatter extends AbstractFormatter {
-		  
+
 		private static final long serialVersionUID = 1L;
-		
+
 		private final String datePattern = "yyyy-MM-dd";
-	    private final java.text.SimpleDateFormat dateFormatter = new java.text.SimpleDateFormat(datePattern);
+		private final java.text.SimpleDateFormat dateFormatter = new java.text.SimpleDateFormat(datePattern);
 
-	    @Override
-	    public Object stringToValue(String text) throws ParseException {
-	        return dateFormatter.parseObject(text);
-	    }
+		@Override
+		public Object stringToValue(String text) throws ParseException {
+			return dateFormatter.parseObject(text);
+		}
 
-	    @Override
-	    public String valueToString(Object value) throws ParseException {
-	        if (value != null) {
-	            Calendar cal = (Calendar) value;
-	            return dateFormatter.format(cal.getTime());
-	        }
-	        return "";
-	    }
+		@Override
+		public String valueToString(Object value) throws ParseException {
+			if (value != null) {
+				Calendar cal = (Calendar) value;
+				return dateFormatter.format(cal.getTime());
+			}
+			return "";
+		}
 	}
 
 	public void mostrarErrorCampoFecha(String mensajeError) {
 		this.labelErrorFecha.setText(mensajeError);
 		this.selectorFecha.setBorder(BorderFactory.createLineBorder(Color.RED));
-	}	
+	}
 }

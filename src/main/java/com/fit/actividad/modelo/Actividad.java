@@ -13,13 +13,13 @@ public class Actividad {
 	private Timestamp fechaHora;
 	private Time duracion;
 	private String ubicación;
-	
+
 	private DaoActividad daoActividad;
-	
+
 	public Actividad() {
 		this.daoActividad = new DaoActividad();
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -67,7 +67,7 @@ public class Actividad {
 	public void setUbicación(String ubicación) {
 		this.ubicación = ubicación;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Actividad [id=" + id + ", userId=" + userId + ", tipoActividadId=" + tipoActividadId + ", fecha="
@@ -78,58 +78,58 @@ public class Actividad {
 		this.id = this.daoActividad.guardarActividad(this);
 		return this.id;
 	}
-	
+
 	public static class ActividadBuilder {
-        private int id;
-        private int userId;
-        private int tipoActividadId;
-        private Timestamp fechaHora;
-        private Time duracion;
-        private String ubicación;
+		private int id;
+		private int userId;
+		private int tipoActividadId;
+		private Timestamp fechaHora;
+		private Time duracion;
+		private String ubicación;
 
-        public ActividadBuilder() {
-        	
-        }
+		public ActividadBuilder() {
 
-        public ActividadBuilder setId(int id) {
-            this.id = id;
-            return this;
-        }
+		}
 
-        public ActividadBuilder setUserId(int userId) {
-            this.userId = userId;
-            return this;
-        }
+		public ActividadBuilder setId(int id) {
+			this.id = id;
+			return this;
+		}
 
-        public ActividadBuilder setTipoActividadId(int tipoActividadId) {
-            this.tipoActividadId = tipoActividadId;
-            return this;
-        }
+		public ActividadBuilder setUserId(int userId) {
+			this.userId = userId;
+			return this;
+		}
 
-        public ActividadBuilder setFechaHora(Timestamp fechaHora) {
-        	this.fechaHora = fechaHora;
-        	return this;
-        }
-        
-        public ActividadBuilder setDuracion(Time duracion) {
-        	this.duracion = duracion;
-        	return this;
-        }
-        
-        public ActividadBuilder setUbicación(String ubicación) {
-            this.ubicación = ubicación;
-            return this;
-        }
+		public ActividadBuilder setTipoActividadId(int tipoActividadId) {
+			this.tipoActividadId = tipoActividadId;
+			return this;
+		}
 
-        public Actividad build() {
-            Actividad actividad = new Actividad();
-            actividad.setId(this.id);
-            actividad.setUserId(this.userId);
-            actividad.setTipoActividadId(this.tipoActividadId);
-            actividad.setFechaHora(this.fechaHora);
-            actividad.setDuracion(this.duracion);
-            actividad.setUbicación(this.ubicación);
-            return actividad;
-        }
+		public ActividadBuilder setFechaHora(Timestamp fechaHora) {
+			this.fechaHora = fechaHora;
+			return this;
+		}
+
+		public ActividadBuilder setDuracion(Time duracion) {
+			this.duracion = duracion;
+			return this;
+		}
+
+		public ActividadBuilder setUbicación(String ubicación) {
+			this.ubicación = ubicación;
+			return this;
+		}
+
+		public Actividad build() {
+			Actividad actividad = new Actividad();
+			actividad.setId(this.id);
+			actividad.setUserId(this.userId);
+			actividad.setTipoActividadId(this.tipoActividadId);
+			actividad.setFechaHora(this.fechaHora);
+			actividad.setDuracion(this.duracion);
+			actividad.setUbicación(this.ubicación);
+			return actividad;
+		}
 	}
 }

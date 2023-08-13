@@ -3,11 +3,12 @@ package com.fit.actividad.modelo;
 public class OtraActividad extends DetalleActividad {
 
 	private String descripcion;
-	
+
 	public static final int TAMANIO_MAXIMO_DESCRIPCION = 150;
 
-	public static final String MENSAJE_TAMANIO_MAXIMO_DESCRIPCION = "Máximo " + TAMANIO_MAXIMO_DESCRIPCION + " caracteres";
-	
+	public static final String MENSAJE_TAMANIO_MAXIMO_DESCRIPCION = "Máximo " + TAMANIO_MAXIMO_DESCRIPCION
+			+ " caracteres";
+
 	public OtraActividad(int id, String descripcion) {
 		super(id);
 		this.descripcion = descripcion;

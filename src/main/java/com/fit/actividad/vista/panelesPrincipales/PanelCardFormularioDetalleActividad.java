@@ -11,20 +11,20 @@ import com.fit.actividad.vista.panelFormulario.PanelFormularioEstiramientos;
 import com.fit.actividad.vista.panelFormulario.PanelFormularioNatacion;
 import com.fit.actividad.vista.panelFormulario.PanelFormularioOtraActividad;
 
-public class PanelCardFormularioDetalleActividad extends JPanel{
-	
+public class PanelCardFormularioDetalleActividad extends JPanel {
+
 	private static final long serialVersionUID = 1L;
 
 	public PanelCardFormularioDetalleActividad(VentanaActividades ventana) {
-		super(ventana.getCardLayout()); 
-		
+		super(ventana.getCardLayout());
+
 		ventana.setPanelCardFormularioDetalleActividad(this);
-		
+
 		String[] tipoActividad = ventana.getOpcionesTipoActividad();
-		
+
 		add(new PanelFormularioCaminata(), tipoActividad[0]);
 		add(new PanelFormularioCiclismo(), tipoActividad[1]);
-		add(new PanelFormularioNatacion(), tipoActividad[2]);	
+		add(new PanelFormularioNatacion(), tipoActividad[2]);
 		add(new PanelFormularioDeporteEquipo(), tipoActividad[3]);
 		add(new PanelFomularioEntrenamientoGimnasio(), tipoActividad[4]);
 		add(new PanelFormularioEstiramientos(), tipoActividad[5]);

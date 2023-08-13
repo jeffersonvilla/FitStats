@@ -12,11 +12,11 @@ import javax.swing.table.DefaultTableModel;
 import com.fit.actividad.vista.VentanaActividades;
 
 public class PanelVisualizacionActividades extends JPanel {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private DefaultTableModel modeloTablaActividades;
-	
+
 	private JTable tablaActividades;
 
 	public PanelVisualizacionActividades(VentanaActividades ventana) {
@@ -28,14 +28,14 @@ public class PanelVisualizacionActividades extends JPanel {
 		tablaActividades.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		add(new JScrollPane(this.tablaActividades), BorderLayout.CENTER);
 	}
-	
+
 	private DefaultTableModel getModeloTabla() {
 		DefaultTableModel modeloTablaActividades = new DefaultTableModel() {
-			
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public boolean isCellEditable(int row, int column) {				
+			public boolean isCellEditable(int row, int column) {
 				return false;
 			}
 		};
@@ -45,10 +45,11 @@ public class PanelVisualizacionActividades extends JPanel {
 		modeloTablaActividades.addColumn("Ubicación");
 		return modeloTablaActividades;
 	}
-	
+
 	public void actualizarListaActividades(List<Object[]> listaActividades) {
 		this.modeloTablaActividades.setRowCount(0);
-		for(Object[] actividad: listaActividades) this.modeloTablaActividades.addRow(actividad);
+		for (Object[] actividad : listaActividades)
+			this.modeloTablaActividades.addRow(actividad);
 		this.modeloTablaActividades.fireTableDataChanged();
 	}
 

@@ -3,7 +3,7 @@ package com.fit.util;
 import java.awt.GridBagConstraints;
 
 public class Constraints {
-	
+
 	public static GridBagConstraints getGridBagConstraints() {
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.gridx = 0;

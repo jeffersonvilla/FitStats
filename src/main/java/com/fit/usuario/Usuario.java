@@ -3,35 +3,35 @@ package com.fit.usuario;
 public class Usuario {
 
 	private int id;
-	
+
 	private String nombre;
-	
+
 	private String email;
-	
+
 	private String password;
-	
+
 	public static final String FORMATO_NOMBRE = "^[A-Za-z]+(?:\\s[A-Za-z]+)+$";
-	
+
 	public static final String FORMATO_PASSWORD = "^(?!.*[\\s\\r\\n\\t]).{8,}$";
-	
+
 	public static final String MENSAJE_NOMBRE_NO_VALIDO = "Nombres y apellidos separados por espacio";
-	
+
 	public static final String MENSAJE_EMAIL_NO_VALIDO = "Formato 'ejemplo@mail'";
-	
+
 	public static final String MENSAJE_PASSWORD_NO_VALIDO = "Minimo 8 caracteres";
 
 	public static final String MENSAJE_USUARIO_REGISTRADO_CORRECTAMENTE = "Usuario registrado con exito";
-	
+
 	public static final String MENSAJE_PROBLEMA_REGISTRANDO_USUARIO = "Hubo un problema registrando el usuario";
-	
+
 	public static final String MENSAJE_EMAIL_EN_USO = "Este email ya está en uso";
-	
+
 	public static final String MENSAJE_CAMPO_VACIO = "Debe llenar este campo";
 
 	public static final String MENSAJE_EMAIL_NO_REGISTRADO = "Email no registrado";
 
 	public static final String MENSAJE_PASSWORD_INCORRECTO = "Contraseña incorrecta";
-	
+
 	public Usuario(int id, String nombre, String email) {
 		super();
 		this.id = id;

@@ -10,7 +10,7 @@ public class Sesion {
 	private GregorianCalendar fechaInicio;
 	private GregorianCalendar fechaFin;
 	private int idUsuario;
-	
+
 	public Sesion(GregorianCalendar fechaInicio, int idUsuario) {
 		super();
 		this.fechaInicio = fechaInicio;
@@ -44,7 +44,7 @@ public class Sesion {
 	public GregorianCalendar getFechaInicio() {
 		return fechaInicio;
 	}
-	
+
 	public String getFechaIncioComoString() {
 		return ConversorFecha.convertirGregorianCalendarEnString(this.fechaInicio);
 	}
@@ -60,7 +60,7 @@ public class Sesion {
 	public void setFechaFin(GregorianCalendar fechaFin) {
 		this.fechaFin = fechaFin;
 	}
-	
+
 	private String getFechaFinComoString() {
 		return ConversorFecha.convertirGregorianCalendarEnString(this.fechaFin);
 	}
@@ -75,9 +75,7 @@ public class Sesion {
 
 	@Override
 	public String toString() {
-		return "Sesion [idSesion=" + idSesion 
-				+ ", fechaInicio=" + getFechaIncioComoString() 
-				+ ", fechaFin=" + getFechaFinComoString()
-				+ ", idUsuario=" + idUsuario + "]";
+		return "Sesion [idSesion=" + idSesion + ", fechaInicio=" + getFechaIncioComoString() + ", fechaFin="
+				+ getFechaFinComoString() + ", idUsuario=" + idUsuario + "]";
 	}
 }

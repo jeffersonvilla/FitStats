@@ -5,7 +5,7 @@ import com.fit.actividad.dao.DaoDetalleActividad;
 public abstract class DetalleActividad {
 
 	protected DaoDetalleActividad daoDetalleActividad;
-	
+
 	private int id;
 
 	public DetalleActividad(int id) {
@@ -27,5 +27,5 @@ public abstract class DetalleActividad {
 		return "Actividad [id=" + id + "]";
 	}
 
-	public abstract boolean guardarEnDB_AsociadoConRegistro(int actividadId);	
+	public abstract boolean guardarEnDB_AsociadoConRegistro(int actividadId);
 }

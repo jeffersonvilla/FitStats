@@ -3,11 +3,12 @@ package com.fit.actividad.modelo;
 public class Natacion extends DetalleActividad {
 
 	public static final int TAMANIO_MAXIMO_ESTILO_NATACION = 50;
-	
-	public static final String MENSAJE_TAMANIO_MAXIMO_ESTILO_NATACION = "Máximo " + TAMANIO_MAXIMO_ESTILO_NATACION + " caracteres";
+
+	public static final String MENSAJE_TAMANIO_MAXIMO_ESTILO_NATACION = "Máximo " + TAMANIO_MAXIMO_ESTILO_NATACION
+			+ " caracteres";
 
 	private float distancia;
-	
+
 	private String estilosNatacion;
 
 	public Natacion(int id, float distancia, String estilosNatacion) {
@@ -38,7 +39,8 @@ public class Natacion extends DetalleActividad {
 
 	@Override
 	public String toString() {
-		return "Natacion [distancia=" + distancia + ", estiloNatacion=" + estilosNatacion + ", idRegistro= " + super.getId() + "]";
+		return "Natacion [distancia=" + distancia + ", estiloNatacion=" + estilosNatacion + ", idRegistro= "
+				+ super.getId() + "]";
 	}
 
 	@Override
