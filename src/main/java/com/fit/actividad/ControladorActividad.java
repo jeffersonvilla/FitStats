@@ -315,8 +315,7 @@ public class ControladorActividad {
 	
 	public void actualizarActividad(int actividadSeleccionada) {
 		Actividad actividad = actividades.get(actividadSeleccionada);
-		PanelFormularioActividad panelActividad = new PanelFormularioActividad(actividad.getFechaHora());
-		vista.mostrarPanelActualizacionActividad(panelActividad);
+		vista.mostrarPanelActualizacionActividad(new PanelFormularioActividad(actividad.getFechaHora()));
 	}
 	
 	public void eliminarActividad(int actividadSeleccionada) {
@@ -355,6 +354,6 @@ public class ControladorActividad {
 	}
 	
 	private int getActividadSelecionada() {
-		return this.vista.getActividadSelecionada();
+		return this.vista.getTipoActividadSelecionada();
 	}
 }

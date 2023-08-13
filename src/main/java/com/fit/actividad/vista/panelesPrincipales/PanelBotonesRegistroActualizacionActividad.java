@@ -21,7 +21,7 @@ import com.fit.actividad.vista.panelFormulario.PanelFormularioNatacion;
 import com.fit.actividad.vista.panelFormulario.PanelFormularioOtraActividad;
 import com.fit.util.Constraints;
 
-public class PanelBotonesRegistroActividad extends JPanel{
+public class PanelBotonesRegistroActualizacionActividad extends JPanel{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -29,11 +29,11 @@ public class PanelBotonesRegistroActividad extends JPanel{
 	
 	private ControladorActividad controlador;
 	
-	public PanelBotonesRegistroActividad(VentanaActividades ventana, ControladorActividad controlador) {
+	public PanelBotonesRegistroActualizacionActividad(VentanaActividades ventana) {
 		super(new GridBagLayout());
 		
 		this.ventana = ventana;
-		this.controlador = controlador;
+		this.controlador = ventana.getControlador();
 		
 		GridBagConstraints constraints = Constraints.getGridBagConstraints();
 		
@@ -51,7 +51,7 @@ public class PanelBotonesRegistroActividad extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				int actividadSelecionada = ventana.getActividadSelecionada();
+				int actividadSelecionada = ventana.getTipoActividadSelecionada();
 				
 				ventana.limpiarCamposError(actividadSelecionada);
 				

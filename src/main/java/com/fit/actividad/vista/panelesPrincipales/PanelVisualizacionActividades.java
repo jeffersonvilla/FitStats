@@ -9,7 +9,6 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
-import com.fit.actividad.ControladorActividad;
 import com.fit.actividad.vista.VentanaActividades;
 
 public class PanelVisualizacionActividades extends JPanel {
@@ -20,11 +19,11 @@ public class PanelVisualizacionActividades extends JPanel {
 	
 	private JTable tablaActividades;
 
-	public PanelVisualizacionActividades(VentanaActividades ventana, ControladorActividad controlador) {
+	public PanelVisualizacionActividades(VentanaActividades ventana) {
 		super(new BorderLayout());
 		ventana.setPanelVisualizacionActividades(this);
 		modeloTablaActividades = getModeloTabla();
-		actualizarListaActividades(controlador.getListaActividades());
+		actualizarListaActividades(ventana.getControlador().getListaActividades());
 		tablaActividades = new JTable(modeloTablaActividades);
 		tablaActividades.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		add(new JScrollPane(this.tablaActividades), BorderLayout.CENTER);

@@ -14,8 +14,7 @@ public class PanelSeleccionActividad extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 
-	public PanelSeleccionActividad(VentanaActividades ventana) {
-		
+	public PanelSeleccionActividad(VentanaActividades ventana) {	
 		super(new GridBagLayout());
 		
 		GridBagConstraints constraints = Constraints.getGridBagConstraints();

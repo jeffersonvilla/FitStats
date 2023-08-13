@@ -12,8 +12,6 @@ public class PanelDetalleActividad extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 
-	private PanelCardFormularioDetalleActividad panelCardFormularioDetalleActividad;
-
 	public PanelDetalleActividad(VentanaActividades ventana) {
 		super(new GridBagLayout());
 		
@@ -22,7 +20,6 @@ public class PanelDetalleActividad extends JPanel{
 		add(new PanelSeleccionActividad(ventana), constraints);
 			
 		constraints.gridx = 1;
-		panelCardFormularioDetalleActividad = new PanelCardFormularioDetalleActividad(ventana);
-		add(this.panelCardFormularioDetalleActividad, constraints);
+		add(new PanelCardFormularioDetalleActividad(ventana), constraints);
 	}
 }

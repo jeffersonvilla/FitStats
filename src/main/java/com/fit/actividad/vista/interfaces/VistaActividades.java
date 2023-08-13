@@ -6,7 +6,7 @@ import com.fit.actividad.vista.panelFormulario.PanelFormularioActividad;
 
 public interface VistaActividades {
 	
-	int getActividadSelecionada();
+	int getTipoActividadSelecionada();
 	
 	void limpiarCamposTexto(int actividad);
 

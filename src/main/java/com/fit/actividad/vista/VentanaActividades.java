@@ -41,17 +41,20 @@ public class VentanaActividades extends JFrame implements VistaActividades, Acti
 	
 	private PanelCardFormularioDetalleActividad panelCardFormularioDetalleActividad;
 	
+	private PanelContenedorRegistroActualizacionActividad panelContenedorRegistroActualizacionActividad;
+	
 	private PanelFormularioActividad panelFormularioActividad;
 
-	private int actividadSelecionada;
+	private int tipoActividadSelecionada;
 	
 	public VentanaActividades(final ControladorActividad controlador) {
 		this.controlador = controlador;		
 		this.opcionesTipoActividad = controlador.getOpcionesTipoActividad();
 		this.cardLayout = new CardLayout();
+		this.panelFormularioActividad = new PanelFormularioActividad();
 		
 		agregarBarraMenu();
-		add(new PanelPrincipalActividades(this, controlador), BorderLayout.CENTER);
+		add(new PanelPrincipalActividades(this), BorderLayout.CENTER);
 		ajustesVentana();
 	} 
 
@@ -95,22 +98,28 @@ public class VentanaActividades extends JFrame implements VistaActividades, Acti
 			JButton boton = (JButton) source;
 			
 			if(boton.getText().equals("Nueva")) {
-				cardLayout.show(panelContenedor, PanelContenedor.PANEL_REGISTRO_ACTIVIDAD);
+				this.panelFormularioActividad = new PanelFormularioActividad();
+				this.panelContenedorRegistroActualizacionActividad.refrescarElementos();
+				cardLayout.show(panelContenedor, PanelContenedor.PANEL_REGISTRO_ACTUALIZACION_ACTIVIDAD);
 				panelBotonesCrudActividad.setVisibilidadBotonesCrudActividades(false);
 			}else if(boton.getText().equals("Ver detalles")) {
-				controlador.verDetallesActividadSeleccionada(panelVisualizacionActividades.getTablaActividades().getSelectedRow());
+				controlador.verDetallesActividadSeleccionada(getActividadSeleccionadaEnTabla());
 			}else if(boton.getText().equals("Actualizar")) {
-				//TODO: implementar
+				controlador.actualizarActividad(getActividadSeleccionadaEnTabla());
 			}else if(boton.getText().equals("Eliminar")) {
-				controlador.eliminarActividad(panelVisualizacionActividades.getTablaActividades().getSelectedRow());
+				controlador.eliminarActividad(getActividadSeleccionadaEnTabla());
 			}
 		}
 		
 		if(source instanceof JComboBox) {
 			JComboBox opciones = (JComboBox) e.getSource();
-			actividadSelecionada = opciones.getSelectedIndex();
+			tipoActividadSelecionada = opciones.getSelectedIndex();
 			cardLayout.show(panelCardFormularioDetalleActividad, opcionesTipoActividad[opciones.getSelectedIndex()]);
 		}
+	}
+
+	public ControladorActividad getControlador() {
+		return controlador;
 	}
 
 	public String[] getOpcionesTipoActividad() {
@@ -150,9 +159,18 @@ public class VentanaActividades extends JFrame implements VistaActividades, Acti
 		this.panelFormularioActividad = panelFormularioActividad;
 	}
 	
+	public void setPanelContenedorRegistroActualizacionActividad(
+			PanelContenedorRegistroActualizacionActividad panelContenedorRegistroActualizacionActividad) {
+		this.panelContenedorRegistroActualizacionActividad = panelContenedorRegistroActualizacionActividad;
+	}
+	
+	private int getActividadSeleccionadaEnTabla() {
+		return panelVisualizacionActividades.getTablaActividades().getSelectedRow();
+	}
+
 	@Override
-	public int getActividadSelecionada() {
-		return this.actividadSelecionada;
+	public int getTipoActividadSelecionada() {
+		return this.tipoActividadSelecionada;
 	}
 	
 	@Override
@@ -260,7 +278,10 @@ public class VentanaActividades extends JFrame implements VistaActividades, Acti
 	
 	@Override
 	public void mostrarPanelActualizacionActividad(PanelFormularioActividad panelActividad) {
-		// TODO Auto-generated method stub
+		this.panelFormularioActividad = panelActividad;
+		panelContenedorRegistroActualizacionActividad.refrescarElementos();
+		cardLayout.show(panelContenedor, PanelContenedor.PANEL_REGISTRO_ACTUALIZACION_ACTIVIDAD);
+		panelBotonesCrudActividad.setVisibilidadBotonesCrudActividades(false);
 	}
 
 	@Override
