@@ -28,10 +28,15 @@ import com.fit.actividad.vista.frameDetalles.VentanaDetallesDeporteEquipo;
 import com.fit.actividad.vista.frameDetalles.VentanaDetallesEntrenamientoGimnasio;
 import com.fit.actividad.vista.frameDetalles.VentanaDetallesEstiramientos;
 import com.fit.actividad.vista.interfaces.VistaActividades;
+import com.fit.actividad.vista.panelFormulario.PanelFomularioEntrenamientoGimnasio;
 import com.fit.actividad.vista.panelFormulario.PanelFormulario;
 import com.fit.actividad.vista.panelFormulario.PanelFormularioActividad;
 import com.fit.actividad.vista.panelFormulario.PanelFormularioCaminata;
 import com.fit.actividad.vista.panelFormulario.PanelFormularioCiclismo;
+import com.fit.actividad.vista.panelFormulario.PanelFormularioDeporteEquipo;
+import com.fit.actividad.vista.panelFormulario.PanelFormularioEstiramientos;
+import com.fit.actividad.vista.panelFormulario.PanelFormularioNatacion;
+import com.fit.actividad.vista.panelFormulario.PanelFormularioOtraActividad;
 import com.fit.principal.ControladorPrincipal;
 import com.fit.usuario.login.Sesion;
 
@@ -141,20 +146,54 @@ public class ControladorActividad {
 				.setUbicación(ubicacion).build();
 	}
 
-	private void registrarActividad(int actividadSeleccionada, Actividad actividad) {
-				
-		/*int idActividad = daoActividad.guardarActividad(actividad);
-		if (idActividad != -1) {
-			actividad.getDetalleActividad().setId(idActividad);
-			if(daoDetalleActividad.guardarDetalleActividad(actividad.getDetalleActividad())) {
+	private void registrarActividad(int actividadSeleccionada, Actividad actividadEntrante) {
+		
+		if(vista.isActualizando()) {
+			if(actualizarActividad(actividades.get(actividadSeleccionada), actividadEntrante)) {
+				vista.actualizarListaActividades(getListaActividades());
+				vista.verListaActividades();
+				JOptionPane.showMessageDialog(null, "Actualizado con exito!");
+			}else {
+				JOptionPane.showMessageDialog(null, "Ha ocurrido un error acutalizando.");
+			}
+		}else {
+			if(crearActividad(actividadEntrante)) {
 				vista.limpiarCamposTexto(getActividadSelecionada());
 				vista.actualizarListaActividades(getListaActividades());
 				vista.verListaActividades();
 				JOptionPane.showMessageDialog(null, "Registrado con exito!");
-			} else JOptionPane.showMessageDialog(null, "Ha ocurrido un error guardando.");
-		} else JOptionPane.showMessageDialog(null, "Ha ocurrido un error guardando.");
-	*/}
+			}else {
+				JOptionPane.showMessageDialog(null, "Ha ocurrido un error guardando.");
+			}
+		}
+	}
+	
+	private boolean actualizarActividad(Actividad actividadOriginal, Actividad actividadEntrante) {
+		boolean actualizadaActividad = false, 
+				actualizadoDetalle = false;
+		if(!actividadOriginal.atributosIguales(actividadEntrante)) {
+			actividadOriginal.setFechaHora(actividadEntrante.getFechaHora());
+			actividadOriginal.setDuracion(actividadEntrante.getDuracion());
+			actividadOriginal.setUbicación(actividadEntrante.getUbicación());
+			actualizadaActividad = daoActividad.actualizarActividad(actividadOriginal);
+		}
+		if(!actividadOriginal.getDetalleActividad().atributosIguales(actividadEntrante.getDetalleActividad())) {
+			actividadEntrante.getDetalleActividad().setId(actividadOriginal.getId());
+			actualizadoDetalle = daoDetalleActividad.actualizarDetalleActividad(actividadEntrante.getDetalleActividad());
+		}	
+		return actualizadaActividad && actualizadoDetalle;
+	}
 
+	private boolean crearActividad(Actividad actividad) {
+		int idActividad = daoActividad.guardarActividad(actividad);
+		if (idActividad != -1) {
+			actividad.getDetalleActividad().setId(idActividad);
+			if(daoDetalleActividad.guardarDetalleActividad(actividad.getDetalleActividad()))
+				return true;
+		}
+		return false;
+	}
+	
 	private boolean validarFecha(Timestamp fecha) {
 		if (fecha != null)
 			return true;
@@ -338,6 +377,21 @@ public class ControladorActividad {
 		} else if(detalleActividad instanceof Ciclismo) {
 			Ciclismo ciclismo = (Ciclismo) detalleActividad;
 			return new PanelFormularioCiclismo(Float.toString(ciclismo.getDistancia()), ciclismo.getTipo_bicicleta());
+		}else if(detalleActividad instanceof Natacion) {
+			Natacion natacion = (Natacion) detalleActividad;
+			return new PanelFormularioNatacion(Float.toString(natacion.getDistancia()), natacion.getEstilosNatacion());
+		}else if(detalleActividad instanceof DeporteEquipo) {
+			DeporteEquipo deporteEquipo = (DeporteEquipo) detalleActividad;
+			return new PanelFormularioDeporteEquipo(deporteEquipo.getNombreDeporte(), deporteEquipo.getNombreEquipos(), deporteEquipo.getResultadoDelPartido());
+		}else if (detalleActividad instanceof EntrenamientoGimnasio) {
+			EntrenamientoGimnasio entrenamiento = (EntrenamientoGimnasio) detalleActividad;
+			return new PanelFomularioEntrenamientoGimnasio(entrenamiento.getEjerciciosRealizados(), entrenamiento.getDescansoEntreEjercicios(), entrenamiento.getDescansoEntreSeries());
+		}else if(detalleActividad instanceof Estiramientos) {
+			Estiramientos estiramientos = (Estiramientos) detalleActividad;
+			return new PanelFormularioEstiramientos(estiramientos.getTipoSesion(), estiramientos.getNivelDificultad());
+		}else if(detalleActividad instanceof OtraActividad) {
+			OtraActividad otraActividad = (OtraActividad) detalleActividad;
+			return new PanelFormularioOtraActividad(otraActividad.getDescripcion());
 		}
 		return null;
 	}

@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import com.fit.actividad.ControladorActividad;
 import com.fit.actividad.vista.VentanaActividades;
 import com.fit.actividad.vista.panelFormulario.PanelFomularioEntrenamientoGimnasio;
+import com.fit.actividad.vista.panelFormulario.PanelFormulario;
 import com.fit.actividad.vista.panelFormulario.PanelFormularioActividad;
 import com.fit.actividad.vista.panelFormulario.PanelFormularioCaminata;
 import com.fit.actividad.vista.panelFormulario.PanelFormularioCiclismo;
@@ -54,10 +55,15 @@ public class PanelBotonesRegistroActualizacionActividad extends JPanel {
 				int actividadSelecionada = ventana.getTipoActividadSelecionada();
 
 				ventana.limpiarCamposError(actividadSelecionada);
-
-				Component componente = ventana.getPanelCardFormularioDetalleActividad()
-						.getComponent(actividadSelecionada);
-
+				
+				Component card = ventana.getPanelCardFormularioDetalleActividad();
+				
+				Component contenido = ventana.getPanelContenidoDetalleActividad();
+				
+				Component componente = (contenido == null)? 
+						((PanelCardFormularioDetalleActividad) card).getComponent(actividadSelecionada) 
+						:(PanelFormulario) contenido;	
+				
 				PanelFormularioActividad panelActividad = ventana.getPanelFormularioActividad();
 
 				if (componente instanceof PanelFormularioCaminata) {

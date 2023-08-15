@@ -21,15 +21,36 @@ public class PanelFomularioEntrenamientoGimnasio extends PanelFormulario {
 	private JTextField textFieldDescansosEntreSeries;
 
 	private JLabel labelErrorDescansosEntreSeries;
+	
+	private String ejerciciosRealizados;
+	
+	private String descansoEjercicios;
+	
+	private String descansoSeries;
 
 	public PanelFomularioEntrenamientoGimnasio() {
 		super();
 
+		inicializar();
+	}
+	
+	public PanelFomularioEntrenamientoGimnasio(String ejerciciosRealizados, String descansoEjercicios,
+			String descansoSeries) {
+		super();
+		this.ejerciciosRealizados = ejerciciosRealizados;
+		this.descansoEjercicios = descansoEjercicios;
+		this.descansoSeries = descansoSeries;
+		
+		inicializar();
+	}
+
+	private void inicializar() {
 		ajustarConstraints(0, 0, 1, 1);
 		add(new JLabel("Ejercicios realizados"), constraints);
 
 		ajustarConstraints(1, 0, 1, 1);
 		this.textAreaEjerciciosRealizados = new JTextArea(3, 10);
+		if(this.ejerciciosRealizados != null) this.textAreaEjerciciosRealizados.setText(this.ejerciciosRealizados);
 		add(this.textAreaEjerciciosRealizados, constraints);
 
 		ajustarConstraints(0, 1, 1, 1);
@@ -37,6 +58,7 @@ public class PanelFomularioEntrenamientoGimnasio extends PanelFormulario {
 
 		ajustarConstraints(1, 1, 1, 1);
 		this.textFieldDescansosEntreEjercicios = new JTextField(10);
+		if(this.descansoEjercicios != null) this.textFieldDescansosEntreEjercicios.setText(this.descansoEjercicios);
 		add(this.textFieldDescansosEntreEjercicios, constraints);
 
 		ajustarConstraints(0, 2, 2, 1);
@@ -48,6 +70,7 @@ public class PanelFomularioEntrenamientoGimnasio extends PanelFormulario {
 
 		ajustarConstraints(1, 3, 1, 1);
 		this.textFieldDescansosEntreSeries = new JTextField(10);
+		if(this.descansoSeries != null) this.textFieldDescansosEntreSeries.setText(this.descansoSeries);
 		add(this.textFieldDescansosEntreSeries, constraints);
 
 		ajustarConstraints(0, 4, 2, 1);

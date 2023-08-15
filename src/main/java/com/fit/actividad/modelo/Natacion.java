@@ -53,4 +53,12 @@ public class Natacion extends DetalleActividad {
 	public int getTipoActividad() {
 		return TipoActividad.NATACION.getValor();
 	}
+
+	@Override
+	public boolean atributosIguales(DetalleActividad detalle) {
+		if(!(detalle instanceof Natacion)) return false;
+		Natacion natacion = (Natacion) detalle;
+		return this.distancia == natacion.getDistancia() &&
+				this.estilosNatacion.equals(natacion.getEstilosNatacion());
+	}
 }

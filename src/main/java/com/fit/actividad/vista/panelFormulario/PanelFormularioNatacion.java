@@ -21,15 +21,31 @@ public class PanelFormularioNatacion extends PanelFormulario implements Validado
 
 	private JLabel labelErrorEstiloNatacion;
 
+	private String distancia;
+	
+	private String estiloNatacion;
+	
 	public PanelFormularioNatacion() {
 		super();
 
+		inicializar();
+	}
+	
+	public PanelFormularioNatacion(String distancia, String estiloNatacion) {
+		super();
+		this.distancia = distancia;
+		this.estiloNatacion = estiloNatacion;
+		
+		inicializar();
+	}
+
+	private void inicializar() {
 		ajustarConstraints(0, 0, 1, 1);
 		add(new JLabel("Distancia"), constraints);
 
 		ajustarConstraints(1, 0, 1, 1);
 		this.textFieldDistancia = new JTextField(15);
-		this.textFieldDistancia.setText("0.0");
+		this.textFieldDistancia.setText((this.distancia != null) ? this.distancia : "0.0");
 		add(this.textFieldDistancia, constraints);
 
 		ajustarConstraints(0, 1, 2, 1);
@@ -41,6 +57,7 @@ public class PanelFormularioNatacion extends PanelFormulario implements Validado
 
 		ajustarConstraints(1, 2, 1, 1);
 		this.textFieldEstiloNatacion = new JTextField(15);
+		if(this.estiloNatacion != null) this.textFieldEstiloNatacion.setText(this.estiloNatacion);
 		add(this.textFieldEstiloNatacion, constraints);
 
 		ajustarConstraints(0, 3, 2, 1);

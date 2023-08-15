@@ -36,4 +36,11 @@ public class OtraActividad extends DetalleActividad {
 	public int getTipoActividad() {
 		return TipoActividad.OTRA_ACTIVIDAD.getValor();
 	}
+
+	@Override
+	public boolean atributosIguales(DetalleActividad detalle) {
+		if(!(detalle instanceof OtraActividad)) return false;
+		OtraActividad otraActividad = (OtraActividad) detalle;
+		return this.descripcion.equals(otraActividad.getDescripcion());
+	}
 }

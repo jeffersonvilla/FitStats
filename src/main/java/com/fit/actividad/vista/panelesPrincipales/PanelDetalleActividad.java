@@ -32,6 +32,7 @@ public class PanelDetalleActividad extends JPanel {
 
 		constraints.gridx = 1;
 		add(new PanelCardFormularioDetalleActividad(ventana), constraints);
+		ventana.setPanelContenidoDetalleActividad(null);
 	}
 
 	private void inicializarElementos(PanelFormulario panel) {
@@ -41,6 +42,7 @@ public class PanelDetalleActividad extends JPanel {
 
 		constraints.gridx = 1;
 		add(panel, constraints);
+		ventana.setPanelContenidoDetalleActividad(panel);
 	}
 	
 	public void setPanelFormDetalleActividad(PanelFormulario panelFormDetalleActividad) {

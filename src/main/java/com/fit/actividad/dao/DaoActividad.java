@@ -19,44 +19,38 @@ public class DaoActividad {
 	}
 
 	public int guardarActividad(Actividad actividad) {
-		try {
-			System.out.println("Entrante: "+actividad);
-			Actividad actividadGuardada = leerActividadPorId(actividad.getId());
-			if(actividadGuardada == null) {
-				
-				System.out.println("Actividad nueva se inserta en base de datos");
-				
-				String query = "insert into actividad (user_id, tipo_actividad_id, fecha_hora, duracion, ubicacion) values(?, ?, ?, ?, ?);";
-				PreparedStatement insertStatement = this.conexion.prepareStatement(query);
-				insertStatement.setInt(1, actividad.getUserId());
-				insertStatement.setInt(2, actividad.getDetalleActividad().getTipoActividad());
-				insertStatement.setTimestamp(3, actividad.getFechaHora());
-				insertStatement.setTime(4, actividad.getDuracion());
-				insertStatement.setString(5, actividad.getUbicación());
-				if (insertStatement.executeUpdate() > 0) {
-					PreparedStatement statementForId = this.conexion.prepareStatement("select last_insert_id();");
-					ResultSet resultadoActividadId = statementForId.executeQuery();
-					return (resultadoActividadId.next()) ? resultadoActividadId.getInt(1) : -1;
-				}
-				return -1;
-			} 
-			else if(actividad.equals(actividadGuardada)) {
-				System.out.println("No se han modificado campos de la actividad");
-				return actividad.getId();
+		try {	
+			String query = "insert into actividad (user_id, tipo_actividad_id, fecha_hora, duracion, ubicacion) values(?, ?, ?, ?, ?);";
+			PreparedStatement insertStatement = this.conexion.prepareStatement(query);
+			insertStatement.setInt(1, actividad.getUserId());
+			insertStatement.setInt(2, actividad.getDetalleActividad().getTipoActividad());
+			insertStatement.setTimestamp(3, actividad.getFechaHora());
+			insertStatement.setTime(4, actividad.getDuracion());
+			insertStatement.setString(5, actividad.getUbicación());
+			if (insertStatement.executeUpdate() > 0) {
+				PreparedStatement statementForId = this.conexion.prepareStatement("select last_insert_id();");
+				ResultSet resultadoActividadId = statementForId.executeQuery();
+				return (resultadoActividadId.next()) ? resultadoActividadId.getInt(1) : -1;
 			}
-			else {
-				System.out.println("Se han modificado campos de la actividad se actualiza en base de datos");
-				String query = "update actividad set fecha_hora = ?, duracion = ?, ubicacion = ? where actividad_id = ?;";
-				PreparedStatement updateStatement = this.conexion.prepareStatement(query);
-				updateStatement.setInt(4, actividad.getId());
-				updateStatement.setTimestamp(1, actividad.getFechaHora());
-				updateStatement.setTime(2, actividad.getDuracion());
-				updateStatement.setString(3, actividad.getUbicación());
-				return(updateStatement.executeUpdate() > 0)? actividad.getId() : -1;
-			}
+			return -1;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return -1;
+		}
+	}
+	
+	public boolean actualizarActividad(Actividad actividad) {
+		try {
+			String query = "update actividad set fecha_hora = ?, duracion = ?, ubicacion = ? where actividad_id = ?;";
+			PreparedStatement updateStatement = this.conexion.prepareStatement(query);
+			updateStatement.setInt(4, actividad.getId());
+			updateStatement.setTimestamp(1, actividad.getFechaHora());
+			updateStatement.setTime(2, actividad.getDuracion());
+			updateStatement.setString(3, actividad.getUbicación());
+			return(updateStatement.executeUpdate() > 0);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
 		}
 	}
 
@@ -71,7 +65,7 @@ public class DaoActividad {
 			return false;
 		}
 	}
-	
+	/*
 	private Actividad leerActividadPorId(int idActividad) {
 		try {
 			String query = "select * from actividad where actividad_id = ?;";
@@ -95,7 +89,7 @@ public class DaoActividad {
 			return null;
 		}
 	}
-
+	 */
 	public List<Actividad> leerListaActividadesPorUsuarioId(int usuarioId) {
 		try {
 			String query = "select actividad_id, user_id, a.tipo_actividad_id as tipo_actividad, fecha_hora, duracion, ubicacion "

@@ -69,4 +69,13 @@ public class EntrenamientoGimnasio extends DetalleActividad {
 	public int getTipoActividad() {
 		return TipoActividad.ENTRENAMIENTO_GIMNASIO.getValor();
 	}
+
+	@Override
+	public boolean atributosIguales(DetalleActividad detalle) {
+		if(!(detalle instanceof EntrenamientoGimnasio)) return false;
+		EntrenamientoGimnasio entrenamiento = (EntrenamientoGimnasio) detalle;
+		return this.ejerciciosRealizados.equals(entrenamiento.getEjerciciosRealizados()) &&
+				this.descansoEntreEjercicios.equals(entrenamiento.getDescansoEntreEjercicios()) &&
+				this.descansoEntreSeries.equals(entrenamiento.getDescansoEntreSeries());
+	}
 }

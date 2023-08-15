@@ -144,6 +144,129 @@ public class DaoDetalleActividad {
 		}
 	}
 	
+	public boolean actualizarDetalleActividad(DetalleActividad detalleActividad) {
+		 Class<? extends DetalleActividad> clase = detalleActividad.getClass();
+		    switch (clase.getSimpleName()) {
+		        case "Caminata":
+		            return actualizarCaminata((Caminata) detalleActividad);
+		        case "Ciclismo":
+		            return actualizarCiclismo((Ciclismo) detalleActividad);
+		        case "Natacion":
+		            return actualizarNatacion((Natacion) detalleActividad);
+		        case "DeporteEquipo":
+		        	return actualizarDeporteEquipo((DeporteEquipo) detalleActividad);
+		        case "EntrenamientoGimnasio":
+		        	return actualizarEntrenamientoGimnasio((EntrenamientoGimnasio) detalleActividad);
+		        case "Estiramientos":
+		        	return actualizarEstiramientos((Estiramientos) detalleActividad);
+		        case "OtraActividad":
+		        	return actualizarOtraActividad((OtraActividad) detalleActividad);
+		        default:
+		            return false;
+		    }
+	}
+	
+	private boolean actualizarCaminata(Caminata caminata) {
+		try {
+			String query = "update detalles_caminanta_carrera set distancia = ? where actividad_id = ?;";
+			PreparedStatement statement = this.conexion.prepareStatement(query);
+			statement.setInt(2, caminata.getId());
+			statement.setFloat(1, caminata.getDistancia());
+			return statement.executeUpdate() > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	private boolean actualizarCiclismo(Ciclismo ciclismo) {
+		try {
+			String query = "update detalles_ciclismo set distancia = ?, tipo_bicicleta = ? where actividad_id = ?;";
+			PreparedStatement statement = this.conexion.prepareStatement(query);
+			statement.setInt(3, ciclismo.getId());
+			statement.setFloat(1, ciclismo.getDistancia());
+			statement.setString(2, ciclismo.getTipo_bicicleta());
+			return statement.executeUpdate() > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	private boolean actualizarNatacion(Natacion natacion) {
+		try {
+			String query = "update detalles_natacion set distancia = ?, estilos_natacion = ? where actividad_id = ?;";
+			PreparedStatement statement = this.conexion.prepareStatement(query);
+			statement.setInt(3, natacion.getId());
+			statement.setFloat(1, natacion.getDistancia());
+			statement.setString(2, natacion.getEstilosNatacion());
+			return statement.executeUpdate() > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	private boolean actualizarDeporteEquipo(DeporteEquipo deporteEquipo) {
+		try {
+			String query = "update detalles_deporte_equipo set nombre_deporte = ?, nombre_equipo = ?, resultado_partido = ? where actividad_id = ?;";
+			PreparedStatement statement = this.conexion.prepareStatement(query);
+			statement.setInt(4, deporteEquipo.getId());
+			statement.setString(1, deporteEquipo.getNombreDeporte());
+			statement.setString(2, deporteEquipo.getNombreEquipos());
+			statement.setString(3, deporteEquipo.getResultadoDelPartido());
+			return statement.executeUpdate() > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	private boolean actualizarEntrenamientoGimnasio(EntrenamientoGimnasio entrenamiento) {
+		try {
+			String query = "update detalles_entrenamiento set ejercicios_realizados = ?, descanso_entre_ejercicios = ?, descanso_entre_series = ? where actividad_id = ?;";
+			PreparedStatement statement = this.conexion.prepareStatement(query);
+			statement.setInt(4, entrenamiento.getId());
+			statement.setString(1, entrenamiento.getEjerciciosRealizados());
+			statement.setString(2, entrenamiento.getDescansoEntreEjercicios());
+			statement.setString(3, entrenamiento.getDescansoEntreSeries());
+			return statement.executeUpdate() > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+
+	private boolean actualizarEstiramientos(Estiramientos estiramientos) {
+		try {
+			String query = "update detalles_yoga_estiramientos set tipo_sesion = ?, nivel_dificultad = ? where actividad_id = ?;";
+			PreparedStatement statement = this.conexion.prepareStatement(query);
+			statement.setInt(3, estiramientos.getId());
+			statement.setString(1, estiramientos.getTipoSesion());
+			statement.setString(2, estiramientos.getNivelDificultad());
+			return statement.executeUpdate() > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+
+	private boolean actualizarOtraActividad(OtraActividad otraActividad) {
+		try {
+			String query = "update detalles_otra_actividad set descripcion = ? where actividad_id = ?;";
+			PreparedStatement statement = this.conexion.prepareStatement(query);
+			statement.setInt(2, otraActividad.getId());
+			statement.setString(1, otraActividad.getDescripcion());
+			return statement.executeUpdate() > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+	
 	public DetalleActividad leerDetalleActividad(int actividadId, int tipoActividad) {
 		System.out.println("actividadId: " + actividadId + " ,tipoActividad: " + tipoActividad);
 		switch (tipoActividad) {

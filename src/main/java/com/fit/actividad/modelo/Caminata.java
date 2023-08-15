@@ -31,4 +31,10 @@ public class Caminata extends DetalleActividad {
 		return TipoActividad.CAMINATA.getValor();
 	}
 
+	@Override
+	public boolean atributosIguales(DetalleActividad detalle) {
+		if(!(detalle instanceof Caminata)) return false;
+		return this.distancia == ((Caminata) detalle).getDistancia();
+	}
+
 }

@@ -22,15 +22,35 @@ public class PanelFormularioDeporteEquipo extends PanelFormulario {
 	private JTextField textFieldResultadoDelPartido;
 
 	private JLabel labelErrorResultadoDelPartido;
+	
+	private String nombreDeporte;
+	
+	private String nombreEquipos;
+	
+	private String resultadoPartido;
 
 	public PanelFormularioDeporteEquipo() {
 		super();
 
+		inicializar();
+	}
+
+	public PanelFormularioDeporteEquipo(String nombreDeporte, String nombreEquipos, String resultadoPartido) {
+		super();
+		this.nombreDeporte = nombreDeporte;
+		this.nombreEquipos = nombreEquipos;
+		this.resultadoPartido = resultadoPartido;
+		
+		inicializar();
+	}
+
+	private void inicializar() {
 		ajustarConstraints(0, 0, 1, 1);
 		add(new JLabel("Nombre del deporte"), constraints);
 
 		ajustarConstraints(1, 0, 1, 1);
 		this.textFieldNombreDeporte = new JTextField(15);
+		if(this.nombreDeporte != null) this.textFieldNombreDeporte.setText(this.nombreDeporte);
 		add(this.textFieldNombreDeporte, constraints);
 
 		ajustarConstraints(0, 1, 2, 1);
@@ -42,6 +62,7 @@ public class PanelFormularioDeporteEquipo extends PanelFormulario {
 
 		ajustarConstraints(1, 2, 1, 1);
 		this.textFieldNombreEquipos = new JTextField(15);
+		if(this.nombreEquipos != null) this.textFieldNombreEquipos.setText(this.nombreEquipos);
 		add(this.textFieldNombreEquipos, constraints);
 
 		ajustarConstraints(0, 3, 2, 1);
@@ -53,13 +74,14 @@ public class PanelFormularioDeporteEquipo extends PanelFormulario {
 
 		ajustarConstraints(1, 4, 1, 1);
 		this.textFieldResultadoDelPartido = new JTextField(15);
+		if(this.resultadoPartido != null) this.textFieldResultadoDelPartido.setText(this.resultadoPartido);
 		add(this.textFieldResultadoDelPartido, constraints);
 
 		ajustarConstraints(0, 5, 2, 1);
 		this.labelErrorResultadoDelPartido = getLabelError();
 		add(this.labelErrorResultadoDelPartido, constraints);
 	}
-
+	
 	@Override
 	public void limpiarCamposTexto() {
 		this.textFieldNombreDeporte.setText("");

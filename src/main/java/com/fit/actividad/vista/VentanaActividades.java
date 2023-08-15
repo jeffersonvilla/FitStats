@@ -53,6 +53,8 @@ public class VentanaActividades extends JFrame implements VistaActividades, Acti
 	private PanelFormularioActividad panelFormularioActividad;
 
 	private int tipoActividadSelecionada;
+	
+	private boolean actualizando = false;
 
 	public VentanaActividades(final ControladorActividad controlador) {
 		this.controlador = controlador;
@@ -106,17 +108,19 @@ public class VentanaActividades extends JFrame implements VistaActividades, Acti
 			JButton boton = (JButton) source;
 
 			if (boton.getText().equals("Nueva")) {
+				this.actualizando = false;
+				this.panelSeleccionActividades.refrescar();
 				this.panelFormularioActividad = new PanelFormularioActividad();
 				this.panelDetalleActividad = new PanelDetalleActividad(this);
 				this.panelContenedorRegistroActualizacionActividad.refrescarElementos();
 				this.panelContenidoDetalleActividad = new PanelCardFormularioDetalleActividad(this);
 				this.panelDetalleActividad.refrescarElementos();
-				this.panelSeleccionActividades.refrescar();
 				cardLayout.show(panelContenedor, PanelContenedor.PANEL_REGISTRO_ACTUALIZACION_ACTIVIDAD);
 				panelBotonesCrudActividad.setVisibilidadBotonesCrudActividades(false);
 			} else if (boton.getText().equals("Ver detalles")) {
 				controlador.verDetallesActividadSeleccionada(getActividadSeleccionadaEnTabla());
 			} else if (boton.getText().equals("Actualizar")) {
+				this.actualizando = true;
 				controlador.getInfoActividadActualizar(getActividadSeleccionadaEnTabla());
 			} else if (boton.getText().equals("Eliminar")) {
 				controlador.eliminarActividad(getActividadSeleccionadaEnTabla());
@@ -154,7 +158,7 @@ public class VentanaActividades extends JFrame implements VistaActividades, Acti
 		this.panelVisualizacionActividades = panelVisualizacionActividades;
 	}
 
-	public PanelCardFormularioDetalleActividad getPanelCardFormularioDetalleActividad() {
+	public Component getPanelCardFormularioDetalleActividad() {
 		return panelCardFormularioDetalleActividad;
 	}
 
@@ -198,6 +202,11 @@ public class VentanaActividades extends JFrame implements VistaActividades, Acti
 
 	public void setPanelDetalleActividad(PanelDetalleActividad panelDetalleActividad) {
 		this.panelDetalleActividad = panelDetalleActividad;
+	}
+
+	@Override
+	public boolean isActualizando() {
+		return actualizando;
 	}
 
 	@Override

@@ -71,4 +71,13 @@ public class DeporteEquipo extends DetalleActividad {
 	public int getTipoActividad() {
 		return TipoActividad.DEPORTES_EQUIPO.getValor();
 	}
+
+	@Override
+	public boolean atributosIguales(DetalleActividad detalle) {
+		if(!(detalle instanceof DeporteEquipo)) return false;
+		DeporteEquipo deporte = (DeporteEquipo) detalle;
+		return this.nombreDeporte.equals(deporte.getNombreDeporte()) &&
+				this.nombreEquipos.equals(deporte.getNombreEquipos()) &&
+				this.resultadoDelPartido.equals(deporte.getResultadoDelPartido());
+	}
 }

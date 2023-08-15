@@ -3,7 +3,6 @@ package com.fit.actividad.modelo;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Objects;
 
 public class Actividad {
 

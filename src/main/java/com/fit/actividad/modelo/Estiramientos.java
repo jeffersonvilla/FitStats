@@ -54,4 +54,12 @@ public class Estiramientos extends DetalleActividad {
 	public int getTipoActividad() {
 		return TipoActividad.ESTIRAMIENTOS.getValor();
 	}
+
+	@Override
+	public boolean atributosIguales(DetalleActividad detalle) {
+		if(!(detalle instanceof Estiramientos)) return false;
+		Estiramientos estiramientos = (Estiramientos) detalle;
+		return this.tipoSesion.equals(estiramientos.getTipoSesion()) &&
+				this.nivelDificultad.equals(estiramientos.getNivelDificultad());
+	}
 }

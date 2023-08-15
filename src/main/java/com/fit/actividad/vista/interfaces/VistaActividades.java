@@ -43,4 +43,6 @@ public interface VistaActividades {
 	
 	void mostrarPanelActualizacionActividad(PanelFormularioActividad panelActividad, int tipoActividad,
 			PanelFormulario panelDetalleActividad);
+
+	boolean isActualizando();
 }

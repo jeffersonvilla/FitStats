@@ -18,15 +18,32 @@ public class PanelFormularioEstiramientos extends PanelFormulario {
 	private JTextField textFieldNivelDificultad;
 
 	private JLabel labelErrorNivelDificultad;
+	
+	private String tipoSesion;
+	
+	private String nivelDificultad;
 
 	public PanelFormularioEstiramientos() {
 		super();
 
+		inicializar();
+	}
+	
+	public PanelFormularioEstiramientos(String tipoSesion, String nivelDificultad) {
+		super();
+		this.tipoSesion = tipoSesion;
+		this.nivelDificultad = nivelDificultad;
+		
+		inicializar();
+	}
+
+	private void inicializar() {
 		ajustarConstraints(0, 0, 1, 1);
 		add(new JLabel("Tipo de sesion"), constraints);
 
 		ajustarConstraints(1, 0, 1, 1);
 		this.textFieldTipoSesion = new JTextField(15);
+		if(this.tipoSesion != null) this.textFieldTipoSesion.setText(this.tipoSesion);
 		add(this.textFieldTipoSesion, constraints);
 
 		ajustarConstraints(0, 1, 2, 1);
@@ -38,13 +55,14 @@ public class PanelFormularioEstiramientos extends PanelFormulario {
 
 		ajustarConstraints(1, 2, 1, 1);
 		this.textFieldNivelDificultad = new JTextField(15);
+		if(this.nivelDificultad != null) this.textFieldNivelDificultad.setText(this.nivelDificultad);
 		add(this.textFieldNivelDificultad, constraints);
 
 		ajustarConstraints(0, 3, 2, 1);
 		this.labelErrorNivelDificultad = getLabelError();
 		add(this.labelErrorNivelDificultad, constraints);
 	}
-
+	
 	@Override
 	public void limpiarCamposTexto() {
 		this.textFieldTipoSesion.setText("");

@@ -49,4 +49,12 @@ public class Ciclismo extends DetalleActividad {
 	public int getTipoActividad() {
 		return TipoActividad.CICLISMO.getValor();
 	}
+
+	@Override
+	public boolean atributosIguales(DetalleActividad detalle) {
+		if(!(detalle instanceof Ciclismo)) return false;
+		Ciclismo ciclismo = (Ciclismo) detalle;
+		return this.distancia == ciclismo.getDistancia() &&
+				this.tipo_bicicleta.equals(ciclismo.getTipo_bicicleta());
+	}
 }

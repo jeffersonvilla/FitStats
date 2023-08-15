@@ -30,4 +30,6 @@ public abstract class DetalleActividad {
 	}
 	
 	public abstract int getTipoActividad();
+	
+	public abstract boolean atributosIguales (DetalleActividad detalle);
 }
