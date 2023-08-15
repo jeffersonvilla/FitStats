@@ -7,6 +7,8 @@ public abstract class DetalleActividad {
 	protected DaoDetalleActividad daoDetalleActividad;
 
 	private int id;
+	
+	public DetalleActividad() {}
 
 	public DetalleActividad(int id) {
 		super();
@@ -26,6 +28,6 @@ public abstract class DetalleActividad {
 	public String toString() {
 		return "Actividad [id=" + id + "]";
 	}
-
-	public abstract boolean guardarEnDB_AsociadoConRegistro(int actividadId);
+	
+	public abstract int getTipoActividad();
 }

@@ -48,6 +48,12 @@ public class PanelFormularioActividad extends PanelFormulario {
 	private Border borderDefault;
 
 	private Timestamp fechaHora;
+	
+	private int horasDuracion = -1;
+	
+	private int minutosDuracion = -1;
+	
+	private String ubicacion;
 
 	public PanelFormularioActividad() {
 		super();
@@ -55,9 +61,16 @@ public class PanelFormularioActividad extends PanelFormulario {
 		inicializarCampos();
 	}
 
-	public PanelFormularioActividad(Timestamp fechaHora) {
+	public PanelFormularioActividad(Timestamp fechaHora, Time duracion, String ubicacion) {
 		super();
 		this.fechaHora = fechaHora;
+		if(duracion != null) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTimeInMillis(duracion.getTime());
+			this.horasDuracion = calendar.get(Calendar.HOUR_OF_DAY);
+			this.minutosDuracion = calendar.get(Calendar.MINUTE);
+		}
+		this.ubicacion = ubicacion;
 		inicializarCampos();
 	}
 
@@ -92,14 +105,14 @@ public class PanelFormularioActividad extends PanelFormulario {
 		add(new JLabel("hora(s):"), constraints);
 
 		ajustarConstraints(4, 0, 1, 1);
-		this.duracionHoras = getSelectorDuracion(23);
+		this.duracionHoras = getSelectorDuracion(23, horasDuracion);
 		add(this.duracionHoras, constraints);
 
 		ajustarConstraints(5, 0, 1, 1);
 		add(new JLabel("minutos"), constraints);
 
 		ajustarConstraints(6, 0, 1, 1);
-		this.duracionMinutos = getSelectorDuracion(59);
+		this.duracionMinutos = getSelectorDuracion(59, minutosDuracion);
 		add(this.duracionMinutos, constraints);
 
 		ajustarConstraints(1, 1, 3, 1);
@@ -115,6 +128,7 @@ public class PanelFormularioActividad extends PanelFormulario {
 
 		ajustarConstraints(3, 2, 4, 1);
 		this.textFieldUbicacion = new JTextField(10);
+		if(this.ubicacion != null) this.textFieldUbicacion.setText(ubicacion);
 		add(this.textFieldUbicacion, constraints);
 
 		ajustarConstraints(0, 3, 6, 1);
@@ -137,12 +151,12 @@ public class PanelFormularioActividad extends PanelFormulario {
 		JSpinner selectorHora = new JSpinner(modelo);
 		JSpinner.DateEditor editor = new JSpinner.DateEditor(selectorHora, "HH:mm");
 		selectorHora.setEditor(editor);
-		selectorHora.setValue(new Date());
+		modelo.setValue((this.fechaHora != null) ? new Date(this.fechaHora.getTime()): new Date());
 		return selectorHora;
 	}
 
-	private JSpinner getSelectorDuracion(int maximo) {
-		JSpinner spinner = new JSpinner(new SpinnerNumberModel(0, 0, maximo, 1));
+	private JSpinner getSelectorDuracion(int maximo, int value) {
+		JSpinner spinner = new JSpinner(new SpinnerNumberModel(((value != -1)? value : 0), 0, maximo, 1));
 		return spinner;
 	}
 

@@ -28,7 +28,10 @@ import com.fit.actividad.vista.frameDetalles.VentanaDetallesDeporteEquipo;
 import com.fit.actividad.vista.frameDetalles.VentanaDetallesEntrenamientoGimnasio;
 import com.fit.actividad.vista.frameDetalles.VentanaDetallesEstiramientos;
 import com.fit.actividad.vista.interfaces.VistaActividades;
+import com.fit.actividad.vista.panelFormulario.PanelFormulario;
 import com.fit.actividad.vista.panelFormulario.PanelFormularioActividad;
+import com.fit.actividad.vista.panelFormulario.PanelFormularioCaminata;
+import com.fit.actividad.vista.panelFormulario.PanelFormularioCiclismo;
 import com.fit.principal.ControladorPrincipal;
 import com.fit.usuario.login.Sesion;
 
@@ -69,89 +72,88 @@ public class ControladorActividad {
 		this.vista = vista;
 	}
 
-	public void registrarCaminata(Timestamp fecha, Time duracion, String ubicacion, String distancia) {
+	public void registrarCaminata(int actividadSeleccionada, Timestamp fecha, Time duracion, String ubicacion, String distancia) {
 		if (validarFecha(fecha)) {
 			if (validarDistancia(distancia))
-				registrarActividad(getActividad(fecha, duracion, ubicacion),
-						new Caminata(getActividadSelecionada() + 1, Float.parseFloat(distancia)));
+				registrarActividad(actividadSeleccionada, getActividad(fecha, duracion, ubicacion, new Caminata(Float.parseFloat(distancia))));
 		}
 	}
 
-	public void registrarCiclismo(Timestamp fecha, Time duracion, String ubicacion, String distancia,
+	public void registrarCiclismo(int actividadSeleccionada, Timestamp fecha, Time duracion, String ubicacion, String distancia,
 			String tipoBicicleta) {
 		if (validarFecha(fecha)) {
 			if (validarDatosCiclismo(distancia, tipoBicicleta)) {
-				registrarActividad(getActividad(fecha, duracion, ubicacion),
-						new Ciclismo(getActividadSelecionada() + 1, Float.parseFloat(distancia), tipoBicicleta));
+				registrarActividad(actividadSeleccionada, getActividad(fecha, duracion, ubicacion, new Ciclismo(Float.parseFloat(distancia), tipoBicicleta)));
 			}
 		}
 	}
 
-	public void registrarNatacion(Timestamp fecha, Time duracion, String ubicacion, String distancia,
+	public void registrarNatacion(int actividadSeleccionada, Timestamp fecha, Time duracion, String ubicacion, String distancia,
 			String estiloNatacion) {
 		if (validarFecha(fecha)) {
 			if (validarDatosNatacion(distancia, estiloNatacion)) {
-				registrarActividad(getActividad(fecha, duracion, ubicacion),
-						new Natacion(getActividadSelecionada() + 1, Float.parseFloat(distancia), estiloNatacion));
+				registrarActividad(actividadSeleccionada, getActividad(fecha, duracion, ubicacion, new Natacion(Float.parseFloat(distancia), estiloNatacion)));
 			}
 		}
 	}
 
-	public void registrarDeporteEquipo(Timestamp fecha, Time duracion, String ubicacion, String nombreDeporte,
+	public void registrarDeporteEquipo(int actividadSeleccionada, Timestamp fecha, Time duracion, String ubicacion, String nombreDeporte,
 			String nombreEquipos, String resultadoDelPartido) {
 		if (validarFecha(fecha)) {
 			if (validarDatosDeporteEquipo(nombreDeporte, nombreEquipos, resultadoDelPartido))
-				registrarActividad(getActividad(fecha, duracion, ubicacion), new DeporteEquipo(
-						getActividadSelecionada(), nombreDeporte, nombreEquipos, resultadoDelPartido));
+				registrarActividad(actividadSeleccionada, getActividad(fecha, duracion, ubicacion, 
+						new DeporteEquipo(nombreDeporte, nombreEquipos, resultadoDelPartido)));
 		}
 	}
 
-	public void registrarEntrenamientoGimnasio(Timestamp fecha, Time duracion, String ubicacion,
+	public void registrarEntrenamientoGimnasio(int actividadSeleccionada, Timestamp fecha, Time duracion, String ubicacion,
 			String ejerciciosRealizados, String descansosEntreEjercicios, String descansosEntreSeries) {
 		if (validarFecha(fecha)) {
 			if (validarDatosEntrenamientoGimnasio(descansosEntreEjercicios, descansosEntreSeries)) {
-				registrarActividad(getActividad(fecha, duracion, ubicacion),
-						new EntrenamientoGimnasio(getActividadSelecionada() + 1, ejerciciosRealizados,
-								descansosEntreEjercicios, descansosEntreSeries));
+				registrarActividad(actividadSeleccionada, getActividad(fecha, duracion, ubicacion, new EntrenamientoGimnasio(ejerciciosRealizados,
+						descansosEntreEjercicios, descansosEntreSeries)));
 			}
 		}
 	}
 
-	public void registrarEstiramientos(Timestamp fecha, Time duracion, String ubicacion, String tipoSesion,
+	public void registrarEstiramientos(int actividadSeleccionada, Timestamp fecha, Time duracion, String ubicacion, String tipoSesion,
 			String nivelDificultad) {
 		if (validarFecha(fecha)) {
 			if (validarDatosEstiramientos(tipoSesion, nivelDificultad)) {
-				registrarActividad(getActividad(fecha, duracion, ubicacion),
-						new Estiramientos(getActividadSelecionada() + 1, tipoSesion, nivelDificultad));
+				registrarActividad(actividadSeleccionada, getActividad(fecha, duracion, ubicacion, new Estiramientos(tipoSesion, nivelDificultad)));
 			}
 		}
 	}
 
-	public void registrarOtraActividad(Timestamp fecha, Time duracion, String ubicacion, String descripcion) {
+	public void registrarOtraActividad(int actividadSeleccionada, Timestamp fecha, Time duracion, String ubicacion, String descripcion) {
 		if (validarFecha(fecha)) {
 			if (validarDescripcion(descripcion)) {
-				registrarActividad(getActividad(fecha, duracion, ubicacion),
-						new OtraActividad(getActividadSelecionada() + 1, descripcion));
+				registrarActividad(actividadSeleccionada, getActividad(fecha, duracion, ubicacion, new OtraActividad(descripcion)));
 			}
 		}
 	}
 
-	private Actividad getActividad(Timestamp fecha, Time duracion, String ubicacion) {
-		return new Actividad.ActividadBuilder().setUserId(this.sesion.getIdUsuario())
-				.setTipoActividadId(getActividadSelecionada() + 1).setFechaHora(fecha).setDuracion(duracion)
+	private Actividad getActividad(Timestamp fecha, Time duracion, String ubicacion, DetalleActividad detalleActividad) {
+		return new Actividad.ActividadBuilder()
+				.setUserId(this.sesion.getIdUsuario())
+				.setDetalleActividad(detalleActividad)
+				.setFechaHora(fecha).setDuracion(duracion)
 				.setUbicación(ubicacion).build();
 	}
 
-	private void registrarActividad(Actividad actividad, DetalleActividad detalleActividad) {
-		int idActividad = actividad.guardarEnDB();
-		if (idActividad != -1 && detalleActividad.guardarEnDB_AsociadoConRegistro(idActividad)) {
-			vista.limpiarCamposTexto(getActividadSelecionada());
-			vista.actualizarListaActividades(getListaActividades());
-			vista.verListaActividades();
-			JOptionPane.showMessageDialog(null, "Registrado con exito!");
-		} else
-			JOptionPane.showMessageDialog(null, "Ha ocurrido un error guardando.");
-	}
+	private void registrarActividad(int actividadSeleccionada, Actividad actividad) {
+				
+		/*int idActividad = daoActividad.guardarActividad(actividad);
+		if (idActividad != -1) {
+			actividad.getDetalleActividad().setId(idActividad);
+			if(daoDetalleActividad.guardarDetalleActividad(actividad.getDetalleActividad())) {
+				vista.limpiarCamposTexto(getActividadSelecionada());
+				vista.actualizarListaActividades(getListaActividades());
+				vista.verListaActividades();
+				JOptionPane.showMessageDialog(null, "Registrado con exito!");
+			} else JOptionPane.showMessageDialog(null, "Ha ocurrido un error guardando.");
+		} else JOptionPane.showMessageDialog(null, "Ha ocurrido un error guardando.");
+	*/}
 
 	private boolean validarFecha(Timestamp fecha) {
 		if (fecha != null)
@@ -285,7 +287,7 @@ public class ControladorActividad {
 
 	public void verDetallesActividadSeleccionada(int actividadSeleccionada) {
 		Actividad actividad = this.actividades.get(actividadSeleccionada);
-		switch (actividad.getTipoActividadId()) {
+		switch (actividad.getTipoActividad()) {
 		case 1 -> {
 			Caminata caminata = this.daoDetalleActividad.leerDetallesCaminata(actividad.getId());
 			new VentanaDetallesCaminata(String.valueOf(caminata.getDistancia()));
@@ -321,9 +323,23 @@ public class ControladorActividad {
 		}
 	}
 
-	public void actualizarActividad(int actividadSeleccionada) {
+	public void getInfoActividadActualizar(int actividadSeleccionada) {
 		Actividad actividad = actividades.get(actividadSeleccionada);
-		vista.mostrarPanelActualizacionActividad(new PanelFormularioActividad(actividad.getFechaHora()));
+		actividad.setDetalleActividad(daoDetalleActividad.leerDetalleActividad(actividad.getId(), actividad.getTipoActividad()));
+		vista.mostrarPanelActualizacionActividad(
+				new PanelFormularioActividad(actividad.getFechaHora(), actividad.getDuracion(), actividad.getUbicación()),
+				actividad.getTipoActividad(), getPanelFormularioDetalles(actividad.getDetalleActividad()));
+	}
+	
+	private PanelFormulario getPanelFormularioDetalles(DetalleActividad detalleActividad) {
+		if(detalleActividad instanceof Caminata) {
+			Caminata caminata = (Caminata) detalleActividad;
+			return new PanelFormularioCaminata(Float.toString(caminata.getDistancia()));
+		} else if(detalleActividad instanceof Ciclismo) {
+			Ciclismo ciclismo = (Ciclismo) detalleActividad;
+			return new PanelFormularioCiclismo(Float.toString(ciclismo.getDistancia()), ciclismo.getTipo_bicicleta());
+		}
+		return null;
 	}
 
 	public void eliminarActividad(int actividadSeleccionada) {
@@ -351,7 +367,7 @@ public class ControladorActividad {
 		List<Object[]> actividadesObjectos = new ArrayList<>();
 		if (actividades != null) {
 			for (Actividad actividad : this.actividades) {
-				actividadesObjectos.add(new Object[] { this.tipoActividades[actividad.getTipoActividadId() - 1],
+				actividadesObjectos.add(new Object[] { this.tipoActividades[actividad.getTipoActividad() - 1],
 						actividad.getFechaHora(), actividad.getDuracion(), actividad.getUbicación() });
 			}
 		}

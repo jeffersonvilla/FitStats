@@ -8,6 +8,10 @@ public class Caminata extends DetalleActividad {
 		super(id);
 		this.distancia = distancia;
 	}
+	
+	public Caminata(float distancia) {
+		this.distancia = distancia;
+	}
 
 	public float getDistancia() {
 		return distancia;
@@ -23,7 +27,8 @@ public class Caminata extends DetalleActividad {
 	}
 
 	@Override
-	public boolean guardarEnDB_AsociadoConRegistro(int actividadId) {
-		return super.daoDetalleActividad.guardarCaminata(actividadId, this);
+	public int getTipoActividad() {
+		return TipoActividad.CAMINATA.getValor();
 	}
+
 }

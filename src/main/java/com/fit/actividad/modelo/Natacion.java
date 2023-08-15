@@ -17,6 +17,12 @@ public class Natacion extends DetalleActividad {
 		this.estilosNatacion = estilosNatacion;
 	}
 
+	public Natacion(float distancia, String estilosNatacion) {
+		super();
+		this.distancia = distancia;
+		this.estilosNatacion = estilosNatacion;
+	}
+
 	public float getDistancia() {
 		return distancia;
 	}
@@ -42,9 +48,9 @@ public class Natacion extends DetalleActividad {
 		return "Natacion [distancia=" + distancia + ", estiloNatacion=" + estilosNatacion + ", idRegistro= "
 				+ super.getId() + "]";
 	}
-
+	
 	@Override
-	public boolean guardarEnDB_AsociadoConRegistro(int actividadId) {
-		return daoDetalleActividad.guardarNatacion(actividadId, this);
+	public int getTipoActividad() {
+		return TipoActividad.NATACION.getValor();
 	}
 }

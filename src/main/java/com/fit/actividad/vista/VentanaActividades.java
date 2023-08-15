@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 
 import com.fit.actividad.ControladorActividad;
 import com.fit.actividad.vista.interfaces.*;
@@ -33,7 +34,11 @@ public class VentanaActividades extends JFrame implements VistaActividades, Acti
 
 	private CardLayout cardLayout;
 
+	private JPanel panelContenidoDetalleActividad;
+	
 	private PanelContenedor panelContenedor;
+
+	private PanelDetalleActividad panelDetalleActividad;
 
 	private PanelBotonesCrudActividad panelBotonesCrudActividad;
 
@@ -42,6 +47,8 @@ public class VentanaActividades extends JFrame implements VistaActividades, Acti
 	private PanelCardFormularioDetalleActividad panelCardFormularioDetalleActividad;
 
 	private PanelContenedorRegistroActualizacionActividad panelContenedorRegistroActualizacionActividad;
+	
+	private PanelSeleccionActividad panelSeleccionActividades;
 
 	private PanelFormularioActividad panelFormularioActividad;
 
@@ -52,7 +59,8 @@ public class VentanaActividades extends JFrame implements VistaActividades, Acti
 		this.opcionesTipoActividad = controlador.getOpcionesTipoActividad();
 		this.cardLayout = new CardLayout();
 		this.panelFormularioActividad = new PanelFormularioActividad();
-
+		this.panelContenidoDetalleActividad = new PanelCardFormularioDetalleActividad(this);
+		
 		agregarBarraMenu();
 		add(new PanelPrincipalActividades(this), BorderLayout.CENTER);
 		ajustesVentana();
@@ -99,13 +107,17 @@ public class VentanaActividades extends JFrame implements VistaActividades, Acti
 
 			if (boton.getText().equals("Nueva")) {
 				this.panelFormularioActividad = new PanelFormularioActividad();
+				this.panelDetalleActividad = new PanelDetalleActividad(this);
 				this.panelContenedorRegistroActualizacionActividad.refrescarElementos();
+				this.panelContenidoDetalleActividad = new PanelCardFormularioDetalleActividad(this);
+				this.panelDetalleActividad.refrescarElementos();
+				this.panelSeleccionActividades.refrescar();
 				cardLayout.show(panelContenedor, PanelContenedor.PANEL_REGISTRO_ACTUALIZACION_ACTIVIDAD);
 				panelBotonesCrudActividad.setVisibilidadBotonesCrudActividades(false);
 			} else if (boton.getText().equals("Ver detalles")) {
 				controlador.verDetallesActividadSeleccionada(getActividadSeleccionadaEnTabla());
 			} else if (boton.getText().equals("Actualizar")) {
-				controlador.actualizarActividad(getActividadSeleccionadaEnTabla());
+				controlador.getInfoActividadActualizar(getActividadSeleccionadaEnTabla());
 			} else if (boton.getText().equals("Eliminar")) {
 				controlador.eliminarActividad(getActividadSeleccionadaEnTabla());
 			}
@@ -164,8 +176,28 @@ public class VentanaActividades extends JFrame implements VistaActividades, Acti
 		this.panelContenedorRegistroActualizacionActividad = panelContenedorRegistroActualizacionActividad;
 	}
 
-	private int getActividadSeleccionadaEnTabla() {
+	public int getActividadSeleccionadaEnTabla() {
 		return panelVisualizacionActividades.getTablaActividades().getSelectedRow();
+	}
+
+	public void setPanelSeleccionActividades(PanelSeleccionActividad panelSeleccionActividades) {
+		this.panelSeleccionActividades = panelSeleccionActividades;
+	}
+
+	public PanelDetalleActividad getPanelDetalleActividad() {
+		return panelDetalleActividad;
+	}
+
+	public JPanel getPanelContenidoDetalleActividad() {
+		return panelContenidoDetalleActividad;
+	}
+
+	public void setPanelContenidoDetalleActividad(JPanel panelContenidoDetalleActividad) {
+		this.panelContenidoDetalleActividad = panelContenidoDetalleActividad;
+	}
+
+	public void setPanelDetalleActividad(PanelDetalleActividad panelDetalleActividad) {
+		this.panelDetalleActividad = panelDetalleActividad;
 	}
 
 	@Override
@@ -277,10 +309,14 @@ public class VentanaActividades extends JFrame implements VistaActividades, Acti
 	}
 
 	@Override
-	public void mostrarPanelActualizacionActividad(PanelFormularioActividad panelActividad) {
+	public void mostrarPanelActualizacionActividad(PanelFormularioActividad panelActividad, int tipoActividad, PanelFormulario panelContenidoDetalleActividad) {
 		this.panelFormularioActividad = panelActividad;
 		panelContenedorRegistroActualizacionActividad.refrescarElementos();
-		cardLayout.show(panelContenedor, PanelContenedor.PANEL_REGISTRO_ACTUALIZACION_ACTIVIDAD);
+		cardLayout.show(panelContenedor, PanelContenedor.PANEL_REGISTRO_ACTUALIZACION_ACTIVIDAD);		
+		
+		panelDetalleActividad.setPanelFormDetalleActividad(panelContenidoDetalleActividad);
+		panelSeleccionActividades.setActividadDefault(tipoActividad - 1);
+		cardLayout.show(panelCardFormularioDetalleActividad, opcionesTipoActividad[tipoActividad - 1]);
 		panelBotonesCrudActividad.setVisibilidadBotonesCrudActividades(false);
 	}
 

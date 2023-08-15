@@ -14,6 +14,11 @@ public class OtraActividad extends DetalleActividad {
 		this.descripcion = descripcion;
 	}
 
+	public OtraActividad(String descripcion) {
+		super();
+		this.descripcion = descripcion;
+	}
+
 	public String getDescripcion() {
 		return descripcion;
 	}
@@ -28,8 +33,7 @@ public class OtraActividad extends DetalleActividad {
 	}
 
 	@Override
-	public boolean guardarEnDB_AsociadoConRegistro(int actividadId) {
-		return this.daoDetalleActividad.guardarOtraActividad(actividadId, this);
+	public int getTipoActividad() {
+		return TipoActividad.OTRA_ACTIVIDAD.getValor();
 	}
-
 }

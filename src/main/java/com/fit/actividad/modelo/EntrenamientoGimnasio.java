@@ -26,6 +26,14 @@ public class EntrenamientoGimnasio extends DetalleActividad {
 		this.descansoEntreSeries = descansoEntreSeries;
 	}
 
+	public EntrenamientoGimnasio(String ejerciciosRealizados, String descansoEntreEjercicios,
+			String descansoEntreSeries) {
+		super();
+		this.ejerciciosRealizados = ejerciciosRealizados;
+		this.descansoEntreEjercicios = descansoEntreEjercicios;
+		this.descansoEntreSeries = descansoEntreSeries;
+	}
+
 	public String getEjerciciosRealizados() {
 		return ejerciciosRealizados;
 	}
@@ -58,7 +66,7 @@ public class EntrenamientoGimnasio extends DetalleActividad {
 	}
 
 	@Override
-	public boolean guardarEnDB_AsociadoConRegistro(int actividadId) {
-		return this.daoDetalleActividad.guardarEntrenamientoGimnasio(actividadId, this);
+	public int getTipoActividad() {
+		return TipoActividad.ENTRENAMIENTO_GIMNASIO.getValor();
 	}
 }

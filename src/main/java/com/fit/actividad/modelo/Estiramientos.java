@@ -22,6 +22,12 @@ public class Estiramientos extends DetalleActividad {
 		this.nivelDificultad = nivelDificultad;
 	}
 
+	public Estiramientos(String tipoSesion, String nivelDificultad) {
+		super();
+		this.tipoSesion = tipoSesion;
+		this.nivelDificultad = nivelDificultad;
+	}
+
 	public String getTipoSesion() {
 		return tipoSesion;
 	}
@@ -45,7 +51,7 @@ public class Estiramientos extends DetalleActividad {
 	}
 
 	@Override
-	public boolean guardarEnDB_AsociadoConRegistro(int actividadId) {
-		return this.daoDetalleActividad.guardarEstiramientos(actividadId, this);
+	public int getTipoActividad() {
+		return TipoActividad.ESTIRAMIENTOS.getValor();
 	}
 }

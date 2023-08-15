@@ -16,21 +16,35 @@ public class PanelFormularioCaminata extends PanelFormulario implements Validado
 	private JTextField textFieldDistancia;
 
 	private JLabel labelErrorDistancia;
+	
+	private String distancia;
 
 	public PanelFormularioCaminata() {
 		super();
 
+		inicializar();
+	}
+	
+	public PanelFormularioCaminata(String distancia) {
+		super();
+		this.distancia = distancia;
+		
+		inicializar();
+	}
+
+	public void inicializar() {
 		ajustarConstraints(0, 0, 1, 1);
 		add(new JLabel("Distancia"), constraints);
 
 		ajustarConstraints(1, 0, 1, 1);
 		this.textFieldDistancia = new JTextField(15);
-		this.textFieldDistancia.setText("0.0");
+		this.textFieldDistancia.setText((distancia != null)? distancia :"0.0");
 		add(this.textFieldDistancia, constraints);
 
 		ajustarConstraints(0, 1, 2, 1);
 		this.labelErrorDistancia = getLabelError();
 		add(this.labelErrorDistancia, constraints);
+	
 	}
 
 	public String getDistancia() {

@@ -2,6 +2,7 @@ package com.fit.actividad.vista.interfaces;
 
 import java.util.List;
 
+import com.fit.actividad.vista.panelFormulario.PanelFormulario;
 import com.fit.actividad.vista.panelFormulario.PanelFormularioActividad;
 
 public interface VistaActividades {
@@ -39,6 +40,7 @@ public interface VistaActividades {
 	void actualizarListaActividades(List<Object[]> listaActividades);
 
 	void verListaActividades();
-
-	void mostrarPanelActualizacionActividad(PanelFormularioActividad panelActividad);
+	
+	void mostrarPanelActualizacionActividad(PanelFormularioActividad panelActividad, int tipoActividad,
+			PanelFormulario panelDetalleActividad);
 }

@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import com.fit.actividad.modelo.Caminata;
 import com.fit.actividad.modelo.Ciclismo;
 import com.fit.actividad.modelo.DeporteEquipo;
+import com.fit.actividad.modelo.DetalleActividad;
 import com.fit.actividad.modelo.EntrenamientoGimnasio;
 import com.fit.actividad.modelo.Natacion;
 import com.fit.actividad.modelo.OtraActividad;
@@ -22,11 +23,33 @@ public class DaoDetalleActividad {
 		this.conexion = MysqlConnection.getConnection();
 	}
 
-	public boolean guardarCaminata(int actividadId, Caminata caminata) {
+	public boolean guardarDetalleActividad(DetalleActividad detalleActividad) {
+		 Class<? extends DetalleActividad> clase = detalleActividad.getClass();
+		    switch (clase.getSimpleName()) {
+		        case "Caminata":
+		            return guardarCaminata((Caminata) detalleActividad);
+		        case "Ciclismo":
+		            return guardarCiclismo((Ciclismo) detalleActividad);
+		        case "Natacion":
+		            return guardarNatacion((Natacion) detalleActividad);
+		        case "DeporteEquipo":
+		        	return guardarDeporteEquipo((DeporteEquipo) detalleActividad);
+		        case "EntrenamientoGimnasio":
+		        	return guardarEntrenamientoGimnasio((EntrenamientoGimnasio) detalleActividad);
+		        case "Estiramientos":
+		        	return guardarEstiramientos((Estiramientos) detalleActividad);
+		        case "OtraActividad":
+		        	return guardarOtraActividad((OtraActividad) detalleActividad);
+		        default:
+		            return false;
+		    }
+	}
+	
+	private boolean guardarCaminata(Caminata caminata) {
 		try {
 			String query = "insert into detalles_caminata_carrera (actividad_id, distancia) values(?, ?);";
 			PreparedStatement statement = this.conexion.prepareStatement(query);
-			statement.setInt(1, actividadId);
+			statement.setInt(1, caminata.getId());
 			statement.setFloat(2, caminata.getDistancia());
 			return statement.executeUpdate() > 0;
 		} catch (SQLException e) {
@@ -36,11 +59,11 @@ public class DaoDetalleActividad {
 
 	}
 
-	public boolean guardarCiclismo(int actividadId, Ciclismo ciclismo) {
+	private boolean guardarCiclismo(Ciclismo ciclismo) {
 		try {
 			String query = "insert into detalles_ciclismo (actividad_id, distancia, tipo_bicicleta) values (?, ?, ?);";
 			PreparedStatement statement = this.conexion.prepareStatement(query);
-			statement.setInt(1, actividadId);
+			statement.setInt(1, ciclismo.getId());
 			statement.setFloat(2, ciclismo.getDistancia());
 			statement.setString(3, ciclismo.getTipo_bicicleta());
 			return statement.executeUpdate() > 0;
@@ -50,11 +73,11 @@ public class DaoDetalleActividad {
 		}
 	}
 
-	public boolean guardarNatacion(int actividadId, Natacion natacion) {
+	private boolean guardarNatacion(Natacion natacion) {
 		try {
 			String query = "insert into detalles_natacion (actividad_id, distancia, estilos_natacion) values (?, ?, ?);";
 			PreparedStatement statement = this.conexion.prepareStatement(query);
-			statement.setInt(1, actividadId);
+			statement.setInt(1, natacion.getId());
 			statement.setFloat(2, natacion.getDistancia());
 			statement.setString(3, natacion.getEstilosNatacion());
 			return statement.executeUpdate() > 0;
@@ -64,11 +87,11 @@ public class DaoDetalleActividad {
 		}
 	}
 
-	public boolean guardarDeporteEquipo(int actividadId, DeporteEquipo deporteEquipo) {
+	private boolean guardarDeporteEquipo(DeporteEquipo deporteEquipo) {
 		try {
 			String query = "insert into detalles_deporte_equipo (actividad_id, nombre_deporte, nombre_equipo, resultado_partido) values (?, ? ,? ,?);";
 			PreparedStatement statement = this.conexion.prepareStatement(query);
-			statement.setInt(1, actividadId);
+			statement.setInt(1, deporteEquipo.getId());
 			statement.setString(2, deporteEquipo.getNombreDeporte());
 			statement.setString(3, deporteEquipo.getNombreEquipos());
 			statement.setString(4, deporteEquipo.getResultadoDelPartido());
@@ -79,11 +102,11 @@ public class DaoDetalleActividad {
 		}
 	}
 
-	public boolean guardarEntrenamientoGimnasio(int actividadId, EntrenamientoGimnasio entrenamientoGimnasio) {
+	private boolean guardarEntrenamientoGimnasio(EntrenamientoGimnasio entrenamientoGimnasio) {
 		try {
 			String query = "insert into detalles_entrenamiento(actividad_id, ejercicios_realizados, descanso_entre_ejercicios, descanso_entre_series) values(?, ?, ?, ?);";
 			PreparedStatement statement = this.conexion.prepareStatement(query);
-			statement.setInt(1, actividadId);
+			statement.setInt(1, entrenamientoGimnasio.getId());
 			statement.setString(2, entrenamientoGimnasio.getEjerciciosRealizados());
 			statement.setString(3, entrenamientoGimnasio.getDescansoEntreEjercicios());
 			statement.setString(4, entrenamientoGimnasio.getDescansoEntreSeries());
@@ -94,11 +117,11 @@ public class DaoDetalleActividad {
 		}
 	}
 
-	public boolean guardarEstiramientos(int actividadId, Estiramientos estiramientos) {
+	private boolean guardarEstiramientos(Estiramientos estiramientos) {
 		try {
 			String query = "insert into detalles_yoga_estiramientos(actividad_id, tipo_sesion, nivel_dificultad) values(?, ?, ?);";
 			PreparedStatement statement = this.conexion.prepareStatement(query);
-			statement.setInt(1, actividadId);
+			statement.setInt(1, estiramientos.getId());
 			statement.setString(2, estiramientos.getTipoSesion());
 			statement.setString(3, estiramientos.getNivelDificultad());
 			return statement.executeUpdate() > 0;
@@ -108,16 +131,30 @@ public class DaoDetalleActividad {
 		}
 	}
 
-	public boolean guardarOtraActividad(int actividadId, OtraActividad otraActividad) {
+	private boolean guardarOtraActividad(OtraActividad otraActividad) {
 		try {
 			String query = "insert into detalles_otra_actividad(actividad_id, descripcion) values(?, ?);";
 			PreparedStatement statement = this.conexion.prepareStatement(query);
-			statement.setInt(1, actividadId);
+			statement.setInt(1, otraActividad.getId());
 			statement.setString(2, otraActividad.getDescripcion());
 			return statement.executeUpdate() > 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
+		}
+	}
+	
+	public DetalleActividad leerDetalleActividad(int actividadId, int tipoActividad) {
+		System.out.println("actividadId: " + actividadId + " ,tipoActividad: " + tipoActividad);
+		switch (tipoActividad) {
+		case 1: return leerDetallesCaminata(actividadId);
+		case 2: return leerDetallesCiclismo(actividadId);
+		case 3: return leerDetallesNatacion(actividadId);
+		case 4: return leerDetallesDeporteEquipo(actividadId);
+		case 5: return leerDetallesEntrenamientoGimnasio(actividadId);
+		case 6: return leerDetallesEstiramientos(actividadId);
+		case 7: return leerDetallesOtraActividad(actividadId);
+		default: return null;
 		}
 	}
 

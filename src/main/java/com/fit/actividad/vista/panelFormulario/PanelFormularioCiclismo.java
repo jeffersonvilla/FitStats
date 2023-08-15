@@ -20,16 +20,33 @@ public class PanelFormularioCiclismo extends PanelFormulario implements Validado
 	private JTextField textFieldTipoBicicleta;
 
 	private JLabel labelErrorTipoBicicleta;
+	
+	private String distancia;
+	
+	private String tipoBicicleta;
 
 	public PanelFormularioCiclismo() {
 		super();
+		
+		inicializar();
+	}
+
+	public PanelFormularioCiclismo(String distancia, String tipoBicicleta) {
+		super();
+		this.distancia = distancia;
+		this.tipoBicicleta = tipoBicicleta;
+		
+		inicializar();
+	}
+
+	private void inicializar() {
 
 		ajustarConstraints(0, 0, 1, 1);
 		add(new JLabel("Distancia"), constraints);
 
 		ajustarConstraints(1, 0, 1, 1);
 		this.textFieldDistancia = new JTextField(15);
-		this.textFieldDistancia.setText("0.0");
+		this.textFieldDistancia.setText((distancia != null)? distancia:"0.0");
 		add(this.textFieldDistancia, constraints);
 
 		ajustarConstraints(0, 1, 2, 1);
@@ -41,13 +58,15 @@ public class PanelFormularioCiclismo extends PanelFormulario implements Validado
 
 		ajustarConstraints(1, 2, 1, 1);
 		this.textFieldTipoBicicleta = new JTextField(15);
+		if(tipoBicicleta != null) this.textFieldTipoBicicleta.setText(tipoBicicleta);
 		add(this.textFieldTipoBicicleta, constraints);
 
 		ajustarConstraints(0, 3, 2, 1);
 		this.labelErrorTipoBicicleta = getLabelError();
 		add(this.labelErrorTipoBicicleta, constraints);
+	
 	}
-
+	
 	@Override
 	public void limpiarCamposTexto() {
 		this.textFieldDistancia.setText("0.0");

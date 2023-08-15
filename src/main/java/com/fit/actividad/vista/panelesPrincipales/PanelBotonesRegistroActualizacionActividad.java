@@ -61,44 +61,48 @@ public class PanelBotonesRegistroActualizacionActividad extends JPanel {
 				PanelFormularioActividad panelActividad = ventana.getPanelFormularioActividad();
 
 				if (componente instanceof PanelFormularioCaminata) {
-					controlador.registrarCaminata(panelActividad.getFecha(), panelActividad.getDuracion(),
-							panelActividad.getUbicacion(), ((PanelFormularioCaminata) componente).getDistancia());
+					controlador.registrarCaminata(ventana.getActividadSeleccionadaEnTabla(), panelActividad.getFecha(),
+							panelActividad.getDuracion(), panelActividad.getUbicacion(),
+							((PanelFormularioCaminata) componente).getDistancia());
 				}
 				if (componente instanceof PanelFormularioCiclismo) {
 					PanelFormularioCiclismo panelCiclismo = (PanelFormularioCiclismo) componente;
-					controlador.registrarCiclismo(panelActividad.getFecha(), panelActividad.getDuracion(),
-							panelActividad.getUbicacion(), panelCiclismo.getDistancia(),
+					controlador.registrarCiclismo(ventana.getActividadSeleccionadaEnTabla(), panelActividad.getFecha(),
+							panelActividad.getDuracion(), panelActividad.getUbicacion(), panelCiclismo.getDistancia(),
 							panelCiclismo.getTipoBicicleta());
 				}
 				if (componente instanceof PanelFormularioNatacion) {
 					PanelFormularioNatacion panelNatacion = (PanelFormularioNatacion) componente;
-					controlador.registrarNatacion(panelActividad.getFecha(), panelActividad.getDuracion(),
-							panelActividad.getUbicacion(), panelNatacion.getDistancia(),
+					controlador.registrarNatacion(ventana.getActividadSeleccionadaEnTabla(), panelActividad.getFecha(),
+							panelActividad.getDuracion(), panelActividad.getUbicacion(), panelNatacion.getDistancia(),
 							panelNatacion.getEstiloNatacion());
 				}
 				if (componente instanceof PanelFormularioDeporteEquipo) {
 					PanelFormularioDeporteEquipo panelDeporteEquipo = (PanelFormularioDeporteEquipo) componente;
-					controlador.registrarDeporteEquipo(panelActividad.getFecha(), panelActividad.getDuracion(),
-							panelActividad.getUbicacion(), panelDeporteEquipo.getNombreDeporte(),
-							panelDeporteEquipo.getNombreEquipos(), panelDeporteEquipo.getResultadoDelPartido());
+					controlador.registrarDeporteEquipo(ventana.getActividadSeleccionadaEnTabla(),
+							panelActividad.getFecha(), panelActividad.getDuracion(), panelActividad.getUbicacion(),
+							panelDeporteEquipo.getNombreDeporte(), panelDeporteEquipo.getNombreEquipos(),
+							panelDeporteEquipo.getResultadoDelPartido());
 				}
 				if (componente instanceof PanelFomularioEntrenamientoGimnasio) {
 					PanelFomularioEntrenamientoGimnasio panelEntrenamiento = (PanelFomularioEntrenamientoGimnasio) componente;
-					controlador.registrarEntrenamientoGimnasio(panelActividad.getFecha(), panelActividad.getDuracion(),
-							panelActividad.getUbicacion(), panelEntrenamiento.getEjerciciosRealizados(),
+					controlador.registrarEntrenamientoGimnasio(ventana.getActividadSeleccionadaEnTabla(),
+							panelActividad.getFecha(), panelActividad.getDuracion(), panelActividad.getUbicacion(),
+							panelEntrenamiento.getEjerciciosRealizados(),
 							panelEntrenamiento.getDescansosEntreEjercicios(),
 							panelEntrenamiento.getDescansosEntreSeries());
 				}
 				if (componente instanceof PanelFormularioEstiramientos) {
 					PanelFormularioEstiramientos panelEstiramientos = (PanelFormularioEstiramientos) componente;
-					controlador.registrarEstiramientos(panelActividad.getFecha(), panelActividad.getDuracion(),
-							panelActividad.getUbicacion(), panelEstiramientos.getTipoSesion(),
-							panelEstiramientos.getNivelDificultad());
+					controlador.registrarEstiramientos(ventana.getActividadSeleccionadaEnTabla(),
+							panelActividad.getFecha(), panelActividad.getDuracion(), panelActividad.getUbicacion(),
+							panelEstiramientos.getTipoSesion(), panelEstiramientos.getNivelDificultad());
 				}
 				if (componente instanceof PanelFormularioOtraActividad) {
 					PanelFormularioOtraActividad panelOtraActividad = (PanelFormularioOtraActividad) componente;
-					controlador.registrarOtraActividad(panelActividad.getFecha(), panelActividad.getDuracion(),
-							panelActividad.getUbicacion(), panelOtraActividad.getDescripcion());
+					controlador.registrarOtraActividad(ventana.getActividadSeleccionadaEnTabla(),
+							panelActividad.getFecha(), panelActividad.getDuracion(), panelActividad.getUbicacion(),
+							panelOtraActividad.getDescripcion());
 				}
 			}
 		});

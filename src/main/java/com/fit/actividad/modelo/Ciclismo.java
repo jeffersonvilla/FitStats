@@ -17,6 +17,12 @@ public class Ciclismo extends DetalleActividad {
 		this.tipo_bicicleta = tipo_bicicleta;
 	}
 
+	public Ciclismo(float distancia, String tipo_bicicleta) {
+		super();
+		this.distancia = distancia;
+		this.tipo_bicicleta = tipo_bicicleta;
+	}
+
 	public float getDistancia() {
 		return distancia;
 	}
@@ -40,7 +46,7 @@ public class Ciclismo extends DetalleActividad {
 	}
 
 	@Override
-	public boolean guardarEnDB_AsociadoConRegistro(int actividadId) {
-		return daoDetalleActividad.guardarCiclismo(actividadId, this);
+	public int getTipoActividad() {
+		return TipoActividad.CICLISMO.getValor();
 	}
 }

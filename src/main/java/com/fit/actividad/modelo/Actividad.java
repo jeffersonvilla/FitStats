@@ -2,23 +2,26 @@ package com.fit.actividad.modelo;
 
 import java.sql.Time;
 import java.sql.Timestamp;
-
-import com.fit.actividad.dao.DaoActividad;
+import java.util.Calendar;
+import java.util.Objects;
 
 public class Actividad {
 
 	private int id;
+	
 	private int userId;
-	private int tipoActividadId;
+	
 	private Timestamp fechaHora;
+	
 	private Time duracion;
+	
 	private String ubicación;
+	
+	private DetalleActividad detalleActividad;
+	
+	private int tipoActividad;
 
-	private DaoActividad daoActividad;
-
-	public Actividad() {
-		this.daoActividad = new DaoActividad();
-	}
+	private Actividad() {}
 
 	public int getId() {
 		return id;
@@ -34,14 +37,6 @@ public class Actividad {
 
 	public void setUserId(int userId) {
 		this.userId = userId;
-	}
-
-	public int getTipoActividadId() {
-		return tipoActividadId;
-	}
-
-	public void setTipoActividadId(int tipoActividadId) {
-		this.tipoActividadId = tipoActividadId;
 	}
 
 	public Timestamp getFechaHora() {
@@ -68,24 +63,51 @@ public class Actividad {
 		this.ubicación = ubicación;
 	}
 
+	public DetalleActividad getDetalleActividad() {
+		return detalleActividad;
+	}
+
+	public void setDetalleActividad(DetalleActividad detalleActividad) {
+		this.detalleActividad = detalleActividad;
+	}
+
+	public int getTipoActividad() {
+		return tipoActividad;
+	}
+
+	public void setTipoActividad(int tipoActividad) {
+		this.tipoActividad = tipoActividad;
+	}
+
 	@Override
 	public String toString() {
-		return "Actividad [id=" + id + ", userId=" + userId + ", tipoActividadId=" + tipoActividadId + ", fecha="
-				+ fechaHora + ", duracion=" + duracion + ", ubicación=" + ubicación + "]";
+		return "Actividad [id=" + id + ", userId=" + userId + ", detalleActividadId=" + detalleActividad + ", fecha="
+				+ fechaHora + ", duracion=" + duracion + ", ubicación=" + ubicación +", tipoActividad=" + tipoActividad +"]";
 	}
-
-	public int guardarEnDB() {
-		this.id = this.daoActividad.guardarActividad(this);
-		return this.id;
-	}
-
+	
+    public boolean atributosIguales(Actividad actividad) {
+    	return  this.fechaHora.equals(actividad.getFechaHora()) &&
+                compararDuracion(actividad) &&
+                this.ubicación.equals(actividad.getUbicación());
+    }
+    
+    private boolean compararDuracion(Actividad actividad) {
+    	Calendar calendarDB = Calendar.getInstance();
+    	calendarDB.setTimeInMillis(this.duracion.getTime());
+    	Calendar calendarVista = Calendar.getInstance();
+    	calendarVista.setTimeInMillis(actividad.getDuracion().getTime());
+    	return calendarDB.get(Calendar.HOUR_OF_DAY) == calendarVista.get(Calendar.HOUR_OF_DAY) &&
+    			calendarDB.get(Calendar.MINUTE) == calendarVista.get(Calendar.MINUTE);
+    }
+    
 	public static class ActividadBuilder {
 		private int id;
 		private int userId;
-		private int tipoActividadId;
 		private Timestamp fechaHora;
 		private Time duracion;
 		private String ubicación;
+		private DetalleActividad detalleActividad;
+		private int tipoActividad;
 
 		public ActividadBuilder() {
 
@@ -101,8 +123,8 @@ public class Actividad {
 			return this;
 		}
 
-		public ActividadBuilder setTipoActividadId(int tipoActividadId) {
-			this.tipoActividadId = tipoActividadId;
+		public ActividadBuilder setDetalleActividad(DetalleActividad detalleActividad) {
+			this.detalleActividad = detalleActividad;
 			return this;
 		}
 
@@ -121,14 +143,20 @@ public class Actividad {
 			return this;
 		}
 
+		public ActividadBuilder setTipoActividad(int tipoActividad) {
+			this.tipoActividad = tipoActividad;
+			return this;
+		}
+		
 		public Actividad build() {
 			Actividad actividad = new Actividad();
 			actividad.setId(this.id);
 			actividad.setUserId(this.userId);
-			actividad.setTipoActividadId(this.tipoActividadId);
+			actividad.setDetalleActividad(this.detalleActividad);
 			actividad.setFechaHora(this.fechaHora);
 			actividad.setDuracion(this.duracion);
 			actividad.setUbicación(this.ubicación);
+			actividad.setTipoActividad(this.tipoActividad);
 			return actividad;
 		}
 	}

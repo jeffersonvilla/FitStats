@@ -6,12 +6,23 @@ import java.sql.SQLException;
 
 public class MysqlConnection {
 
-	public static Connection getConnection() {
-		try {
-			return DriverManager.getConnection("jdbc:mysql://localhost:3306/FitStats?", "root", "root");
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
+    private static Connection connection;
+
+    private MysqlConnection() {}
+
+    public static Connection getConnection() {
+        if (connection == null) {
+            synchronized (MysqlConnection.class) {
+                if (connection == null) {
+                    try {
+                        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/FitStats?", "root", "root");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        return connection;
+    }
 }
+

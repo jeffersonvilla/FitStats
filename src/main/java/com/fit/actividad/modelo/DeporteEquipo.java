@@ -30,6 +30,13 @@ public class DeporteEquipo extends DetalleActividad {
 		this.resultadoDelPartido = resultadoDelPartido;
 	}
 
+	public DeporteEquipo(String nombreDeporte, String nombreEquipos, String resultadoDelPartido) {
+		super();
+		this.nombreDeporte = nombreDeporte;
+		this.nombreEquipos = nombreEquipos;
+		this.resultadoDelPartido = resultadoDelPartido;
+	}
+
 	public String getNombreDeporte() {
 		return nombreDeporte;
 	}
@@ -61,7 +68,7 @@ public class DeporteEquipo extends DetalleActividad {
 	}
 
 	@Override
-	public boolean guardarEnDB_AsociadoConRegistro(int actividadId) {
-		return daoDetalleActividad.guardarDeporteEquipo(actividadId, this);
+	public int getTipoActividad() {
+		return TipoActividad.DEPORTES_EQUIPO.getValor();
 	}
 }
