@@ -1,6 +1,9 @@
 package com.fit.actividad.modelo;
 
-public class Natacion extends DetalleActividad {
+import java.sql.Time;
+import java.sql.Timestamp;
+
+public class Natacion extends Actividad {
 
 	public static final int TAMANIO_MAXIMO_ESTILO_NATACION = 50;
 
@@ -11,14 +14,9 @@ public class Natacion extends DetalleActividad {
 
 	private String estilosNatacion;
 
-	public Natacion(int id, float distancia, String estilosNatacion) {
-		super(id);
-		this.distancia = distancia;
-		this.estilosNatacion = estilosNatacion;
-	}
-
-	public Natacion(float distancia, String estilosNatacion) {
-		super();
+	public Natacion(int id, int userId, Timestamp fechaHora, Time duracion, String ubicacion, 
+			float distancia, String estilosNatacion) {
+		super(id, userId, fechaHora, duracion, ubicacion);
 		this.distancia = distancia;
 		this.estilosNatacion = estilosNatacion;
 	}
@@ -44,21 +42,43 @@ public class Natacion extends DetalleActividad {
 	}
 
 	@Override
-	public String toString() {
-		return "Natacion [distancia=" + distancia + ", estiloNatacion=" + estilosNatacion + ", idRegistro= "
-				+ super.getId() + "]";
-	}
-	
-	@Override
 	public int getTipoActividad() {
 		return TipoActividad.NATACION.getValor();
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + "Natacion [distancia=" + distancia + ", estilosNatacion=" + estilosNatacion + "]";
+	}
 
 	@Override
-	public boolean atributosIguales(DetalleActividad detalle) {
-		if(!(detalle instanceof Natacion)) return false;
-		Natacion natacion = (Natacion) detalle;
+	public boolean atributosIguales(Actividad otraActividad) {
+		if(! super.atributosIguales(otraActividad)) return false;
+		if(!(otraActividad instanceof Natacion)) return false;
+		Natacion natacion = (Natacion) otraActividad;
 		return this.distancia == natacion.getDistancia() &&
 				this.estilosNatacion.equals(natacion.getEstilosNatacion());
+	}
+	
+	public static class NatacionBuilder extends ActividadBuilder{
+
+		private float distancia = -1;
+
+		private String estilosNatacion;
+
+		public NatacionBuilder setDistancia(float distancia) {
+			this.distancia = distancia;
+			return this;
+		}
+		
+		public NatacionBuilder setEstilosNatacion(String estilosNatacion) {
+			this.estilosNatacion = estilosNatacion;
+			return this;
+		}
+		
+		@Override
+		public Actividad build() {
+			return new Natacion(id, userId, fechaHora, duracion, ubicacion, distancia, estilosNatacion);
+		}
 	}
 }

@@ -1,15 +1,15 @@
 package com.fit.actividad.vista.panelFormulario;
 
 import java.awt.Color;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
-import com.fit.actividad.vista.interfaces.ValidadorCampoDistancia;
-
-public class PanelFormularioCiclismo extends PanelFormulario implements ValidadorCampoDistancia {
+public class FormularioCiclismo extends FormularioActividad{
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,14 +25,15 @@ public class PanelFormularioCiclismo extends PanelFormulario implements Validado
 	
 	private String tipoBicicleta;
 
-	public PanelFormularioCiclismo() {
+	public FormularioCiclismo() {
 		super();
 		
 		inicializar();
 	}
 
-	public PanelFormularioCiclismo(String distancia, String tipoBicicleta) {
-		super();
+	public FormularioCiclismo(Timestamp fechaHora, Time duracion, String ubicacion,
+			String distancia, String tipoBicicleta) {
+		super(fechaHora, duracion, ubicacion);
 		this.distancia = distancia;
 		this.tipoBicicleta = tipoBicicleta;
 		
@@ -40,31 +41,26 @@ public class PanelFormularioCiclismo extends PanelFormulario implements Validado
 	}
 
 	private void inicializar() {
-
-		ajustarConstraints(0, 0, 1, 1);
-		add(new JLabel("Distancia"), constraints);
-
-		ajustarConstraints(1, 0, 1, 1);
+		inicializarCamposDistancia();
+		inicializarCamposTipoBicicleta();
+	}
+	
+	private void inicializarCamposDistancia() {
+		add(new JLabel("Distancia"));
 		this.textFieldDistancia = new JTextField(15);
-		this.textFieldDistancia.setText((distancia != null)? distancia:"0.0");
-		add(this.textFieldDistancia, constraints);
-
-		ajustarConstraints(0, 1, 2, 1);
+		this.textFieldDistancia.setText((distancia != null)? distancia :"0.0");
+		add(this.textFieldDistancia, "span, grow, wrap");
 		this.labelErrorDistancia = getLabelError();
-		add(this.labelErrorDistancia, constraints);
-
-		ajustarConstraints(0, 2, 1, 1);
-		add(new JLabel("Tipo bicicleta"), constraints);
-
-		ajustarConstraints(1, 2, 1, 1);
+		add(this.labelErrorDistancia, "span, grow, wrap");
+	}
+	
+	private void inicializarCamposTipoBicicleta() {
+		add(new JLabel("Tipo bicicleta"));
 		this.textFieldTipoBicicleta = new JTextField(15);
 		if(tipoBicicleta != null) this.textFieldTipoBicicleta.setText(tipoBicicleta);
-		add(this.textFieldTipoBicicleta, constraints);
-
-		ajustarConstraints(0, 3, 2, 1);
+		add(this.textFieldTipoBicicleta, "span, grow, wrap");
 		this.labelErrorTipoBicicleta = getLabelError();
-		add(this.labelErrorTipoBicicleta, constraints);
-	
+		add(this.labelErrorTipoBicicleta, "span, grow, wrap");
 	}
 	
 	@Override
@@ -79,7 +75,6 @@ public class PanelFormularioCiclismo extends PanelFormulario implements Validado
 		limpiarCampoErrorTipoBicicleta();
 	}
 
-	@Override
 	public void mostrarErrorCampoDistancia(String mensajeError) {
 		this.labelErrorDistancia.setText(mensajeError);
 		this.textFieldDistancia.setBorder(BorderFactory.createLineBorder(Color.RED));

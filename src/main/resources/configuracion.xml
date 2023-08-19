@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="conexion" class="com.fit.util.MysqlConnection" factory-method="getConnection" />
+
+	<bean id="daoActividad" class="com.fit.actividad.dao.DaoActividadImpl">  
+ 		<constructor-arg ref="conexion"/>
+	</bean>
+
+	<bean id="modeloActividad" class="com.fit.actividad.modelo.ModeloActividad">  
+		<constructor-arg ref="daoActividad" />
+	</bean>
+	
+	<bean id="controladorActividad" class="com.fit.actividad.controlador.ControladorActividad">
+		<constructor-arg ref="modeloActividad"/>
+	</bean>
+	
+	<bean id="controladorCaminata" class="com.fit.actividad.controlador.ControladorCaminata">
+		<constructor-arg ref="modeloActividad"/>
+	</bean>
+	
+	<bean id="formularioCaminataVacio" class="com.fit.actividad.vista.panelFormulario.FormularioCaminata">
+	</bean>
+	
+	<bean id="vistaCrearCaminata" class="com.fit.actividad.vista.VistaCrearCaminata" lazy-init="true">
+		<constructor-arg ref="controladorCaminata"/>
+		<constructor-arg ref="formularioCaminataVacio"/>
+	</bean>
+	
+	
+	
+
+</beans>

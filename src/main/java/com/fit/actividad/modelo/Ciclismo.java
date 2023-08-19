@@ -1,6 +1,9 @@
 package com.fit.actividad.modelo;
 
-public class Ciclismo extends DetalleActividad {
+import java.sql.Time;
+import java.sql.Timestamp;
+
+public class Ciclismo extends Actividad {
 
 	public static final int TAMANIO_MAXIMO_TIPO_BICICLETA = 50;
 
@@ -9,18 +12,13 @@ public class Ciclismo extends DetalleActividad {
 
 	private float distancia;
 
-	private String tipo_bicicleta;
+	private String tipoBicicleta;
 
-	public Ciclismo(int id, float distancia, String tipo_bicicleta) {
-		super(id);
+	public Ciclismo(int id, int userId, Timestamp fechaHora, Time duracion, String ubicacion, float distancia, String tipo_bicicleta) {
+		super(id, userId, fechaHora, duracion, ubicacion
+				);
 		this.distancia = distancia;
-		this.tipo_bicicleta = tipo_bicicleta;
-	}
-
-	public Ciclismo(float distancia, String tipo_bicicleta) {
-		super();
-		this.distancia = distancia;
-		this.tipo_bicicleta = tipo_bicicleta;
+		this.tipoBicicleta = tipo_bicicleta;
 	}
 
 	public float getDistancia() {
@@ -32,17 +30,11 @@ public class Ciclismo extends DetalleActividad {
 	}
 
 	public String getTipo_bicicleta() {
-		return tipo_bicicleta;
+		return tipoBicicleta;
 	}
 
 	public void setTipo_bicicleta(String tipo_bicicleta) {
-		this.tipo_bicicleta = tipo_bicicleta;
-	}
-
-	@Override
-	public String toString() {
-		return "Ciclismo [distancia=" + distancia + ", tipo_bicicleta=" + tipo_bicicleta + ", id=" + super.getId()
-				+ "]";
+		this.tipoBicicleta = tipo_bicicleta;
 	}
 
 	@Override
@@ -51,10 +43,41 @@ public class Ciclismo extends DetalleActividad {
 	}
 
 	@Override
-	public boolean atributosIguales(DetalleActividad detalle) {
-		if(!(detalle instanceof Ciclismo)) return false;
-		Ciclismo ciclismo = (Ciclismo) detalle;
-		return this.distancia == ciclismo.getDistancia() &&
-				this.tipo_bicicleta.equals(ciclismo.getTipo_bicicleta());
+	public String toString() {
+		return super.toString() + "Ciclismo [distancia=" + distancia + ", tipo_bicicleta=" + tipoBicicleta + "]";
 	}
+
+	@Override
+	public boolean atributosIguales(Actividad otraActividad) {
+		if (!super.atributosIguales(otraActividad))
+			return false;
+		if (!(otraActividad instanceof Ciclismo))
+			return false;
+		Ciclismo ciclismo = (Ciclismo) otraActividad;
+		return this.distancia == ciclismo.getDistancia() && this.tipoBicicleta.equals(ciclismo.getTipo_bicicleta());
+	}
+	
+	public static class CiclismoBuilder extends ActividadBuilder{
+
+		private float distancia = -1;
+		
+		private String tipoBicicleta;
+		
+		public CiclismoBuilder setDistancia(float distancia) {
+			this.distancia = distancia;
+			return this;
+		}
+		
+		public CiclismoBuilder setTipoBicicleta(String tipoBicicleta) {
+			this.tipoBicicleta = tipoBicicleta;
+			return this;
+		}
+		
+		@Override
+		public Actividad build() {
+			return new Ciclismo(id, userId, fechaHora, duracion, ubicacion, distancia, tipoBicicleta);
+		}
+		
+	}
+	
 }

@@ -1,15 +1,15 @@
 package com.fit.actividad.vista.panelFormulario;
 
 import java.awt.Color;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
-import com.fit.actividad.vista.interfaces.ValidadorCampoDistancia;
-
-public class PanelFormularioCaminata extends PanelFormulario implements ValidadorCampoDistancia {
+public class FormularioCaminata extends FormularioActividad {
 
 	private static final long serialVersionUID = 1L;
 
@@ -19,31 +19,26 @@ public class PanelFormularioCaminata extends PanelFormulario implements Validado
 	
 	private String distancia;
 
-	public PanelFormularioCaminata() {
+	public FormularioCaminata() {
 		super();
 
 		inicializar();
 	}
 	
-	public PanelFormularioCaminata(String distancia) {
-		super();
+	public FormularioCaminata(Timestamp fechaHora, Time duracion, String ubicacion, String distancia) {
+		super(fechaHora, duracion, ubicacion);
 		this.distancia = distancia;
 		
 		inicializar();
 	}
 
 	public void inicializar() {
-		ajustarConstraints(0, 0, 1, 1);
-		add(new JLabel("Distancia"), constraints);
-
-		ajustarConstraints(1, 0, 1, 1);
+		add(new JLabel("Distancia"));
 		this.textFieldDistancia = new JTextField(15);
 		this.textFieldDistancia.setText((distancia != null)? distancia :"0.0");
-		add(this.textFieldDistancia, constraints);
-
-		ajustarConstraints(0, 1, 2, 1);
+		add(this.textFieldDistancia, "span, grow, wrap");
 		this.labelErrorDistancia = getLabelError();
-		add(this.labelErrorDistancia, constraints);
+		add(this.labelErrorDistancia, "span, grow, wrap");
 	
 	}
 
@@ -58,10 +53,10 @@ public class PanelFormularioCaminata extends PanelFormulario implements Validado
 
 	@Override
 	public void limpiarCamposError() {
+		super.limpiarCamposError();
 		limpiarCampoErrorDistancia();
 	}
 
-	@Override
 	public void mostrarErrorCampoDistancia(String mensajeError) {
 		this.labelErrorDistancia.setText(mensajeError);
 		this.textFieldDistancia.setBorder(BorderFactory.createLineBorder(Color.RED));

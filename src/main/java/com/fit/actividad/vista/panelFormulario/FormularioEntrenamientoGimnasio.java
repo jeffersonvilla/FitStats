@@ -1,6 +1,8 @@
 package com.fit.actividad.vista.panelFormulario;
 
 import java.awt.Color;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -8,11 +10,13 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
-public class PanelFomularioEntrenamientoGimnasio extends PanelFormulario {
+public class FormularioEntrenamientoGimnasio extends FormularioActividad {
 
 	private static final long serialVersionUID = 1L;
 
 	private JTextArea textAreaEjerciciosRealizados;
+	
+	private JLabel labelErrorEjerciciosRealizados;
 
 	private JTextField textFieldDescansosEntreEjercicios;
 
@@ -28,15 +32,16 @@ public class PanelFomularioEntrenamientoGimnasio extends PanelFormulario {
 	
 	private String descansoSeries;
 
-	public PanelFomularioEntrenamientoGimnasio() {
+	public FormularioEntrenamientoGimnasio() {
 		super();
 
 		inicializar();
 	}
 	
-	public PanelFomularioEntrenamientoGimnasio(String ejerciciosRealizados, String descansoEjercicios,
+	public FormularioEntrenamientoGimnasio(Timestamp fechaHora, Time duracion, String ubicacion,
+			String ejerciciosRealizados, String descansoEjercicios,
 			String descansoSeries) {
-		super();
+		super(fechaHora, duracion, ubicacion);
 		this.ejerciciosRealizados = ejerciciosRealizados;
 		this.descansoEjercicios = descansoEjercicios;
 		this.descansoSeries = descansoSeries;
@@ -45,37 +50,36 @@ public class PanelFomularioEntrenamientoGimnasio extends PanelFormulario {
 	}
 
 	private void inicializar() {
-		ajustarConstraints(0, 0, 1, 1);
-		add(new JLabel("Ejercicios realizados"), constraints);
-
-		ajustarConstraints(1, 0, 1, 1);
+		inicializarCamposEjerciciosRealizados();
+		inicializarCamposDescansoEjercicios();
+		inicializarCamposDescansoSeries();
+	}
+	
+	private void inicializarCamposEjerciciosRealizados() {
+		add(new JLabel("Ejercicios realizados"));
 		this.textAreaEjerciciosRealizados = new JTextArea(3, 10);
 		if(this.ejerciciosRealizados != null) this.textAreaEjerciciosRealizados.setText(this.ejerciciosRealizados);
-		add(this.textAreaEjerciciosRealizados, constraints);
-
-		ajustarConstraints(0, 1, 1, 1);
-		add(new JLabel("Descansos entre ejercicios"), constraints);
-
-		ajustarConstraints(1, 1, 1, 1);
+		add(this.textAreaEjerciciosRealizados, "span, grow, wrap");
+		this.labelErrorEjerciciosRealizados = getLabelError();
+		add(this.labelErrorEjerciciosRealizados, "span, grow, wrap");
+	}
+	
+	private void inicializarCamposDescansoEjercicios() {
+		add(new JLabel("Descansos entre ejercicios"));
 		this.textFieldDescansosEntreEjercicios = new JTextField(10);
 		if(this.descansoEjercicios != null) this.textFieldDescansosEntreEjercicios.setText(this.descansoEjercicios);
-		add(this.textFieldDescansosEntreEjercicios, constraints);
-
-		ajustarConstraints(0, 2, 2, 1);
+		add(this.textFieldDescansosEntreEjercicios, "span, grow, wrap");
 		this.labelErrorDescansosEntreEjercicios = getLabelError();
-		add(this.labelErrorDescansosEntreEjercicios, constraints);
-
-		ajustarConstraints(0, 3, 1, 1);
-		add(new JLabel("Descansos entre series"), constraints);
-
-		ajustarConstraints(1, 3, 1, 1);
+		add(this.labelErrorDescansosEntreEjercicios, "span, grow, wrap");
+	}
+	
+	private void inicializarCamposDescansoSeries() {
+		add(new JLabel("Descansos entre series"));
 		this.textFieldDescansosEntreSeries = new JTextField(10);
 		if(this.descansoSeries != null) this.textFieldDescansosEntreSeries.setText(this.descansoSeries);
-		add(this.textFieldDescansosEntreSeries, constraints);
-
-		ajustarConstraints(0, 4, 2, 1);
+		add(this.textFieldDescansosEntreSeries, "span, grow, wrap");
 		this.labelErrorDescansosEntreSeries = getLabelError();
-		add(this.labelErrorDescansosEntreSeries, constraints);
+		add(this.labelErrorDescansosEntreSeries, "span, grow, wrap");
 	}
 
 	@Override

@@ -1,6 +1,9 @@
 package com.fit.actividad.modelo;
 
-public class DeporteEquipo extends DetalleActividad {
+import java.sql.Time;
+import java.sql.Timestamp;
+
+public class DeporteEquipo extends Actividad {
 
 	public static final int TAMANIO_MAXIMO_NOMBRE_DEPORTE = 20;
 
@@ -23,15 +26,9 @@ public class DeporteEquipo extends DetalleActividad {
 
 	private String resultadoDelPartido;
 
-	public DeporteEquipo(int id, String nombreDeporte, String nombreEquipos, String resultadoDelPartido) {
-		super(id);
-		this.nombreDeporte = nombreDeporte;
-		this.nombreEquipos = nombreEquipos;
-		this.resultadoDelPartido = resultadoDelPartido;
-	}
-
-	public DeporteEquipo(String nombreDeporte, String nombreEquipos, String resultadoDelPartido) {
-		super();
+	public DeporteEquipo(int id, int userId, Timestamp fechaHora, Time duracion, String ubicacion, String nombreDeporte, String nombreEquipos,
+			String resultadoDelPartido) {
+		super(id, userId, fechaHora, duracion, ubicacion);
 		this.nombreDeporte = nombreDeporte;
 		this.nombreEquipos = nombreEquipos;
 		this.resultadoDelPartido = resultadoDelPartido;
@@ -62,22 +59,52 @@ public class DeporteEquipo extends DetalleActividad {
 	}
 
 	@Override
-	public String toString() {
-		return "DeporteEquipo [nombreDeporte=" + nombreDeporte + ", nombreEquipos=" + nombreEquipos
-				+ ", resultadoDelPartido=" + resultadoDelPartido + " id=" + super.getId() + "]";
-	}
-
-	@Override
 	public int getTipoActividad() {
-		return TipoActividad.DEPORTES_EQUIPO.getValor();
+		return TipoActividad.DEPORTE_EQUIPO.getValor();
+	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + "DeporteEquipo [nombreDeporte=" + nombreDeporte + ", nombreEquipos=" + nombreEquipos
+				+ ", resultadoDelPartido=" + resultadoDelPartido + "]";
 	}
 
 	@Override
-	public boolean atributosIguales(DetalleActividad detalle) {
-		if(!(detalle instanceof DeporteEquipo)) return false;
-		DeporteEquipo deporte = (DeporteEquipo) detalle;
-		return this.nombreDeporte.equals(deporte.getNombreDeporte()) &&
-				this.nombreEquipos.equals(deporte.getNombreEquipos()) &&
-				this.resultadoDelPartido.equals(deporte.getResultadoDelPartido());
+	public boolean atributosIguales(Actividad otraActividad) {
+		if(! super.atributosIguales(otraActividad)) return false;
+		if (!(otraActividad instanceof DeporteEquipo)) return false;
+		DeporteEquipo deporte = (DeporteEquipo) otraActividad;
+		return this.nombreDeporte.equals(deporte.getNombreDeporte())
+				&& this.nombreEquipos.equals(deporte.getNombreEquipos())
+				&& this.resultadoDelPartido.equals(deporte.getResultadoDelPartido());
+	}
+	
+	public static class DeporteEquipoBuilder extends ActividadBuilder{
+
+		private String nombreDeporte;
+
+		private String nombreEquipos;
+
+		private String resultadoDelPartido;
+		
+		public DeporteEquipoBuilder setNombreDeporte(String nombreDeporte) {
+			this.nombreDeporte = nombreDeporte;
+			return this;
+		}
+		
+		public DeporteEquipoBuilder setNombreEquipos(String nombreEquipos) {
+			this.nombreEquipos = nombreEquipos;
+			return this;
+		}
+		
+		public DeporteEquipoBuilder setResultadoDelPartido(String resultadoDelPartido) {
+			this.resultadoDelPartido = resultadoDelPartido;
+			return this;
+		}
+		
+		@Override
+		public Actividad build() {
+			return new DeporteEquipo(id, userId, fechaHora, duracion, ubicacion, nombreDeporte, nombreEquipos, resultadoDelPartido);
+		}
 	}
 }

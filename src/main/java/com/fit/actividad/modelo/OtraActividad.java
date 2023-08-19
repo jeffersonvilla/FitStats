@@ -1,21 +1,19 @@
 package com.fit.actividad.modelo;
 
-public class OtraActividad extends DetalleActividad {
+import java.sql.Time;
+import java.sql.Timestamp;
 
-	private String descripcion;
+public class OtraActividad extends Actividad {
 
 	public static final int TAMANIO_MAXIMO_DESCRIPCION = 150;
 
 	public static final String MENSAJE_TAMANIO_MAXIMO_DESCRIPCION = "Máximo " + TAMANIO_MAXIMO_DESCRIPCION
 			+ " caracteres";
 
-	public OtraActividad(int id, String descripcion) {
-		super(id);
-		this.descripcion = descripcion;
-	}
+	private String descripcion;
 
-	public OtraActividad(String descripcion) {
-		super();
+	public OtraActividad(int id, int userId, Timestamp fechaHora, Time duracion, String ubicacion, String descripcion) {
+		super(id, userId, fechaHora, duracion, ubicacion);
 		this.descripcion = descripcion;
 	}
 
@@ -28,19 +26,35 @@ public class OtraActividad extends DetalleActividad {
 	}
 
 	@Override
-	public String toString() {
-		return "OtraActividad [descripcion=" + descripcion + " id=" + super.getId() + "]";
-	}
-
-	@Override
 	public int getTipoActividad() {
 		return TipoActividad.OTRA_ACTIVIDAD.getValor();
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + "OtraActividad [descripcion=" + descripcion + "]";
+	}
 
 	@Override
-	public boolean atributosIguales(DetalleActividad detalle) {
+	public boolean atributosIguales(Actividad detalle) {
+		if(! super.atributosIguales(detalle)) return false;
 		if(!(detalle instanceof OtraActividad)) return false;
 		OtraActividad otraActividad = (OtraActividad) detalle;
 		return this.descripcion.equals(otraActividad.getDescripcion());
+	}
+	
+	public static class OtraActividadBuilder extends ActividadBuilder{
+
+		private String descripcion;
+
+		public OtraActividadBuilder setDescripcion(String descripcion) {
+			this.descripcion = descripcion;
+			return this;
+		}
+		
+		@Override
+		public Actividad build() {
+			return new OtraActividad(id, userId, fechaHora, duracion, ubicacion, descripcion);
+		}
 	}
 }

@@ -59,10 +59,10 @@ public class ControladorPrincipal {
 
 	public void abrirVentanaActividades(Sesion sesionUsuario) {
 		cerrarVentanaInicioSesion();
-		this.controladorActividades = new ControladorActividad(this, sesionUsuario);
-		this.ventanaActividades = new VentanaActividades(controladorActividades);
-		this.controladorActividades.setVista(ventanaActividades);
-		this.ventanaPrincipal.setVisible(false);
+//		this.controladorActividades = new ControladorActividad(this, sesionUsuario);
+//		this.ventanaActividades = new VentanaActividades(controladorActividades);
+//		this.controladorActividades.setVista(ventanaActividades);
+//		this.ventanaPrincipal.setVisible(false);
 	}
 
 	private void cerrarVentanaActividades() {

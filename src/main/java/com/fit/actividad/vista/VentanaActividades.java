@@ -50,7 +50,7 @@ public class VentanaActividades extends JFrame implements VistaActividades, Acti
 	
 	private PanelSeleccionActividad panelSeleccionActividades;
 
-	private PanelFormularioActividad panelFormularioActividad;
+	private FormularioActividad panelFormularioActividad;
 
 	private int tipoActividadSelecionada;
 	
@@ -58,9 +58,9 @@ public class VentanaActividades extends JFrame implements VistaActividades, Acti
 
 	public VentanaActividades(final ControladorActividad controlador) {
 		this.controlador = controlador;
-		this.opcionesTipoActividad = controlador.getOpcionesTipoActividad();
+		//this.opcionesTipoActividad = controlador.getOpcionesTipoActividad();
 		this.cardLayout = new CardLayout();
-		this.panelFormularioActividad = new PanelFormularioActividad();
+		this.panelFormularioActividad = new FormularioActividad();
 		this.panelContenidoDetalleActividad = new PanelCardFormularioDetalleActividad(this);
 		
 		agregarBarraMenu();
@@ -73,7 +73,7 @@ public class VentanaActividades extends JFrame implements VistaActividades, Acti
 			@Override
 			public void windowClosing(WindowEvent e) {
 				super.windowClosing(e);
-				controlador.cerrarSesion();
+				//controlador.cerrarSesion();
 			}
 		});
 		setSize(Pantalla.ancho / 2, Pantalla.alto / 2);
@@ -89,7 +89,7 @@ public class VentanaActividades extends JFrame implements VistaActividades, Acti
 
 		itemCerrarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controlador.cerrarSesion();
+			//	controlador.cerrarSesion();
 			}
 		});
 
@@ -110,25 +110,25 @@ public class VentanaActividades extends JFrame implements VistaActividades, Acti
 			if (boton.getText().equals("Nueva")) {
 				this.actualizando = false;
 				this.panelSeleccionActividades.refrescar();
-				this.panelFormularioActividad = new PanelFormularioActividad();
+				this.panelFormularioActividad = new FormularioActividad();
 				this.panelDetalleActividad = new PanelDetalleActividad(this);
 				this.panelContenedorRegistroActualizacionActividad.refrescarElementos();
 				this.panelContenidoDetalleActividad = new PanelCardFormularioDetalleActividad(this);
 				this.panelDetalleActividad.refrescarElementos();
 				cardLayout.show(panelContenedor, PanelContenedor.PANEL_REGISTRO_ACTUALIZACION_ACTIVIDAD);
 				panelBotonesCrudActividad.setVisibilidadBotonesCrudActividades(false);
-			} else if (boton.getText().equals("Ver detalles")) {
-				controlador.verDetallesActividadSeleccionada(getActividadSeleccionadaEnTabla());
-			} else if (boton.getText().equals("Actualizar")) {
-				this.actualizando = true;
-				controlador.getInfoActividadActualizar(getActividadSeleccionadaEnTabla());
-			} else if (boton.getText().equals("Eliminar")) {
-				controlador.eliminarActividad(getActividadSeleccionadaEnTabla());
-			}
+			} //else if (boton.getText().equals("Ver detalles")) {
+//				controlador.verDetallesActividadSeleccionada(getActividadSeleccionadaEnTabla());
+//			} else if (boton.getText().equals("Actualizar")) {
+//				this.actualizando = true;
+//				controlador.getInfoActividadActualizar(getActividadSeleccionadaEnTabla());
+//			} else if (boton.getText().equals("Eliminar")) {
+//				controlador.eliminarActividad(getActividadSeleccionadaEnTabla());
+//			}
 		}
 
 		if (source instanceof JComboBox) {
-			JComboBox opciones = (JComboBox) e.getSource();
+			JComboBox<?> opciones = (JComboBox<?>) e.getSource();
 			tipoActividadSelecionada = opciones.getSelectedIndex();
 			cardLayout.show(panelCardFormularioDetalleActividad, opcionesTipoActividad[opciones.getSelectedIndex()]);
 		}
@@ -167,11 +167,11 @@ public class VentanaActividades extends JFrame implements VistaActividades, Acti
 		this.panelCardFormularioDetalleActividad = panelCardFormularioDetalleActividad;
 	}
 
-	public PanelFormularioActividad getPanelFormularioActividad() {
+	public FormularioActividad getPanelFormularioActividad() {
 		return panelFormularioActividad;
 	}
 
-	public void setPanelFormularioActividad(PanelFormularioActividad panelFormularioActividad) {
+	public void setPanelFormularioActividad(FormularioActividad panelFormularioActividad) {
 		this.panelFormularioActividad = panelFormularioActividad;
 	}
 
@@ -244,71 +244,71 @@ public class VentanaActividades extends JFrame implements VistaActividades, Acti
 	@Override
 	public void validarTipoBicicleta(int actividad, String mensajeError) {
 		Component componente = this.panelCardFormularioDetalleActividad.getComponent(actividad);
-		if (componente instanceof PanelFormularioCiclismo)
-			((PanelFormularioCiclismo) componente).mostrarErrorCampoTipoBicicleta(mensajeError);
+		if (componente instanceof FormularioCiclismo)
+			((FormularioCiclismo) componente).mostrarErrorCampoTipoBicicleta(mensajeError);
 	}
 
 	@Override
 	public void validarEstilosNatacion(int actividad, String mensajeError) {
 		Component componente = this.panelCardFormularioDetalleActividad.getComponent(actividad);
-		if (componente instanceof PanelFormularioNatacion)
-			((PanelFormularioNatacion) componente).mostrarErrorCampoEstilosNatacion(mensajeError);
+		if (componente instanceof FormularioNatacion)
+			((FormularioNatacion) componente).mostrarErrorCampoEstilosNatacion(mensajeError);
 	}
 
 	@Override
 	public void validarNombreDeporte(int actividad, String mensajeError) {
 		Component componente = this.panelCardFormularioDetalleActividad.getComponent(actividad);
-		if (componente instanceof PanelFormularioDeporteEquipo)
-			((PanelFormularioDeporteEquipo) componente).mostrarErrorCampoNombreDeporte(mensajeError);
+		if (componente instanceof FormularioDeporteEquipo)
+			((FormularioDeporteEquipo) componente).mostrarErrorCampoNombreDeporte(mensajeError);
 	}
 
 	@Override
 	public void validarNombreEquipos(int actividad, String mensajeError) {
 		Component componente = this.panelCardFormularioDetalleActividad.getComponent(actividad);
-		if (componente instanceof PanelFormularioDeporteEquipo)
-			((PanelFormularioDeporteEquipo) componente).mostrarErrorNombreEquipos(mensajeError);
+		if (componente instanceof FormularioDeporteEquipo)
+			((FormularioDeporteEquipo) componente).mostrarErrorNombreEquipos(mensajeError);
 	}
 
 	@Override
 	public void validarResultadoDelPartido(int actividad, String mensajeError) {
 		Component componente = this.panelCardFormularioDetalleActividad.getComponent(actividad);
-		if (componente instanceof PanelFormularioDeporteEquipo)
-			((PanelFormularioDeporteEquipo) componente).mostrarErrorCampoResultadoDelPartido(mensajeError);
+		if (componente instanceof FormularioDeporteEquipo)
+			((FormularioDeporteEquipo) componente).mostrarErrorCampoResultadoDelPartido(mensajeError);
 	}
 
 	@Override
 	public void validarDescansosEntreEjercicios(int actividad, String mensajeError) {
 		Component componente = this.panelCardFormularioDetalleActividad.getComponent(actividad);
-		if (componente instanceof PanelFomularioEntrenamientoGimnasio)
-			((PanelFomularioEntrenamientoGimnasio) componente).mostrarErrorCampoDescansoEntreEjercicios(mensajeError);
+		if (componente instanceof FormularioEntrenamientoGimnasio)
+			((FormularioEntrenamientoGimnasio) componente).mostrarErrorCampoDescansoEntreEjercicios(mensajeError);
 	}
 
 	@Override
 	public void validarDescansosEntreSeries(int actividad, String mensajeError) {
 		Component componente = this.panelCardFormularioDetalleActividad.getComponent(actividad);
-		if (componente instanceof PanelFomularioEntrenamientoGimnasio)
-			((PanelFomularioEntrenamientoGimnasio) componente).mostrarErrorCampoDescansosEntreSeries(mensajeError);
+		if (componente instanceof FormularioEntrenamientoGimnasio)
+			((FormularioEntrenamientoGimnasio) componente).mostrarErrorCampoDescansosEntreSeries(mensajeError);
 	}
 
 	@Override
 	public void validarTipoSesionEstiramientos(int actividad, String mensajeError) {
 		Component componente = this.panelCardFormularioDetalleActividad.getComponent(actividad);
-		if (componente instanceof PanelFormularioEstiramientos)
-			((PanelFormularioEstiramientos) componente).mostrarErrorCampoTipoSesion(mensajeError);
+		if (componente instanceof FormularioEstiramientos)
+			((FormularioEstiramientos) componente).mostrarErrorCampoTipoSesion(mensajeError);
 	}
 
 	@Override
 	public void validarNivelDificultadEstiramientos(int actividad, String mensajeError) {
 		Component componente = this.panelCardFormularioDetalleActividad.getComponent(actividad);
-		if (componente instanceof PanelFormularioEstiramientos)
-			((PanelFormularioEstiramientos) componente).mostrarErrorCampoNivelDificultad(mensajeError);
+		if (componente instanceof FormularioEstiramientos)
+			((FormularioEstiramientos) componente).mostrarErrorCampoNivelDificultad(mensajeError);
 	}
 
 	@Override
 	public void validarDescripcionOtraActividad(int actividad, String mensajeError) {
 		Component componente = this.panelCardFormularioDetalleActividad.getComponent(actividad);
-		if (componente instanceof PanelFormularioOtraActividad)
-			((PanelFormularioOtraActividad) componente).mostrarErrorCampoDescripcion(mensajeError);
+		if (componente instanceof FormularioOtraActividad)
+			((FormularioOtraActividad) componente).mostrarErrorCampoDescripcion(mensajeError);
 	}
 
 	@Override
@@ -318,7 +318,7 @@ public class VentanaActividades extends JFrame implements VistaActividades, Acti
 	}
 
 	@Override
-	public void mostrarPanelActualizacionActividad(PanelFormularioActividad panelActividad, int tipoActividad, PanelFormulario panelContenidoDetalleActividad) {
+	public void mostrarPanelActualizacionActividad(FormularioActividad panelActividad, int tipoActividad, PanelFormulario panelContenidoDetalleActividad) {
 		this.panelFormularioActividad = panelActividad;
 		panelContenedorRegistroActualizacionActividad.refrescarElementos();
 		cardLayout.show(panelContenedor, PanelContenedor.PANEL_REGISTRO_ACTUALIZACION_ACTIVIDAD);		

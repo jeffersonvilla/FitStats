@@ -1,13 +1,15 @@
 package com.fit.actividad.vista.panelFormulario;
 
 import java.awt.Color;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
-public class PanelFormularioEstiramientos extends PanelFormulario {
+public class FormularioEstiramientos extends FormularioActividad {
 
 	private static final long serialVersionUID = 1L;
 
@@ -23,14 +25,15 @@ public class PanelFormularioEstiramientos extends PanelFormulario {
 	
 	private String nivelDificultad;
 
-	public PanelFormularioEstiramientos() {
+	public FormularioEstiramientos() {
 		super();
 
 		inicializar();
 	}
 	
-	public PanelFormularioEstiramientos(String tipoSesion, String nivelDificultad) {
-		super();
+	public FormularioEstiramientos(Timestamp fechaHora, Time duracion, String ubicacion,
+			String tipoSesion, String nivelDificultad) {
+		super(fechaHora, duracion, ubicacion);
 		this.tipoSesion = tipoSesion;
 		this.nivelDificultad = nivelDificultad;
 		
@@ -38,29 +41,26 @@ public class PanelFormularioEstiramientos extends PanelFormulario {
 	}
 
 	private void inicializar() {
-		ajustarConstraints(0, 0, 1, 1);
-		add(new JLabel("Tipo de sesion"), constraints);
-
-		ajustarConstraints(1, 0, 1, 1);
+		inicializarCamposTipoSesion();
+		inicializarCamposNivelDificultad();
+	}
+	
+	private void inicializarCamposTipoSesion() {
+		add(new JLabel("Tipo de sesion"));
 		this.textFieldTipoSesion = new JTextField(15);
 		if(this.tipoSesion != null) this.textFieldTipoSesion.setText(this.tipoSesion);
-		add(this.textFieldTipoSesion, constraints);
-
-		ajustarConstraints(0, 1, 2, 1);
+		add(this.textFieldTipoSesion, "span, grow, wrap");
 		this.labelErrorTipoSesion = getLabelError();
-		add(this.labelErrorTipoSesion, constraints);
-
-		ajustarConstraints(0, 2, 1, 1);
-		add(new JLabel("Nivel de dificultad"), constraints);
-
-		ajustarConstraints(1, 2, 1, 1);
+		add(this.labelErrorTipoSesion,  "span, grow, wrap");
+	}
+	
+	private void inicializarCamposNivelDificultad() {
+		add(new JLabel("Nivel de dificultad"));
 		this.textFieldNivelDificultad = new JTextField(15);
 		if(this.nivelDificultad != null) this.textFieldNivelDificultad.setText(this.nivelDificultad);
-		add(this.textFieldNivelDificultad, constraints);
-
-		ajustarConstraints(0, 3, 2, 1);
+		add(this.textFieldNivelDificultad, "span, grow, wrap");
 		this.labelErrorNivelDificultad = getLabelError();
-		add(this.labelErrorNivelDificultad, constraints);
+		add(this.labelErrorNivelDificultad, "span, grow, wrap");
 	}
 	
 	@Override

@@ -1,11 +1,10 @@
 package com.fit.actividad.modelo;
 
-public class Estiramientos extends DetalleActividad {
+import java.sql.Time;
+import java.sql.Timestamp;
 
-	private String tipoSesion;
-
-	private String nivelDificultad;
-
+public class Estiramientos extends Actividad {
+	
 	public static final int TAMANIO_MAXIMO_TIPO_SESION = 50;
 
 	public static final int TAMANIO_MAXIMO_NIVEL_DIFICULTAD = 20;
@@ -16,14 +15,13 @@ public class Estiramientos extends DetalleActividad {
 	public static final String MENSAJE_TAMANIO_MAXIMO_NIVEL_DIFICULTAD = "Máximo " + TAMANIO_MAXIMO_NIVEL_DIFICULTAD
 			+ " caracteres";
 
-	public Estiramientos(int id, String tipoSesion, String nivelDificultad) {
-		super(id);
-		this.tipoSesion = tipoSesion;
-		this.nivelDificultad = nivelDificultad;
-	}
+	private String tipoSesion;
 
-	public Estiramientos(String tipoSesion, String nivelDificultad) {
-		super();
+	private String nivelDificultad;
+	
+	public Estiramientos(int id, int userId, Timestamp fechaHora, Time duracion, String ubicacion, 
+			String tipoSesion, String nivelDificultad) {
+		super(id, userId, fechaHora, duracion, ubicacion);
 		this.tipoSesion = tipoSesion;
 		this.nivelDificultad = nivelDificultad;
 	}
@@ -45,21 +43,43 @@ public class Estiramientos extends DetalleActividad {
 	}
 
 	@Override
-	public String toString() {
-		return "Estiramientos [tipoSesion=" + tipoSesion + ", nivelDificultad=" + nivelDificultad + " id="
-				+ super.getId() + "]";
-	}
-
-	@Override
 	public int getTipoActividad() {
 		return TipoActividad.ESTIRAMIENTOS.getValor();
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + "Estiramientos [tipoSesion=" + tipoSesion + ", nivelDificultad=" + nivelDificultad + "]";
+	}
 
 	@Override
-	public boolean atributosIguales(DetalleActividad detalle) {
-		if(!(detalle instanceof Estiramientos)) return false;
-		Estiramientos estiramientos = (Estiramientos) detalle;
+	public boolean atributosIguales(Actividad otraActividad) {
+		if(! super.atributosIguales(otraActividad)) return false;
+		if(!(otraActividad instanceof Estiramientos)) return false;
+		Estiramientos estiramientos = (Estiramientos) otraActividad;
 		return this.tipoSesion.equals(estiramientos.getTipoSesion()) &&
 				this.nivelDificultad.equals(estiramientos.getNivelDificultad());
+	}
+	
+	public static class EstiramientosBuilder extends ActividadBuilder{
+
+		private String tipoSesion;
+
+		private String nivelDificultad;
+
+		public EstiramientosBuilder setTipoSesion(String tipoSesion) {
+			this.tipoSesion = tipoSesion;
+			return this;
+		}
+		
+		public EstiramientosBuilder setNivelDificultad(String nivelDificultad) {
+			this.nivelDificultad = nivelDificultad;
+			return this;
+		}
+		
+		@Override
+		public Actividad build() {
+			return new Estiramientos(id, userId, fechaHora, duracion, ubicacion, tipoSesion, nivelDificultad);
+		}
 	}
 }

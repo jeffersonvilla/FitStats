@@ -23,7 +23,7 @@ public class PanelVisualizacionActividades extends JPanel {
 		super(new BorderLayout());
 		ventana.setPanelVisualizacionActividades(this);
 		modeloTablaActividades = getModeloTabla();
-		actualizarListaActividades(ventana.getControlador().getListaActividades());
+		//actualizarListaActividades(ventana.getControlador().getListaActividades());
 		tablaActividades = new JTable(modeloTablaActividades);
 		tablaActividades.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		add(new JScrollPane(this.tablaActividades), BorderLayout.CENTER);

@@ -1,13 +1,15 @@
 package com.fit.actividad.vista.panelFormulario;
 
 import java.awt.Color;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
-public class PanelFormularioOtraActividad extends PanelFormulario {
+public class FormularioOtraActividad extends FormularioActividad {
 
 	private static final long serialVersionUID = 1L;
 
@@ -17,31 +19,26 @@ public class PanelFormularioOtraActividad extends PanelFormulario {
 	
 	private String descripcion;
 
-	public PanelFormularioOtraActividad() {
+	public FormularioOtraActividad() {
 		super();
 
 		inicializar();
 	}
 
-	public PanelFormularioOtraActividad(String descripcion) {
-		super();
+	public FormularioOtraActividad(Timestamp fechaHora, Time duracion, String ubicacion, String descripcion) {
+		super(fechaHora, duracion, ubicacion);
 		this.descripcion = descripcion;
 		
 		inicializar();
 	}
 
 	private void inicializar() {
-		ajustarConstraints(0, 0, 1, 1);
-		add(new JLabel("Descripcion"), constraints);
-
-		ajustarConstraints(1, 0, 1, 1);
+		add(new JLabel("Descripcion"));
 		this.textFieldDescripcion = new JTextField(15);
 		if(this.descripcion != null) this.textFieldDescripcion.setText(this.descripcion);
-		add(this.textFieldDescripcion, constraints);
-
-		ajustarConstraints(0, 1, 2, 1);
+		add(this.textFieldDescripcion, "span, grow, wrap");
 		this.labelErrorDescripcion = getLabelError();
-		add(this.labelErrorDescripcion, constraints);
+		add(this.labelErrorDescripcion, "span, grow, wrap");
 	}
 	
 	@Override

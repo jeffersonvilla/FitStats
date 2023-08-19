@@ -3,13 +3,13 @@ package com.fit.actividad.vista.panelesPrincipales;
 import javax.swing.JPanel;
 
 import com.fit.actividad.vista.VentanaActividades;
-import com.fit.actividad.vista.panelFormulario.PanelFomularioEntrenamientoGimnasio;
-import com.fit.actividad.vista.panelFormulario.PanelFormularioCaminata;
-import com.fit.actividad.vista.panelFormulario.PanelFormularioCiclismo;
-import com.fit.actividad.vista.panelFormulario.PanelFormularioDeporteEquipo;
-import com.fit.actividad.vista.panelFormulario.PanelFormularioEstiramientos;
-import com.fit.actividad.vista.panelFormulario.PanelFormularioNatacion;
-import com.fit.actividad.vista.panelFormulario.PanelFormularioOtraActividad;
+import com.fit.actividad.vista.panelFormulario.FormularioEntrenamientoGimnasio;
+import com.fit.actividad.vista.panelFormulario.FormularioCaminata;
+import com.fit.actividad.vista.panelFormulario.FormularioCiclismo;
+import com.fit.actividad.vista.panelFormulario.FormularioDeporteEquipo;
+import com.fit.actividad.vista.panelFormulario.FormularioEstiramientos;
+import com.fit.actividad.vista.panelFormulario.FormularioNatacion;
+import com.fit.actividad.vista.panelFormulario.FormularioOtraActividad;
 
 public class PanelCardFormularioDetalleActividad extends JPanel {
 
@@ -22,12 +22,12 @@ public class PanelCardFormularioDetalleActividad extends JPanel {
 
 		String[] tipoActividad = ventana.getOpcionesTipoActividad();
 
-		add(new PanelFormularioCaminata(), tipoActividad[0]);
-		add(new PanelFormularioCiclismo(), tipoActividad[1]);
-		add(new PanelFormularioNatacion(), tipoActividad[2]);
-		add(new PanelFormularioDeporteEquipo(), tipoActividad[3]);
-		add(new PanelFomularioEntrenamientoGimnasio(), tipoActividad[4]);
-		add(new PanelFormularioEstiramientos(), tipoActividad[5]);
-		add(new PanelFormularioOtraActividad(), tipoActividad[6]);
+		add(new FormularioCaminata(), tipoActividad[0]);
+		add(new FormularioCiclismo(), tipoActividad[1]);
+		add(new FormularioNatacion(), tipoActividad[2]);
+		add(new FormularioDeporteEquipo(), tipoActividad[3]);
+		add(new FormularioEntrenamientoGimnasio(), tipoActividad[4]);
+		add(new FormularioEstiramientos(), tipoActividad[5]);
+		add(new FormularioOtraActividad(), tipoActividad[6]);
 	}
 }

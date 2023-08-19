@@ -21,9 +21,11 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-public class PanelFormularioActividad extends PanelFormulario {
+public abstract class FormularioActividad extends PanelFormulario {
 
 	private static final long serialVersionUID = 1L;
+	
+	public static final String MENSAJE_VALIDACION_CAMPO_VACIO = "Debe llenar este campo";
 
 	private JDatePickerImpl selectorFecha;
 
@@ -35,11 +37,9 @@ public class PanelFormularioActividad extends PanelFormulario {
 
 	private JSpinner duracionHoras;
 
-	private JLabel labelErrorDuracionHora;
+	private JLabel labelErrorDuracion;
 
 	private JSpinner duracionMinutos;
-
-	private JLabel labelErrorDuracionMinuto;
 
 	private JTextField textFieldUbicacion;
 
@@ -55,13 +55,13 @@ public class PanelFormularioActividad extends PanelFormulario {
 	
 	private String ubicacion;
 
-	public PanelFormularioActividad() {
+	protected FormularioActividad() {
 		super();
 
 		inicializarCampos();
 	}
 
-	public PanelFormularioActividad(Timestamp fechaHora, Time duracion, String ubicacion) {
+	protected FormularioActividad(Timestamp fechaHora, Time duracion, String ubicacion) {
 		super();
 		this.fechaHora = fechaHora;
 		if(duracion != null) {
@@ -71,71 +71,55 @@ public class PanelFormularioActividad extends PanelFormulario {
 			this.minutosDuracion = calendar.get(Calendar.MINUTE);
 		}
 		this.ubicacion = ubicacion;
+		
 		inicializarCampos();
 	}
-
+	
 	private void inicializarCampos() {
-		ajustarConstraints(0, 0, 1, 1);
-		add(new JLabel("Fecha"), constraints);
-
-		ajustarConstraints(1, 0, 1, 1);
+		inicializarCamposFecha();		
+		inicializarCamposHora();
+		inicializarCamposDuracion();
+		inicializarCamposUbicacion();
+	}
+		
+	private void inicializarCamposFecha() {
+		add(new JLabel("Fecha"));
 		this.selectorFecha = getSelectorFecha();
 		this.borderDefault = this.selectorFecha.getBorder();
-		add(this.selectorFecha, constraints);
-
-		ajustarConstraints(0, 1, 2, 1);
+		add(this.selectorFecha, "wrap");
 		this.labelErrorFecha = getLabelError();
-		add(this.labelErrorFecha, constraints);
-
-		ajustarConstraints(0, 2, 1, 1);
-		add(new JLabel("Hora"), constraints);
-
-		ajustarConstraints(1, 2, 1, 1);
+		add(this.labelErrorFecha, "span, grow");
+	}
+	
+	private void inicializarCamposHora() {
+		add(new JLabel("Hora"));
 		this.selectorHora = getSelectorHoraIncio();
-		add(this.selectorHora, constraints);
-
-		ajustarConstraints(0, 3, 2, 1);
+		add(this.selectorHora, "grow, wrap");
 		this.labelErrorHora = getLabelError();
-		add(this.labelErrorHora, constraints);
-
-		ajustarConstraints(2, 0, 1, 1);
-		add(new JLabel("Duracion"), constraints);
-
-		ajustarConstraints(3, 0, 1, 1);
-		add(new JLabel("hora(s):"), constraints);
-
-		ajustarConstraints(4, 0, 1, 1);
+		add(this.labelErrorHora,"span, grow, wrap");
+	}
+	
+	private void inicializarCamposDuracion() {
+		add(new JLabel("Duracion", JLabel.CENTER), "span, grow, wrap");
+		add(new JLabel("hora(s)"));
 		this.duracionHoras = getSelectorDuracion(23, horasDuracion);
-		add(this.duracionHoras, constraints);
-
-		ajustarConstraints(5, 0, 1, 1);
-		add(new JLabel("minutos"), constraints);
-
-		ajustarConstraints(6, 0, 1, 1);
+		add(this.duracionHoras, "split 3, grow");
+		add(new JLabel("minutos"));
 		this.duracionMinutos = getSelectorDuracion(59, minutosDuracion);
-		add(this.duracionMinutos, constraints);
-
-		ajustarConstraints(1, 1, 3, 1);
-		this.labelErrorDuracionHora = getLabelError();
-		add(this.labelErrorDuracionHora, constraints);
-
-		ajustarConstraints(2, 1, 2, 1);
-		this.labelErrorDuracionMinuto = getLabelError();
-		add(this.labelErrorDuracionMinuto, constraints);
-
-		ajustarConstraints(2, 2, 1, 1);
-		add(new JLabel("Ubicacion"), constraints);
-
-		ajustarConstraints(3, 2, 4, 1);
-		this.textFieldUbicacion = new JTextField(10);
-		if(this.ubicacion != null) this.textFieldUbicacion.setText(ubicacion);
-		add(this.textFieldUbicacion, constraints);
-
-		ajustarConstraints(0, 3, 6, 1);
-		this.labelErrorUbicacion = getLabelError();
-		add(this.labelErrorUbicacion, constraints);
+		add(this.duracionMinutos, "grow, wrap");		
+		this.labelErrorDuracion = getLabelError();
+		add(this.labelErrorDuracion, "span, grow, wrap");
 	}
 
+	private void inicializarCamposUbicacion() {
+		add(new JLabel("Ubicacion"));
+		this.textFieldUbicacion = new JTextField(10);
+		if(this.ubicacion != null) this.textFieldUbicacion.setText(ubicacion);
+		add(this.textFieldUbicacion, "span, grow, wrap");
+		this.labelErrorUbicacion = getLabelError();
+		add(this.labelErrorUbicacion, "span, grow, wrap");
+	}
+	
 	private JDatePickerImpl getSelectorFecha() {
 		UtilDateModel model = new UtilDateModel();
 		Calendar calendar = Calendar.getInstance();

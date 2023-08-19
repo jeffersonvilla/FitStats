@@ -1,15 +1,15 @@
 package com.fit.actividad.vista.panelFormulario;
 
 import java.awt.Color;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
-import com.fit.actividad.vista.interfaces.ValidadorCampoDistancia;
-
-public class PanelFormularioNatacion extends PanelFormulario implements ValidadorCampoDistancia {
+public class FormularioNatacion extends FormularioActividad {
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,14 +25,15 @@ public class PanelFormularioNatacion extends PanelFormulario implements Validado
 	
 	private String estiloNatacion;
 	
-	public PanelFormularioNatacion() {
+	public FormularioNatacion() {
 		super();
 
 		inicializar();
 	}
 	
-	public PanelFormularioNatacion(String distancia, String estiloNatacion) {
-		super();
+	public FormularioNatacion(Timestamp fechaHora, Time duracion, String ubicacion,
+			String distancia, String estiloNatacion) {
+		super(fechaHora, duracion, ubicacion);
 		this.distancia = distancia;
 		this.estiloNatacion = estiloNatacion;
 		
@@ -40,31 +41,28 @@ public class PanelFormularioNatacion extends PanelFormulario implements Validado
 	}
 
 	private void inicializar() {
-		ajustarConstraints(0, 0, 1, 1);
-		add(new JLabel("Distancia"), constraints);
-
-		ajustarConstraints(1, 0, 1, 1);
-		this.textFieldDistancia = new JTextField(15);
-		this.textFieldDistancia.setText((this.distancia != null) ? this.distancia : "0.0");
-		add(this.textFieldDistancia, constraints);
-
-		ajustarConstraints(0, 1, 2, 1);
-		this.labelErrorDistancia = getLabelError();
-		add(this.labelErrorDistancia, constraints);
-
-		ajustarConstraints(0, 2, 1, 1);
-		add(new JLabel("Estilos natación"), constraints);
-
-		ajustarConstraints(1, 2, 1, 1);
-		this.textFieldEstiloNatacion = new JTextField(15);
-		if(this.estiloNatacion != null) this.textFieldEstiloNatacion.setText(this.estiloNatacion);
-		add(this.textFieldEstiloNatacion, constraints);
-
-		ajustarConstraints(0, 3, 2, 1);
-		this.labelErrorEstiloNatacion = getLabelError();
-		add(this.labelErrorEstiloNatacion, constraints);
+		inicializarCamposDistancia();
+		inicializarCamposEstilosNatacion();
 	}
 
+	private void inicializarCamposDistancia() {
+		add(new JLabel("Distancia"));
+		this.textFieldDistancia = new JTextField(15);
+		this.textFieldDistancia.setText((this.distancia != null) ? this.distancia : "0.0");
+		add(this.textFieldDistancia, "span, grow, wrap");
+		this.labelErrorDistancia = getLabelError();
+		add(this.labelErrorDistancia, "span, grow, wrap");
+	}
+	
+	private void inicializarCamposEstilosNatacion() {
+		add(new JLabel("Estilos natación"));
+		this.textFieldEstiloNatacion = new JTextField(15);
+		if(this.estiloNatacion != null) this.textFieldEstiloNatacion.setText(this.estiloNatacion);
+		add(this.textFieldEstiloNatacion, "span, grow, wrap");
+		this.labelErrorEstiloNatacion = getLabelError();
+		add(this.labelErrorEstiloNatacion, "span, grow, wrap");
+	}
+	
 	@Override
 	public void limpiarCamposTexto() {
 		this.textFieldDistancia.setText("0.0");
@@ -77,7 +75,6 @@ public class PanelFormularioNatacion extends PanelFormulario implements Validado
 		limpiarCampoErrorEstiloNatacion();
 	}
 
-	@Override
 	public void mostrarErrorCampoDistancia(String mensajeError) {
 		this.labelErrorDistancia.setText(mensajeError);
 		this.textFieldDistancia.setBorder(BorderFactory.createLineBorder(Color.RED));
