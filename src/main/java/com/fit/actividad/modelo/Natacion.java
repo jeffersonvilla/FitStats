@@ -45,7 +45,12 @@ public class Natacion extends Actividad {
 	public int getTipoActividad() {
 		return TipoActividad.NATACION.getValor();
 	}
-	
+
+	@Override
+	public String getNombreTipoActividad() {
+		return TipoActividad.NATACION.getNombre();
+	}
+
 	@Override
 	public String toString() {
 		return super.toString() + "Natacion [distancia=" + distancia + ", estilosNatacion=" + estilosNatacion + "]";

@@ -42,7 +42,7 @@ public class VentanaActividades extends JFrame implements VistaActividades, Acti
 
 	private PanelBotonesCrudActividad panelBotonesCrudActividad;
 
-	private PanelVisualizacionActividades panelVisualizacionActividades;
+	private VistaTablaActividades panelVisualizacionActividades;
 
 	private PanelCardFormularioDetalleActividad panelCardFormularioDetalleActividad;
 
@@ -154,7 +154,7 @@ public class VentanaActividades extends JFrame implements VistaActividades, Acti
 		this.panelBotonesCrudActividad = panelBotonesCrudActividad;
 	}
 
-	public void setPanelVisualizacionActividades(PanelVisualizacionActividades panelVisualizacionActividades) {
+	public void setPanelVisualizacionActividades(VistaTablaActividades panelVisualizacionActividades) {
 		this.panelVisualizacionActividades = panelVisualizacionActividades;
 	}
 

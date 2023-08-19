@@ -57,7 +57,12 @@ public class EntrenamientoGimnasio extends Actividad {
 	public int getTipoActividad() {
 		return TipoActividad.ENTRENAMIENTO_GIMNASIO.getValor();
 	}
-	
+
+	@Override
+	public String getNombreTipoActividad() {
+		return TipoActividad.ENTRENAMIENTO_GIMNASIO.getNombre();
+	}
+
 	@Override
 	public String toString() {
 		return super.toString() + "EntrenamientoGimnasio [ejerciciosRealizados=" + ejerciciosRealizados

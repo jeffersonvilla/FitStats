@@ -98,4 +98,5 @@ public class VistaCrearCaminata extends JFrame implements ActionListener{
 		formulario.mostrarErrorCampoDistancia(MENSAJE_VALIDACION_DISTANCIA);
 		return false;
 	}
+	
 }

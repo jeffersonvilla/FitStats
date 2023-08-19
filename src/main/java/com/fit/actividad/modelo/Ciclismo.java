@@ -43,6 +43,11 @@ public class Ciclismo extends Actividad {
 	}
 
 	@Override
+	public String getNombreTipoActividad() {
+		return TipoActividad.CICLISMO.getNombre();
+	}
+
+	@Override
 	public String toString() {
 		return super.toString() + "Ciclismo [distancia=" + distancia + ", tipo_bicicleta=" + tipoBicicleta + "]";
 	}

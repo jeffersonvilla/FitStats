@@ -30,7 +30,9 @@
 		<constructor-arg ref="formularioCaminataVacio"/>
 	</bean>
 	
-	
+	<bean id="vistaTablaActividades" class="com.fit.actividad.vista.VistaTablaActividades">
+		<constructor-arg ref="controladorActividad"/>	
+	</bean>
 	
 
 </beans>

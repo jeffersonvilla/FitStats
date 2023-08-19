@@ -28,6 +28,11 @@ public class Caminata extends Actividad {
 	}
 	
 	@Override
+	public String getNombreTipoActividad() {
+		return TipoActividad.CAMINATA.getNombre();
+	}
+
+	@Override
 	public String toString() {
 		return super.toString() + "Caminata [distancia=" + distancia + "]";
 	}

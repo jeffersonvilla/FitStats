@@ -46,7 +46,12 @@ public class Estiramientos extends Actividad {
 	public int getTipoActividad() {
 		return TipoActividad.ESTIRAMIENTOS.getValor();
 	}
-	
+
+	@Override
+	public String getNombreTipoActividad() {
+		return TipoActividad.ESTIRAMIENTOS.getNombre();
+	}
+
 	@Override
 	public String toString() {
 		return super.toString() + "Estiramientos [tipoSesion=" + tipoSesion + ", nivelDificultad=" + nivelDificultad + "]";

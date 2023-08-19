@@ -68,6 +68,8 @@ public abstract class Actividad {
 
 	public abstract int getTipoActividad();
 	
+	public abstract String getNombreTipoActividad(); 
+	
     @Override
 	public String toString() {
 		return "Actividad [id=" + id + ", userId=" + userId + ", fechaHora=" + fechaHora + ", duracion=" + duracion

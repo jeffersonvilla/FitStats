@@ -3,6 +3,7 @@ package com.fit.actividad.vista.panelesPrincipales;
 import javax.swing.JPanel;
 
 import com.fit.actividad.vista.VentanaActividades;
+import com.fit.actividad.vista.VistaTablaActividades;
 
 public class PanelContenedor extends JPanel {
 
@@ -15,7 +16,7 @@ public class PanelContenedor extends JPanel {
 	public PanelContenedor(VentanaActividades ventana) {
 		super(ventana.getCardLayout());
 		ventana.setPanelContenedor(this);
-		add(new PanelVisualizacionActividades(ventana), PANEL_VISUALIZACION_ACTIVIDADES);
+		add(new VistaTablaActividades(ventana), PANEL_VISUALIZACION_ACTIVIDADES);
 		add(new PanelRegistroActualizacionActividad(ventana), PANEL_REGISTRO_ACTUALIZACION_ACTIVIDAD);
 	}
 }

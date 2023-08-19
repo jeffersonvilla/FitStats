@@ -29,7 +29,12 @@ public class OtraActividad extends Actividad {
 	public int getTipoActividad() {
 		return TipoActividad.OTRA_ACTIVIDAD.getValor();
 	}
-	
+
+	@Override
+	public String getNombreTipoActividad() {
+		return TipoActividad.OTRA_ACTIVIDAD.getNombre();
+	}
+
 	@Override
 	public String toString() {
 		return super.toString() + "OtraActividad [descripcion=" + descripcion + "]";

@@ -62,7 +62,12 @@ public class DeporteEquipo extends Actividad {
 	public int getTipoActividad() {
 		return TipoActividad.DEPORTE_EQUIPO.getValor();
 	}
-	
+
+	@Override
+	public String getNombreTipoActividad() {
+		return TipoActividad.DEPORTE_EQUIPO.getNombre();
+	}
+
 	@Override
 	public String toString() {
 		return super.toString() + "DeporteEquipo [nombreDeporte=" + nombreDeporte + ", nombreEquipos=" + nombreEquipos

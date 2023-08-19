@@ -13,10 +13,9 @@ public class ControladorActividad {
 		this.modelo = modelo;
 	}
 	
-	public void leerListaActividades() {
-		List<Actividad> actividades = modelo.obtenerActividadesDelUsuario(27);
-		for(Actividad actividad: actividades) System.out.println(actividad);
-		System.out.println("Cantidad actividades: " + actividades.size());
+	//TODO: puede cambiar a void ?
+	public List<Actividad> leerListaActividades() {
+		return modelo.obtenerActividadesDelUsuario(27);
 	}
 	
 	public void eliminarActividad(int idActividad) {
