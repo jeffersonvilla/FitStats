@@ -1,7 +1,7 @@
 package com.fit.actividad;
 
 
-public class ControladorActividad {
+public class ControladorActividadOld {
 
 	
 

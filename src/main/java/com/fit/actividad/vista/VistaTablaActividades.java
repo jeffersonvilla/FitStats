@@ -1,12 +1,16 @@
 package com.fit.actividad.vista;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -16,27 +20,38 @@ import com.fit.actividad.controlador.ControladorActividad;
 import com.fit.actividad.modelo.Actividad;
 import com.fit.util.Pantalla;
 
-public class VistaTablaActividades extends JFrame {
+public class VistaTablaActividades extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	
+	private static final String BOTON_REGISTRAR = "Registrar";
+	
+	private static final String BOTON_ACTUALIZAR = "Actualizar";
 
 	private DefaultTableModel modeloTablaActividades;
 
 	private JTable tablaActividades;
+	
+	private ControladorActividad controlador;
 
 	public VistaTablaActividades(ControladorActividad controlador) {
+		
+		this.controlador = controlador;
+		
 		setLayout(new BorderLayout());
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setLocation(Pantalla.ancho / 3, Pantalla.alto / 3);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocation(Pantalla.ancho / 3, Pantalla.alto / 4);
 		
 		inicializarTabla();
 		actualizarListaActividades(controlador.leerListaActividades());
+		
+		inicializarPanelBotones();
 		
 		pack();
 		setResizable(false);
 		setVisible(true);
 	}
-	
+
 	private void inicializarTabla() {
 		modeloTablaActividades = getModeloTabla();
 		tablaActividades = new JTable(modeloTablaActividades);
@@ -63,10 +78,10 @@ public class VistaTablaActividades extends JFrame {
 	}
 	
 	private void actualizarListaActividades(List<Actividad> listaActividades) {
+		if(listaActividades == null) return;
 		this.modeloTablaActividades.setRowCount(0);
 		for (Actividad actividad : listaActividades)
-			if(actividad != null)
-				this.modeloTablaActividades.addRow(formatearActividad(actividad));
+			this.modeloTablaActividades.addRow(formatearActividad(actividad));
 		this.modeloTablaActividades.fireTableDataChanged();
 	}
 	
@@ -99,5 +114,32 @@ public class VistaTablaActividades extends JFrame {
 		String minutosString = (minutos != 0)? (minutos + " minuto" + ((minutos == 1)? "" : "s" )) : "";
 		return (horasString.isEmpty() && minutosString.isEmpty())? "sin duración" 
 				: (horasString + ((!horasString.isEmpty() && !minutosString.isEmpty())? " y " : "" ) + minutosString);
+	}
+	
+	private void inicializarPanelBotones() {
+		JPanel panelBotones = new JPanel();
+		
+		JButton botonRegistrar = new JButton(BOTON_REGISTRAR);
+		botonRegistrar.addActionListener(this);
+		panelBotones.add(botonRegistrar);
+		
+		JButton botonActualizar = new JButton(BOTON_ACTUALIZAR);
+		botonActualizar.addActionListener(this);
+		panelBotones.add(botonActualizar);
+		
+		add(panelBotones, BorderLayout.SOUTH);
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
+		if(source instanceof JButton) {
+			JButton boton = (JButton) source;
+			if(boton.getText().equals(BOTON_REGISTRAR)) {
+				new SeleccionTipoActividadCrear(controlador);
+			}else if(boton.getText().equals(BOTON_ACTUALIZAR)) {
+				System.out.println("Actualizar: " + tablaActividades.getSelectedRow());
+			}
+		}
 	}
 }

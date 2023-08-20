@@ -2,8 +2,6 @@ package com.fit.principal;
 
 import java.util.GregorianCalendar;
 
-import com.fit.actividad.ControladorActividad;
-import com.fit.actividad.vista.VentanaActividades;
 import com.fit.usuario.login.ControladorInicioSesion;
 import com.fit.usuario.login.DaoSesion;
 import com.fit.usuario.login.Sesion;
@@ -21,8 +19,8 @@ public class ControladorPrincipal {
 	private ControladorRegistroUsuario controladorRegistroUsuario;
 	private VentanaRegistroUsuario ventanaRegistroUsuario;
 
-	private ControladorActividad controladorActividades;
-	private VentanaActividades ventanaActividades;
+	//private ControladorActividad controladorActividades;
+	//private VentanaActividades ventanaActividades;
 
 	private DaoSesion daoSesion;
 
@@ -66,9 +64,9 @@ public class ControladorPrincipal {
 	}
 
 	private void cerrarVentanaActividades() {
-		if (this.ventanaActividades != null)
-			this.ventanaActividades.dispose();
-		this.ventanaPrincipal.setVisible(true);
+//		if (this.ventanaActividades != null)
+//			this.ventanaActividades.dispose();
+//		this.ventanaPrincipal.setVisible(true);
 	}
 
 	public void cerrarSesion(Sesion sesion) {
