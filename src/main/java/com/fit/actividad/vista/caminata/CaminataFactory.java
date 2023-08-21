@@ -6,6 +6,7 @@ import com.fit.actividad.modelo.ModeloActividad;
 import com.fit.actividad.vista.AbstracFactory.CrudMvcFactory;
 import com.fit.actividad.vista.AbstracFactory.VistaFormularioActualizar;
 import com.fit.actividad.vista.AbstracFactory.VistaFormularioCrear;
+import com.fit.actividad.vista.actividades.VistaCrearCaminata;
 import com.fit.actividad.vista.panelFormulario.FormularioActividad;
 import com.fit.actividad.vista.panelFormulario.FormularioCaminata;
 

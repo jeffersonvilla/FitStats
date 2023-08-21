@@ -1,4 +1,4 @@
-package com.fit.actividad.vista.caminata;
+package com.fit.actividad.vista.actividades;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -10,6 +10,7 @@ import javax.swing.JButton;
 
 import com.fit.actividad.controlador.ControladorCaminata;
 import com.fit.actividad.vista.AbstracFactory.VistaFormularioCrear;
+import com.fit.actividad.vista.caminata.VentanaFormularioCaminata;
 import com.fit.actividad.vista.panelFormulario.FormularioCaminata;
 
 public class VistaCrearCaminata extends VentanaFormularioCaminata implements VistaFormularioCrear, ActionListener{

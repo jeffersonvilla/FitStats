@@ -7,13 +7,16 @@ import java.util.List;
 import javax.swing.JComboBox;
 
 import com.fit.actividad.modelo.Actividad;
+import com.fit.actividad.modelo.Caminata;
 import com.fit.actividad.modelo.ModeloActividad;
 import com.fit.actividad.modelo.TipoActividad;
 import com.fit.actividad.vista.Cerrable;
 import com.fit.actividad.vista.ModeloActividadObserver;
 import com.fit.actividad.vista.AbstracFactory.CrudMvcFactory;
+import com.fit.actividad.vista.actividades.VistaCrearCaminata;
+import com.fit.actividad.vista.actividades.VistaDetalles;
 import com.fit.actividad.vista.caminata.CaminataFactory;
-import com.fit.actividad.vista.caminata.VistaCrearCaminata;
+import com.fit.actividad.vista.caminata.DetallesCaminata;
 import com.fit.util.OpcionesTipoActividad;
 
 public class ControladorActividad implements ActionListener{
@@ -34,6 +37,23 @@ public class ControladorActividad implements ActionListener{
 		modelo.eliminarActividad(idActividad);
 	}
 	
+	public void abrirVentanaDetalles(int index) {
+		Actividad actividad = modelo.obtenerActividadPorIndexEnLista(index);
+		if(actividad.getTipoActividad() == TipoActividad.CAMINATA.getValor()) {
+			Caminata caminata = (Caminata) actividad;
+			new VistaDetalles(
+					new DetallesCaminata(
+							caminata.getFechaHora(),
+							caminata.getDuracion(),
+							caminata.getUbicacion(),
+							caminata.getDistancia())
+					);
+		}
+	}
+	
+	/*
+	 * Maneja eventos de selección de combobox en la clase SeleccionTipoActividadCrear
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
@@ -73,4 +93,5 @@ public class ControladorActividad implements ActionListener{
 	public void eliminarObservadorDelModeloActividad(ModeloActividadObserver observador) {
 		modelo.eliminarObservador(observador);
 	}
+
 }

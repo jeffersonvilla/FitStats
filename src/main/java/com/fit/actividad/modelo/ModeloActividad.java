@@ -29,6 +29,10 @@ public class ModeloActividad {
 		return actividades;
 	}
 	
+	public Actividad obtenerActividadPorIndexEnLista(int index) {
+		return actividades.get(index);
+	}
+	
 	public boolean actualizarActividad(Actividad actividad) {
 		boolean resultado = daoActividad.actualizarActividad(actividad);
 		notificarCambioObservadores();

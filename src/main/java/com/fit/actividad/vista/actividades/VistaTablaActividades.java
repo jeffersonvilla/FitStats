@@ -3,9 +3,6 @@ package com.fit.actividad.vista.actividades;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -14,11 +11,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import com.fit.actividad.controlador.ControladorActividad;
 import com.fit.actividad.modelo.Actividad;
 import com.fit.actividad.vista.ModeloActividadObserver;
+import com.fit.util.Formato;
 import com.fit.util.Pantalla;
 
 public class VistaTablaActividades extends JFrame implements ActionListener, ModeloActividadObserver {
@@ -27,11 +27,17 @@ public class VistaTablaActividades extends JFrame implements ActionListener, Mod
 	
 	private static final String BOTON_REGISTRAR = "Registrar";
 	
+	private static final String BOTON_DETALLES = "Ver detalles";
+	
 	private static final String BOTON_ACTUALIZAR = "Actualizar";
 
 	private DefaultTableModel modeloTablaActividades;
 
 	private JTable tablaActividades;
+	
+	private JButton botonDetalles;
+	
+	private JButton botonActualizar;
 	
 	private ControladorActividad controlador;
 
@@ -59,8 +65,20 @@ public class VistaTablaActividades extends JFrame implements ActionListener, Mod
 		modeloTablaActividades = getModeloTabla();
 		tablaActividades = new JTable(modeloTablaActividades);
 		tablaActividades.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		agregarSelectionListenerEnTabla();
 		add(new JScrollPane(this.tablaActividades), BorderLayout.CENTER);
 		
+	}
+	
+	private void agregarSelectionListenerEnTabla() {
+		tablaActividades.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+		    @Override
+		    public void valueChanged(ListSelectionEvent e) {
+		        boolean rowSelected = tablaActividades.getSelectedRow() != -1;
+		        botonDetalles.setEnabled(rowSelected);
+		        botonActualizar.setEnabled(rowSelected);
+		    }
+		});
 	}
 
 	private DefaultTableModel getModeloTabla() {
@@ -91,43 +109,27 @@ public class VistaTablaActividades extends JFrame implements ActionListener, Mod
 	private Object[] formatearActividad(Actividad actividad) {
 		return new Object[] {
 				actividad.getNombreTipoActividad(), 
-				formatearFechaHora(actividad.getFechaHora()),
-				formatearDuracion(actividad.getDuracion()),
+				Formato.formatearFechaHora(actividad.getFechaHora()),
+				Formato.formatearDuracion(actividad.getDuracion()),
 				actividad.getUbicacion()
 				};
-	}
-	
-	private String formatearFechaHora(Timestamp fechaHora) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTimeInMillis(fechaHora.getTime());
-		return String.format("%04d-%02d-%02d %02d:%02d", 
-				calendar.get(Calendar.YEAR),
-				calendar.get(Calendar.MONTH) + 1, 
-				calendar.get(Calendar.DAY_OF_MONTH),
-				calendar.get(Calendar.HOUR_OF_DAY), 
-				calendar.get(Calendar.MINUTE));
-	}
-	
-	private String formatearDuracion(Time duracion) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTimeInMillis(duracion.getTime());
-		int horas = calendar.get(Calendar.HOUR_OF_DAY);
-		int minutos = calendar.get(Calendar.MINUTE);
-		String horasString = (horas != 0)?(horas + " hora" + ((horas == 1)? "" : "s")) : "" ;
-		String minutosString = (minutos != 0)? (minutos + " minuto" + ((minutos == 1)? "" : "s" )) : "";
-		return (horasString.isEmpty() && minutosString.isEmpty())? "sin duración" 
-				: (horasString + ((!horasString.isEmpty() && !minutosString.isEmpty())? " y " : "" ) + minutosString);
 	}
 	
 	private void inicializarPanelBotones() {
 		JPanel panelBotones = new JPanel();
 		
+		botonDetalles = new JButton(BOTON_DETALLES);
+		botonDetalles.addActionListener(this);
+		botonDetalles.setEnabled(false);
+		panelBotones.add(botonDetalles);
+		
 		JButton botonRegistrar = new JButton(BOTON_REGISTRAR);
 		botonRegistrar.addActionListener(this);
 		panelBotones.add(botonRegistrar);
 		
-		JButton botonActualizar = new JButton(BOTON_ACTUALIZAR);
+		botonActualizar = new JButton(BOTON_ACTUALIZAR);
 		botonActualizar.addActionListener(this);
+		botonActualizar.setEnabled(false);
 		panelBotones.add(botonActualizar);
 		
 		add(panelBotones, BorderLayout.SOUTH);
@@ -138,7 +140,9 @@ public class VistaTablaActividades extends JFrame implements ActionListener, Mod
 		Object source = e.getSource();
 		if(source instanceof JButton) {
 			JButton boton = (JButton) source;
-			if(boton.getText().equals(BOTON_REGISTRAR)) {
+			if(boton.getText().equals(BOTON_DETALLES)) {
+				controlador.abrirVentanaDetalles(tablaActividades.getSelectedRow());
+			}else if(boton.getText().equals(BOTON_REGISTRAR)) {
 				new SeleccionTipoActividadCrear(controlador);
 			}else if(boton.getText().equals(BOTON_ACTUALIZAR)) {
 				System.out.println("Actualizar: " + tablaActividades.getSelectedRow());
