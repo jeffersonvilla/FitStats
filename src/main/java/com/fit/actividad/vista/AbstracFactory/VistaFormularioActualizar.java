@@ -1,4 +1,4 @@
-package com.fit.actividad.vista.actualizar;
+package com.fit.actividad.vista.AbstracFactory;
 
 public interface VistaFormularioActualizar {
 

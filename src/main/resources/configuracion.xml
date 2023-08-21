@@ -25,12 +25,12 @@
 	<bean id="formularioCaminataVacio" class="com.fit.actividad.vista.panelFormulario.FormularioCaminata">
 	</bean>
 	
-	<bean id="vistaCrearCaminata" class="com.fit.actividad.vista.VistaCrearCaminata" lazy-init="true">
+	<bean id="vistaCrearCaminata" class="com.fit.actividad.vista.caminata.VistaCrearCaminata" lazy-init="true">
 		<constructor-arg ref="controladorCaminata"/>
 		<constructor-arg ref="formularioCaminataVacio"/>
 	</bean>
 	
-	<bean id="vistaTablaActividades" class="com.fit.actividad.vista.VistaTablaActividades">
+	<bean id="vistaTablaActividades" class="com.fit.actividad.vista.actividades.VistaTablaActividades">
 		<constructor-arg ref="controladorActividad"/>	
 	</bean>
 	

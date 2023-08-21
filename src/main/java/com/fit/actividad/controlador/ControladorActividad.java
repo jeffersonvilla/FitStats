@@ -10,9 +10,10 @@ import com.fit.actividad.modelo.Actividad;
 import com.fit.actividad.modelo.ModeloActividad;
 import com.fit.actividad.modelo.TipoActividad;
 import com.fit.actividad.vista.Cerrable;
-import com.fit.actividad.vista.AbstracFactory.CaminataFactory;
+import com.fit.actividad.vista.ModeloActividadObserver;
 import com.fit.actividad.vista.AbstracFactory.CrudMvcFactory;
-import com.fit.actividad.vista.crear.VistaCrearCaminata;
+import com.fit.actividad.vista.caminata.CaminataFactory;
+import com.fit.actividad.vista.caminata.VistaCrearCaminata;
 import com.fit.util.OpcionesTipoActividad;
 
 public class ControladorActividad implements ActionListener{
@@ -25,9 +26,8 @@ public class ControladorActividad implements ActionListener{
 		this.modelo = modelo;
 	}
 	
-	//TODO: puede cambiar a void ?
 	public List<Actividad> leerListaActividades() {
-		return modelo.obtenerActividadesDelUsuario(27);
+		return modelo.obtenerActividadesDelUsuario(27);//TODO: cambiar
 	}
 	
 	public void eliminarActividad(int idActividad) {
@@ -59,11 +59,18 @@ public class ControladorActividad implements ActionListener{
 			}else if(opcionSeleccionada.equals(TipoActividad.CICLISMO.getNombre())) {
 				System.out.println("Seleccionado " +  opcionSeleccionada);
 			}
-			
 		}
 	}
 	
-	public void addCerrable(Cerrable cerrable) {
+	public void setCerrable(Cerrable cerrable) {
 		ventanaParaCerrar = cerrable;
+	}
+	
+	public void agregarObservadorAlModeloActividad(ModeloActividadObserver observador) {
+		modelo.agregarObservador(observador);
+	}
+	
+	public void eliminarObservadorDelModeloActividad(ModeloActividadObserver observador) {
+		modelo.eliminarObservador(observador);
 	}
 }

@@ -1,4 +1,4 @@
-package com.fit.actividad.vista;
+package com.fit.actividad.vista.actividades;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -18,9 +18,10 @@ import javax.swing.table.DefaultTableModel;
 
 import com.fit.actividad.controlador.ControladorActividad;
 import com.fit.actividad.modelo.Actividad;
+import com.fit.actividad.vista.ModeloActividadObserver;
 import com.fit.util.Pantalla;
 
-public class VistaTablaActividades extends JFrame implements ActionListener {
+public class VistaTablaActividades extends JFrame implements ActionListener, ModeloActividadObserver {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -41,6 +42,8 @@ public class VistaTablaActividades extends JFrame implements ActionListener {
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocation(Pantalla.ancho / 3, Pantalla.alto / 4);
+		
+		controlador.agregarObservadorAlModeloActividad(this);
 		
 		inicializarTabla();
 		actualizarListaActividades(controlador.leerListaActividades());
@@ -141,5 +144,10 @@ public class VistaTablaActividades extends JFrame implements ActionListener {
 				System.out.println("Actualizar: " + tablaActividades.getSelectedRow());
 			}
 		}
+	}
+
+	@Override
+	public void actualizar(List<Actividad> actividades) {
+		actualizarListaActividades(actividades);
 	}
 }

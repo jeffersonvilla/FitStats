@@ -9,12 +9,14 @@ import org.slf4j.LoggerFactory;
 import com.fit.actividad.modelo.Caminata;
 import com.fit.actividad.modelo.ModeloActividad;
 
-public class ControladorCaminata extends ControladorActividad implements Controlador{
+public class ControladorCaminata implements Controlador{
 	
 	private static final Logger logger = LoggerFactory.getLogger(ControladorCaminata.class);
 	
+	private final ModeloActividad modelo;
+	
 	public ControladorCaminata(ModeloActividad modelo) {
-		super(modelo);
+		this.modelo = modelo;
 	}
 
 	@Override
@@ -36,7 +38,7 @@ public class ControladorCaminata extends ControladorActividad implements Control
 				.setDuracion(duracion)
 				.setUbicacion(ubicacion)
 				.build());
-	}
+	} 
 	
 	private float getDistancia(Object[] args) {
 		if(args[0] instanceof Float)

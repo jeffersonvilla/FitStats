@@ -1,12 +1,11 @@
-package com.fit.actividad.vista.AbstracFactory;
+package com.fit.actividad.vista.caminata;
 
 import com.fit.actividad.controlador.Controlador;
 import com.fit.actividad.controlador.ControladorCaminata;
 import com.fit.actividad.modelo.ModeloActividad;
-import com.fit.actividad.vista.actualizar.VistaActualizarCaminata;
-import com.fit.actividad.vista.actualizar.VistaFormularioActualizar;
-import com.fit.actividad.vista.crear.VistaCrearCaminata;
-import com.fit.actividad.vista.crear.VistaFormularioCrear;
+import com.fit.actividad.vista.AbstracFactory.CrudMvcFactory;
+import com.fit.actividad.vista.AbstracFactory.VistaFormularioActualizar;
+import com.fit.actividad.vista.AbstracFactory.VistaFormularioCrear;
 import com.fit.actividad.vista.panelFormulario.FormularioActividad;
 import com.fit.actividad.vista.panelFormulario.FormularioCaminata;
 

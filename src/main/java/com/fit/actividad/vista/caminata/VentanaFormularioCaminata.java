@@ -1,4 +1,4 @@
-package com.fit.actividad.vista;
+package com.fit.actividad.vista.caminata;
 
 import java.awt.BorderLayout;
 import java.sql.Timestamp;

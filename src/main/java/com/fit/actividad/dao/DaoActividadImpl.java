@@ -34,7 +34,7 @@ public class DaoActividadImpl implements DaoActividad{
 		try {	
 			String query = "insert into actividad (user_id, tipo_actividad_id, fecha_hora, duracion, ubicacion) values(?, ?, ?, ?, ?);";
 			PreparedStatement insertStatement = this.conexion.prepareStatement(query);
-			insertStatement.setInt(1, 27);//actividad.getUserId());
+			insertStatement.setInt(1, 27);//actividad.getUserId()); TODO: cambiar
 			insertStatement.setInt(2, actividad.getTipoActividad());
 			insertStatement.setTimestamp(3, actividad.getFechaHora());
 			insertStatement.setTime(4, actividad.getDuracion());

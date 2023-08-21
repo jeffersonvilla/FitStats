@@ -1,4 +1,4 @@
-package com.fit.actividad.vista.crear;
+package com.fit.actividad.vista.caminata;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import javax.swing.JButton;
 
 import com.fit.actividad.controlador.ControladorCaminata;
-import com.fit.actividad.vista.VentanaFormularioCaminata;
+import com.fit.actividad.vista.AbstracFactory.VistaFormularioCrear;
 import com.fit.actividad.vista.panelFormulario.FormularioCaminata;
 
 public class VistaCrearCaminata extends VentanaFormularioCaminata implements VistaFormularioCrear, ActionListener{
@@ -60,6 +60,7 @@ public class VistaCrearCaminata extends VentanaFormularioCaminata implements Vis
 										"Distancia: " + distancia
 								);
 						this.controlador.registrar(fecha, duracion, ubicacion, Float.parseFloat(distancia));
+						this.dispose();
 					}
 				}
 				default -> {System.out.println("Sin funcionalidad para el boton elegido");}

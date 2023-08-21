@@ -9,12 +9,14 @@ import org.slf4j.LoggerFactory;
 import com.fit.actividad.modelo.Ciclismo;
 import com.fit.actividad.modelo.ModeloActividad;
 
-public class ControladorCiclismo extends ControladorActividad implements Controlador {
+public class ControladorCiclismo implements Controlador {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ControladorCiclismo.class);
 
+	private final ModeloActividad modelo;
+	
 	public ControladorCiclismo(ModeloActividad modelo) {
-		super(modelo);
+		this.modelo = modelo;
 	}
 	
 	@Override

@@ -1,4 +1,4 @@
-package com.fit.actividad.vista;
+package com.fit.actividad.vista.actividades;
 
 import java.awt.BorderLayout;
 
@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.fit.actividad.controlador.ControladorActividad;
+import com.fit.actividad.vista.Cerrable;
 import com.fit.util.OpcionesTipoActividad;
 import com.fit.util.Pantalla;
 
@@ -21,7 +22,7 @@ public class SeleccionTipoActividadCrear extends JFrame implements Cerrable{
 		
 		this.controlador = controlador;
 		
-		controlador.addCerrable(this);
+		controlador.setCerrable(this);
 		
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

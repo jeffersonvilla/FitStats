@@ -1,4 +1,4 @@
-package com.fit.actividad.vista.actualizar;
+package com.fit.actividad.vista.caminata;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import javax.swing.JButton;
 
 import com.fit.actividad.controlador.ControladorCaminata;
-import com.fit.actividad.vista.VentanaFormularioCaminata;
+import com.fit.actividad.vista.AbstracFactory.VistaFormularioActualizar;
 import com.fit.actividad.vista.panelFormulario.FormularioCaminata;
 
 public class VistaActualizarCaminata extends VentanaFormularioCaminata implements VistaFormularioActualizar, ActionListener{
