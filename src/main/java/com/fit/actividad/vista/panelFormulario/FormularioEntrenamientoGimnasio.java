@@ -10,6 +10,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
+import com.fit.actividad.modelo.Actividad;
+import com.fit.actividad.modelo.EntrenamientoGimnasio;
+
 public class FormularioEntrenamientoGimnasio extends FormularioActividad {
 
 	private static final long serialVersionUID = 1L;
@@ -38,10 +41,8 @@ public class FormularioEntrenamientoGimnasio extends FormularioActividad {
 		inicializar();
 	}
 	
-	public FormularioEntrenamientoGimnasio(Timestamp fechaHora, Time duracion, String ubicacion,
-			String ejerciciosRealizados, String descansoEjercicios,
-			String descansoSeries) {
-		super(fechaHora, duracion, ubicacion);
+	public FormularioEntrenamientoGimnasio(EntrenamientoGimnasio entrenamiento) {
+		super(entrenamiento);
 		this.ejerciciosRealizados = ejerciciosRealizados;
 		this.descansoEjercicios = descansoEjercicios;
 		this.descansoSeries = descansoSeries;
@@ -117,5 +118,11 @@ public class FormularioEntrenamientoGimnasio extends FormularioActividad {
 	public void mostrarErrorCampoDescansosEntreSeries(String mensajeError) {
 		this.labelErrorDescansosEntreSeries.setText(mensajeError);
 		this.textFieldDescansosEntreSeries.setBorder(BorderFactory.createLineBorder(Color.RED));
+	}
+
+	@Override
+	public Actividad getActividad() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -6,28 +6,30 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import com.fit.actividad.AbstractFactory.VistaFormularioActualizar;
+import com.fit.actividad.AbstractFactory.VistaFormularioCrear;
 import com.fit.actividad.controlador.ControladorActividad;
 import com.fit.actividad.vista.panelFormulario.FormularioCaminata;
 
-public class VistaActualizarCaminata extends VentanaFormularioCaminata implements VistaFormularioActualizar, ActionListener{
+public class VistaCrearCaminata extends VentanaFormularioCaminata implements VistaFormularioCrear, ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	
-	private static final String BOTON_ACTUALIZAR = "Actualizar";
-	
-	public VistaActualizarCaminata(ControladorActividad controlador, FormularioCaminata formulario) {
+	private static final String BOTON_REGISTRAR = "Registrar";
+
+	public VistaCrearCaminata(ControladorActividad controlador, FormularioCaminata formulario) {
 		super(controlador, formulario);
+		
 		init();
 	}
 	
 	private void init() {
-		JButton botonActualizar = new JButton(BOTON_ACTUALIZAR);
-		botonActualizar.addActionListener(this);
-		add(botonActualizar, BorderLayout.SOUTH);
+		JButton botonRegistrar = new JButton(BOTON_REGISTRAR);
+		botonRegistrar.addActionListener(this);
+		add(botonRegistrar, BorderLayout.SOUTH);
 		
 		pack();
 		setResizable(false);
+		setVisible(true);
 	}
 
 	@Override
@@ -39,10 +41,10 @@ public class VistaActualizarCaminata extends VentanaFormularioCaminata implement
 		if(source instanceof JButton) {
 			JButton boton = (JButton) source;
 			switch(boton.getText()) {
-				case BOTON_ACTUALIZAR -> {
-					controlador.actualizarActividad(formulario.getActividad());
-					dispose();
-				}
+				case BOTON_REGISTRAR -> {				
+						controlador.registrarActividad(formulario.getActividad());
+						this.dispose();
+					}
 				default -> {System.out.println("Sin funcionalidad para el boton elegido");}
 			}
 		}

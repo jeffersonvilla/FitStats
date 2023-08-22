@@ -9,6 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
+import com.fit.actividad.modelo.Actividad;
+import com.fit.actividad.modelo.Estiramientos;
+
 public class FormularioEstiramientos extends FormularioActividad {
 
 	private static final long serialVersionUID = 1L;
@@ -31,9 +34,8 @@ public class FormularioEstiramientos extends FormularioActividad {
 		inicializar();
 	}
 	
-	public FormularioEstiramientos(Timestamp fechaHora, Time duracion, String ubicacion,
-			String tipoSesion, String nivelDificultad) {
-		super(fechaHora, duracion, ubicacion);
+	public FormularioEstiramientos(Estiramientos estiramientos) {
+		super(estiramientos);
 		this.tipoSesion = tipoSesion;
 		this.nivelDificultad = nivelDificultad;
 		
@@ -93,5 +95,11 @@ public class FormularioEstiramientos extends FormularioActividad {
 	public void mostrarErrorCampoNivelDificultad(String mensajeError) {
 		this.labelErrorNivelDificultad.setText(mensajeError);
 		this.textFieldNivelDificultad.setBorder(BorderFactory.createLineBorder(Color.RED));
+	}
+
+	@Override
+	public Actividad getActividad() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

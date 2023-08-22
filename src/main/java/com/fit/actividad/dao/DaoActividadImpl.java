@@ -72,6 +72,7 @@ public class DaoActividadImpl implements DaoActividad{
 	
 	@Override
 	public boolean actualizarActividad(Actividad actividad) {
+		logger.debug("actualizando actividad");
 		try {
 			String query = "update actividad set fecha_hora = ?, duracion = ?, ubicacion = ? where actividad_id = ?;";
 			PreparedStatement updateStatement = this.conexion.prepareStatement(query);
@@ -468,6 +469,7 @@ public class DaoActividadImpl implements DaoActividad{
 	}
 	
 	private boolean actualizarCaminata(Caminata caminata) {
+		logger.debug("actualizando caminata");
 		try {
 			String query = "update detalles_caminata set distancia = ? where actividad_id = ?;";
 			PreparedStatement statement = this.conexion.prepareStatement(query);

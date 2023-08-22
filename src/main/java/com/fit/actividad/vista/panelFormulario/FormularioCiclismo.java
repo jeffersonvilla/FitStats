@@ -9,6 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
+import com.fit.actividad.modelo.Actividad;
+import com.fit.actividad.modelo.Ciclismo;
+
 public class FormularioCiclismo extends FormularioActividad{
 
 	private static final long serialVersionUID = 1L;
@@ -31,9 +34,8 @@ public class FormularioCiclismo extends FormularioActividad{
 		inicializar();
 	}
 
-	public FormularioCiclismo(Timestamp fechaHora, Time duracion, String ubicacion,
-			String distancia, String tipoBicicleta) {
-		super(fechaHora, duracion, ubicacion);
+	public FormularioCiclismo(Ciclismo ciclismo) {
+		super(ciclismo);
 		this.distancia = distancia;
 		this.tipoBicicleta = tipoBicicleta;
 		
@@ -101,5 +103,11 @@ public class FormularioCiclismo extends FormularioActividad{
 
 	public String getTipoBicicleta() {
 		return this.textFieldTipoBicicleta.getText();
+	}
+
+	@Override
+	public Actividad getActividad() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

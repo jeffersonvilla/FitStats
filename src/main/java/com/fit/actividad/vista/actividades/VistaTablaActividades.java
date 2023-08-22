@@ -145,7 +145,7 @@ public class VistaTablaActividades extends JFrame implements ActionListener, Mod
 			}else if(boton.getText().equals(BOTON_REGISTRAR)) {
 				new SeleccionTipoActividadCrear(controlador);
 			}else if(boton.getText().equals(BOTON_ACTUALIZAR)) {
-				System.out.println("Actualizar: " + tablaActividades.getSelectedRow());
+				controlador.abrirVentanaActualizarActividad(tablaActividades.getSelectedRow());
 			}
 		}
 	}

@@ -9,6 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
+import com.fit.actividad.modelo.Actividad;
+import com.fit.actividad.modelo.DeporteEquipo;
+
 public class FormularioDeporteEquipo extends FormularioActividad {
 
 	private static final long serialVersionUID = 1L;
@@ -37,9 +40,8 @@ public class FormularioDeporteEquipo extends FormularioActividad {
 		inicializar();
 	}
 
-	public FormularioDeporteEquipo(Timestamp fechaHora, Time duracion, String ubicacion,
-			String nombreDeporte, String nombreEquipos, String resultadoPartido) {
-		super(fechaHora, duracion, ubicacion);
+	public FormularioDeporteEquipo(DeporteEquipo deporteEquipo) {
+		super(deporteEquipo);
 		this.nombreDeporte = nombreDeporte;
 		this.nombreEquipos = nombreEquipos;
 		this.resultadoPartido = resultadoPartido;
@@ -134,5 +136,11 @@ public class FormularioDeporteEquipo extends FormularioActividad {
 
 	public String getResultadoDelPartido() {
 		return this.textFieldResultadoDelPartido.getText();
+	}
+
+	@Override
+	public Actividad getActividad() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

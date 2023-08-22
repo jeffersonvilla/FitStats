@@ -21,6 +21,8 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
+import com.fit.actividad.modelo.Actividad;
+
 public abstract class FormularioActividad extends PanelFormulario {
 
 	private static final long serialVersionUID = 1L;
@@ -46,14 +48,8 @@ public abstract class FormularioActividad extends PanelFormulario {
 	private JLabel labelErrorUbicacion;
 
 	private Border borderDefault;
-
-	private Timestamp fechaHora;
 	
-	private int horasDuracion = -1;
-	
-	private int minutosDuracion = -1;
-	
-	private String ubicacion;
+	protected Actividad actividad;
 
 	protected FormularioActividad() {
 		super();
@@ -61,16 +57,10 @@ public abstract class FormularioActividad extends PanelFormulario {
 		inicializarCampos();
 	}
 
-	protected FormularioActividad(Timestamp fechaHora, Time duracion, String ubicacion) {
+	protected FormularioActividad(Actividad actividad) {
 		super();
-		this.fechaHora = fechaHora;
-		if(duracion != null) {
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTimeInMillis(duracion.getTime());
-			this.horasDuracion = calendar.get(Calendar.HOUR_OF_DAY);
-			this.minutosDuracion = calendar.get(Calendar.MINUTE);
-		}
-		this.ubicacion = ubicacion;
+		
+		this.actividad = actividad;
 		
 		inicializarCampos();
 	}
@@ -102,19 +92,33 @@ public abstract class FormularioActividad extends PanelFormulario {
 	private void inicializarCamposDuracion() {
 		add(new JLabel("Duracion", JLabel.CENTER), "span, grow, wrap");
 		add(new JLabel("hora(s)"));
-		this.duracionHoras = getSelectorDuracion(23, horasDuracion);
+		this.duracionHoras = getSelectorDuracion(23, getHorasDuracion());
 		add(this.duracionHoras, "split 3, grow");
 		add(new JLabel("minutos"));
-		this.duracionMinutos = getSelectorDuracion(59, minutosDuracion);
+		this.duracionMinutos = getSelectorDuracion(59, getMinutosDuracion());
 		add(this.duracionMinutos, "grow, wrap");		
 		this.labelErrorDuracion = getLabelError();
 		add(this.labelErrorDuracion, "span, grow, wrap");
 	}
 
+	public int getHorasDuracion() {	
+		if(actividad == null) return 0;
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(actividad.getDuracion().getTime());
+		return calendar.get(Calendar.HOUR_OF_DAY);
+	}
+	
+	public int getMinutosDuracion() {
+		if(actividad == null) return 0;
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(actividad.getDuracion().getTime());
+		return calendar.get(Calendar.MINUTE);
+	}
+	
 	private void inicializarCamposUbicacion() {
 		add(new JLabel("Ubicacion"));
 		this.textFieldUbicacion = new JTextField(10);
-		if(this.ubicacion != null) this.textFieldUbicacion.setText(ubicacion);
+		if(this.actividad != null) this.textFieldUbicacion.setText(actividad.getUbicacion());
 		add(this.textFieldUbicacion, "span, grow, wrap");
 		this.labelErrorUbicacion = getLabelError();
 		add(this.labelErrorUbicacion, "span, grow, wrap");
@@ -123,8 +127,7 @@ public abstract class FormularioActividad extends PanelFormulario {
 	private JDatePickerImpl getSelectorFecha() {
 		UtilDateModel model = new UtilDateModel();
 		Calendar calendar = Calendar.getInstance();
-		if (this.fechaHora != null)
-			calendar.setTimeInMillis(this.fechaHora.getTime());
+		if(this.actividad != null) calendar.setTimeInMillis(this.actividad.getFechaHora().getTime());
 		model.setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 		model.setSelected(true);
 		return new JDatePickerImpl(new JDatePanelImpl(model, new Properties()), new DateLabelFormatter());
@@ -135,7 +138,7 @@ public abstract class FormularioActividad extends PanelFormulario {
 		JSpinner selectorHora = new JSpinner(modelo);
 		JSpinner.DateEditor editor = new JSpinner.DateEditor(selectorHora, "HH:mm");
 		selectorHora.setEditor(editor);
-		modelo.setValue((this.fechaHora != null) ? new Date(this.fechaHora.getTime()): new Date());
+		modelo.setValue((this.actividad != null) ? new Date(this.actividad.getFechaHora().getTime()): new Date());
 		return selectorHora;
 	}
 
@@ -155,7 +158,7 @@ public abstract class FormularioActividad extends PanelFormulario {
 		this.selectorFecha.setBorder(this.borderDefault);
 	}
 
-	public Timestamp getFecha() {
+	protected Timestamp getFecha() {
 		Date fecha = (Date) this.selectorFecha.getModel().getValue();
 
 		if (fecha == null)
@@ -179,16 +182,18 @@ public abstract class FormularioActividad extends PanelFormulario {
 		return new Timestamp(calendar.getTimeInMillis());
 	}
 
-	public Time getDuracion() {
+	protected Time getDuracion() {
 		int horas = (int) this.duracionHoras.getModel().getValue();
 		int horaDefault = 19;
 		int minutos = (int) this.duracionMinutos.getModel().getValue();
 		return new Time((horas - horaDefault) * 3600000L + minutos * 60000L);
 	}
 
-	public String getUbicacion() {
+	protected String getUbicacion() {
 		return this.textFieldUbicacion.getText();
 	}
+	
+	public abstract Actividad getActividad();
 
 	private class DateLabelFormatter extends AbstractFormatter {
 

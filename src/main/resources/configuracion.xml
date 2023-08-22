@@ -18,18 +18,6 @@
 		<constructor-arg ref="modeloActividad"/>
 	</bean>
 	
-	<bean id="controladorCaminata" class="com.fit.actividad.controlador.ControladorCaminata">
-		<constructor-arg ref="modeloActividad"/>
-	</bean>
-	
-	<bean id="formularioCaminataVacio" class="com.fit.actividad.vista.panelFormulario.FormularioCaminata">
-	</bean>
-	
-	<bean id="vistaCrearCaminata" class="com.fit.actividad.vista.caminata.VistaCrearCaminata" lazy-init="true">
-		<constructor-arg ref="controladorCaminata"/>
-		<constructor-arg ref="formularioCaminataVacio"/>
-	</bean>
-	
 	<bean id="vistaTablaActividades" class="com.fit.actividad.vista.actividades.VistaTablaActividades">
 		<constructor-arg ref="controladorActividad"/>	
 	</bean>

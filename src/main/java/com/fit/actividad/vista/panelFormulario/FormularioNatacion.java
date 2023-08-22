@@ -9,6 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
+import com.fit.actividad.modelo.Actividad;
+import com.fit.actividad.modelo.Natacion;
+
 public class FormularioNatacion extends FormularioActividad {
 
 	private static final long serialVersionUID = 1L;
@@ -31,9 +34,8 @@ public class FormularioNatacion extends FormularioActividad {
 		inicializar();
 	}
 	
-	public FormularioNatacion(Timestamp fechaHora, Time duracion, String ubicacion,
-			String distancia, String estiloNatacion) {
-		super(fechaHora, duracion, ubicacion);
+	public FormularioNatacion(Natacion natacion) {
+		super(natacion);
 		this.distancia = distancia;
 		this.estiloNatacion = estiloNatacion;
 		
@@ -101,5 +103,11 @@ public class FormularioNatacion extends FormularioActividad {
 
 	public String getEstiloNatacion() {
 		return this.textFieldEstiloNatacion.getText();
+	}
+
+	@Override
+	public Actividad getActividad() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

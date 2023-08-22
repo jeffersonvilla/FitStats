@@ -9,6 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
+import com.fit.actividad.modelo.Actividad;
+import com.fit.actividad.modelo.OtraActividad;
+
 public class FormularioOtraActividad extends FormularioActividad {
 
 	private static final long serialVersionUID = 1L;
@@ -25,8 +28,8 @@ public class FormularioOtraActividad extends FormularioActividad {
 		inicializar();
 	}
 
-	public FormularioOtraActividad(Timestamp fechaHora, Time duracion, String ubicacion, String descripcion) {
-		super(fechaHora, duracion, ubicacion);
+	public FormularioOtraActividad(OtraActividad otraActividad) {
+		super(otraActividad);
 		this.descripcion = descripcion;
 		
 		inicializar();
@@ -59,6 +62,12 @@ public class FormularioOtraActividad extends FormularioActividad {
 	public void mostrarErrorCampoDescripcion(String mensajeError) {
 		this.labelErrorDescripcion.setText(mensajeError);
 		this.textFieldDescripcion.setBorder(BorderFactory.createLineBorder(Color.RED));
+	}
+
+	@Override
+	public Actividad getActividad() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
