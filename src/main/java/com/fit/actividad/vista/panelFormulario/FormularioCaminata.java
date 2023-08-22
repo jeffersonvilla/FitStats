@@ -1,11 +1,8 @@
 package com.fit.actividad.vista.panelFormulario;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 
+import javax.management.RuntimeErrorException;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -29,6 +26,8 @@ public class FormularioCaminata extends FormularioActividad {
 	private JTextField textFieldDistancia;
 
 	private JLabel labelErrorDistancia;
+	
+	private boolean distanciaValida;
 
 	public FormularioCaminata() {
 		super();
@@ -60,23 +59,18 @@ public class FormularioCaminata extends FormularioActividad {
 			
 			@Override
 			public void removeUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				logger.info("msg");
-				System.out.println("eliminado");
+				validarDistancia();
+				validarInputs();
 			}
 			
 			@Override
 			public void insertUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				logger.info("msg");
-				System.out.println("agregado");
+				validarDistancia();
+				validarInputs();
 			}
 			
 			@Override
-			public void changedUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void changedUpdate(DocumentEvent e) {}
 		});
 	} 
 
@@ -95,7 +89,6 @@ public class FormularioCaminata extends FormularioActividad {
 	
 	private float getDistancia() {
 		logger.debug("distancia de textfield {}", this.textFieldDistancia.getText());
-		
 		return Float.parseFloat(this.textFieldDistancia.getText());
 	}
 
@@ -111,10 +104,20 @@ public class FormularioCaminata extends FormularioActividad {
 	}
 
 	private void validarDistancia() {
-		if(Validador.validarDistancia(this.textFieldDistancia.getText())) limpiarCampoErrorDistancia();
-		mostrarErrorCampoDistancia(MensajesValidacion.MENSAJE_VALIDACION_DISTANCIA);
+		limpiarCampoErrorDistancia();
+		distanciaValida = true;
+		if(!Validador.validarDistancia(this.textFieldDistancia.getText())) {
+			mostrarErrorCampoDistancia(MensajesValidacion.MENSAJE_VALIDACION_DISTANCIA_VALORES_NUMERICOS);
+			distanciaValida = false;
+		}
 	}
 	
+	@Override
+	protected void validarInputs() {
+		if(observadorInputs != null) observadorInputs.update((fechaValida() && distanciaValida)? true : false);
+		else throw new RuntimeErrorException(new Error("Se debe agregar un InputsValidosObserver al FormularioCaminata"));
+	}
+
 	private void mostrarErrorCampoDistancia(String mensajeError) {
 		this.labelErrorDistancia.setText(mensajeError);
 		this.textFieldDistancia.setBorder(BorderFactory.createLineBorder(Color.RED));

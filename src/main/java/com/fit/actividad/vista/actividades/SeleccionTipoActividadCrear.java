@@ -8,14 +8,11 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 import com.fit.actividad.AbstractFactory.CrudMvcFactory;
 import com.fit.actividad.controlador.ControladorActividad;
-import com.fit.actividad.modelo.Caminata;
 import com.fit.actividad.modelo.TipoActividad;
 import com.fit.actividad.vista.caminata.CaminataFactory;
-import com.fit.actividad.vista.caminata.VistaActualizarCaminata;
 import com.fit.actividad.vista.caminata.VistaCrearCaminata;
 import com.fit.actividad.vista.panelFormulario.FormularioCaminata;
 import com.fit.util.OpcionesTipoActividad;

@@ -9,20 +9,27 @@ import javax.swing.JButton;
 import com.fit.actividad.AbstractFactory.VistaFormularioActualizar;
 import com.fit.actividad.controlador.ControladorActividad;
 import com.fit.actividad.vista.panelFormulario.FormularioCaminata;
+import com.fit.actividad.vista.panelFormulario.InputsValidosObserver;
 
-public class VistaActualizarCaminata extends VentanaFormularioCaminata implements VistaFormularioActualizar, ActionListener{
+public class VistaActualizarCaminata extends VentanaFormularioCaminata 
+implements VistaFormularioActualizar, ActionListener, InputsValidosObserver{
 
 	private static final long serialVersionUID = 1L;
 	
 	private static final String BOTON_ACTUALIZAR = "Actualizar";
 	
+	private JButton botonActualizar;
+	
 	public VistaActualizarCaminata(ControladorActividad controlador, FormularioCaminata formulario) {
 		super(controlador, formulario);
+		
+		formulario.setObservadorInputs(this);
+		
 		init();
 	}
 	
 	private void init() {
-		JButton botonActualizar = new JButton(BOTON_ACTUALIZAR);
+		botonActualizar = new JButton(BOTON_ACTUALIZAR);
 		botonActualizar.addActionListener(this);
 		add(botonActualizar, BorderLayout.SOUTH);
 		
@@ -46,5 +53,10 @@ public class VistaActualizarCaminata extends VentanaFormularioCaminata implement
 				default -> {System.out.println("Sin funcionalidad para el boton elegido");}
 			}
 		}
+	}
+
+	@Override
+	public void update(boolean value) {
+		botonActualizar.setEnabled(value);
 	}
 }

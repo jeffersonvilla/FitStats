@@ -1,6 +1,8 @@
 package com.fit.actividad.vista.panelFormulario;
 
 import java.awt.Color;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -22,6 +24,7 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import com.fit.actividad.modelo.Actividad;
+import com.fit.util.Validador;
 
 public abstract class FormularioActividad extends PanelFormulario {
 
@@ -50,6 +53,10 @@ public abstract class FormularioActividad extends PanelFormulario {
 	private Border borderDefault;
 	
 	protected Actividad actividad;
+	
+	private boolean fechaValida = true;
+	
+	protected InputsValidosObserver observadorInputs;
 
 	protected FormularioActividad() {
 		super();
@@ -79,6 +86,8 @@ public abstract class FormularioActividad extends PanelFormulario {
 		add(this.selectorFecha, "wrap");
 		this.labelErrorFecha = getLabelError();
 		add(this.labelErrorFecha, "span, grow");
+		
+		agregarListenerFecha();
 	}
 	
 	private void inicializarCamposHora() {
@@ -130,7 +139,35 @@ public abstract class FormularioActividad extends PanelFormulario {
 		if(this.actividad != null) calendar.setTimeInMillis(this.actividad.getFechaHora().getTime());
 		model.setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 		model.setSelected(true);
-		return new JDatePickerImpl(new JDatePanelImpl(model, new Properties()), new DateLabelFormatter());
+		return new JDatePickerImpl(new JDatePanelImpl(model, new Properties()), new DateLabelFormatter());	
+	}
+	
+	private void agregarListenerFecha() {
+		selectorFecha.getModel().addPropertyChangeListener(new PropertyChangeListener() {
+			
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if ("value".equals(evt.getPropertyName())) {
+                    validarFecha();
+                    validarInputs();
+                }
+			}
+		});
+	}
+
+	private void validarFecha() {
+		limpiarCamposErrorFecha();
+		fechaValida = true;
+		if(!Validador.validarFecha(getFecha())) { 
+			mostrarErrorCampoFecha(MENSAJE_VALIDACION_CAMPO_VACIO);
+			fechaValida = false;
+		}
+	}
+	
+	protected abstract void validarInputs();
+	
+	protected boolean fechaValida() {
+		return fechaValida;
 	}
 
 	private JSpinner getSelectorHoraIncio() {
@@ -154,6 +191,11 @@ public abstract class FormularioActividad extends PanelFormulario {
 
 	@Override
 	public void limpiarCamposError() {
+		this.labelErrorFecha.setText(" ");
+		this.selectorFecha.setBorder(this.borderDefault);
+	}
+	
+	private void limpiarCamposErrorFecha() {
 		this.labelErrorFecha.setText(" ");
 		this.selectorFecha.setBorder(this.borderDefault);
 	}
@@ -220,5 +262,9 @@ public abstract class FormularioActividad extends PanelFormulario {
 	public void mostrarErrorCampoFecha(String mensajeError) {
 		this.labelErrorFecha.setText(mensajeError);
 		this.selectorFecha.setBorder(BorderFactory.createLineBorder(Color.RED));
+	}
+	
+	public void setObservadorInputs(InputsValidosObserver observadorInputs) {
+		this.observadorInputs = observadorInputs;
 	}
 }

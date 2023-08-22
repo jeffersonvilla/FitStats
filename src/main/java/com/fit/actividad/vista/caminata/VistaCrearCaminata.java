@@ -9,21 +9,27 @@ import javax.swing.JButton;
 import com.fit.actividad.AbstractFactory.VistaFormularioCrear;
 import com.fit.actividad.controlador.ControladorActividad;
 import com.fit.actividad.vista.panelFormulario.FormularioCaminata;
+import com.fit.actividad.vista.panelFormulario.InputsValidosObserver;
 
-public class VistaCrearCaminata extends VentanaFormularioCaminata implements VistaFormularioCrear, ActionListener{
+public class VistaCrearCaminata extends VentanaFormularioCaminata 
+implements VistaFormularioCrear, ActionListener, InputsValidosObserver{
 
 	private static final long serialVersionUID = 1L;
 	
 	private static final String BOTON_REGISTRAR = "Registrar";
+	
+	private JButton botonRegistrar;
 
 	public VistaCrearCaminata(ControladorActividad controlador, FormularioCaminata formulario) {
 		super(controlador, formulario);
+		
+		formulario.setObservadorInputs(this);
 		
 		init();
 	}
 	
 	private void init() {
-		JButton botonRegistrar = new JButton(BOTON_REGISTRAR);
+		botonRegistrar = new JButton(BOTON_REGISTRAR);
 		botonRegistrar.addActionListener(this);
 		add(botonRegistrar, BorderLayout.SOUTH);
 		
@@ -48,5 +54,10 @@ public class VistaCrearCaminata extends VentanaFormularioCaminata implements Vis
 				default -> {System.out.println("Sin funcionalidad para el boton elegido");}
 			}
 		}
+	}
+
+	@Override
+	public void update(boolean value) {
+		botonRegistrar.setEnabled(value);
 	}
 }

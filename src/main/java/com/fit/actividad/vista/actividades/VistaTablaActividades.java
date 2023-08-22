@@ -30,6 +30,8 @@ public class VistaTablaActividades extends JFrame implements ActionListener, Mod
 	private static final String BOTON_DETALLES = "Ver detalles";
 	
 	private static final String BOTON_ACTUALIZAR = "Actualizar";
+	
+	private static final String BOTON_ELIMINAR = "Eliminar";
 
 	private DefaultTableModel modeloTablaActividades;
 
@@ -38,6 +40,8 @@ public class VistaTablaActividades extends JFrame implements ActionListener, Mod
 	private JButton botonDetalles;
 	
 	private JButton botonActualizar;
+	
+	private JButton botonEliminar;
 	
 	private ControladorActividad controlador;
 
@@ -74,9 +78,10 @@ public class VistaTablaActividades extends JFrame implements ActionListener, Mod
 		tablaActividades.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 		    @Override
 		    public void valueChanged(ListSelectionEvent e) {
-		        boolean rowSelected = tablaActividades.getSelectedRow() != -1;
-		        botonDetalles.setEnabled(rowSelected);
-		        botonActualizar.setEnabled(rowSelected);
+		        boolean isRowSelected = tablaActividades.getSelectedRow() != -1;
+		        botonDetalles.setEnabled(isRowSelected);
+		        botonActualizar.setEnabled(isRowSelected);
+		        botonEliminar.setEnabled(isRowSelected);
 		    }
 		});
 	}
@@ -132,6 +137,11 @@ public class VistaTablaActividades extends JFrame implements ActionListener, Mod
 		botonActualizar.setEnabled(false);
 		panelBotones.add(botonActualizar);
 		
+		botonEliminar = new JButton(BOTON_ELIMINAR);
+		botonEliminar.addActionListener(this);
+		botonEliminar.setEnabled(false);
+		panelBotones.add(botonEliminar);
+		
 		add(panelBotones, BorderLayout.SOUTH);
 	}
 	
@@ -140,12 +150,15 @@ public class VistaTablaActividades extends JFrame implements ActionListener, Mod
 		Object source = e.getSource();
 		if(source instanceof JButton) {
 			JButton boton = (JButton) source;
-			if(boton.getText().equals(BOTON_DETALLES)) {
+			String textoBoton = boton.getText();
+			if(textoBoton.equals(BOTON_DETALLES)) {
 				controlador.abrirVentanaDetalles(tablaActividades.getSelectedRow());
-			}else if(boton.getText().equals(BOTON_REGISTRAR)) {
+			}else if(textoBoton.equals(BOTON_REGISTRAR)) {
 				new SeleccionTipoActividadCrear(controlador);
-			}else if(boton.getText().equals(BOTON_ACTUALIZAR)) {
+			}else if(textoBoton.equals(BOTON_ACTUALIZAR)) {
 				controlador.abrirVentanaActualizarActividad(tablaActividades.getSelectedRow());
+			}else if(textoBoton.equals(BOTON_ELIMINAR)) {
+				controlador.eliminarActividad(tablaActividades.getSelectedRow());
 			}
 		}
 	}
