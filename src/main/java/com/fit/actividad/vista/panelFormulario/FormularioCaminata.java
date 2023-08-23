@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fit.actividad.modelo.Caminata;
+import com.fit.actividad.modelo.TipoActividad;
 import com.fit.util.MensajesValidacion;
 import com.fit.util.Validador;
 
@@ -27,7 +28,7 @@ public class FormularioCaminata extends FormularioActividad {
 
 	private JLabel labelErrorDistancia;
 	
-	private boolean distanciaValida;
+	private boolean distanciaValida = true;
 
 	public FormularioCaminata() {
 		super();
@@ -60,13 +61,11 @@ public class FormularioCaminata extends FormularioActividad {
 			@Override
 			public void removeUpdate(DocumentEvent e) {
 				validarDistancia();
-				validarInputs();
 			}
 			
 			@Override
 			public void insertUpdate(DocumentEvent e) {
 				validarDistancia();
-				validarInputs();
 			}
 			
 			@Override
@@ -110,6 +109,7 @@ public class FormularioCaminata extends FormularioActividad {
 			mostrarErrorCampoDistancia(MensajesValidacion.MENSAJE_VALIDACION_DISTANCIA_VALORES_NUMERICOS);
 			distanciaValida = false;
 		}
+		validarInputs();
 	}
 	
 	@Override
@@ -126,5 +126,10 @@ public class FormularioCaminata extends FormularioActividad {
 	private void limpiarCampoErrorDistancia() {
 		this.labelErrorDistancia.setText(" ");
 		this.textFieldDistancia.setBorder(UIManager.getBorder(textField_border_key));
+	}
+	
+	@Override
+	public String getTitulo() {
+		return TipoActividad.CAMINATA.getNombre();
 	}
 }

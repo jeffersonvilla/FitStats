@@ -13,6 +13,10 @@ public class Ciclismo extends Actividad {
 	private float distancia;
 
 	private String tipoBicicleta;
+	
+	public Ciclismo() {
+		super();
+	}
 
 	public Ciclismo(int id, int userId, Timestamp fechaHora, Time duracion, String ubicacion, float distancia, String tipo_bicicleta) {
 		super(id, userId, fechaHora, duracion, ubicacion

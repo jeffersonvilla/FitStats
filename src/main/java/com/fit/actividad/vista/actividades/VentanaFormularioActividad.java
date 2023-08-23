@@ -1,24 +1,26 @@
-package com.fit.actividad.vista.caminata;
+package com.fit.actividad.vista.actividades;
 
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 
 import com.fit.actividad.controlador.ControladorActividad;
-import com.fit.actividad.vista.panelFormulario.FormularioCaminata;
+import com.fit.actividad.vista.panelFormulario.FormularioActividad;
 import com.fit.util.Pantalla;
 
-public abstract class VentanaFormularioCaminata extends JFrame {
+public abstract class VentanaFormularioActividad extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	
 	protected final ControladorActividad controlador;
 	
-	protected FormularioCaminata formulario;
+	protected FormularioActividad formulario;
 
-	protected VentanaFormularioCaminata(ControladorActividad controlador, FormularioCaminata formulario) {
+	protected VentanaFormularioActividad(ControladorActividad controlador, FormularioActividad formulario) {
 		this.controlador = controlador;
 		this.formulario = formulario;
+		
+		setTitle(formulario.getTitulo());
 		
 		init();
 	}

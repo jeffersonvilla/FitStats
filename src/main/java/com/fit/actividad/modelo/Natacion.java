@@ -14,6 +14,10 @@ public class Natacion extends Actividad {
 
 	private String estilosNatacion;
 
+	public Natacion() {
+		super();
+	}
+
 	public Natacion(int id, int userId, Timestamp fechaHora, Time duracion, String ubicacion, 
 			float distancia, String estilosNatacion) {
 		super(id, userId, fechaHora, duracion, ubicacion);
@@ -35,10 +39,6 @@ public class Natacion extends Actividad {
 
 	public String getEstilosNatacion() {
 		return estilosNatacion;
-	}
-
-	public void setEstiloNatacion(String estiloNatacion) {
-		this.estilosNatacion = estiloNatacion;
 	}
 
 	@Override

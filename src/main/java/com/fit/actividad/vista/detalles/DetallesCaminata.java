@@ -1,9 +1,8 @@
-package com.fit.actividad.vista.caminata;
+package com.fit.actividad.vista.detalles;
 
 import javax.swing.JLabel;
 
 import com.fit.actividad.modelo.Caminata;
-import com.fit.actividad.vista.actividades.PanelDetalles;
 
 public class DetallesCaminata extends PanelDetalles {
 

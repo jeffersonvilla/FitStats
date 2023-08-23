@@ -1,16 +1,20 @@
 package com.fit.actividad.vista.panelFormulario;
 
 import java.awt.Color;
-import java.sql.Time;
-import java.sql.Timestamp;
 
+import javax.management.RuntimeErrorException;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import com.fit.actividad.modelo.Actividad;
 import com.fit.actividad.modelo.Natacion;
+import com.fit.actividad.modelo.TipoActividad;
+import com.fit.util.MensajesValidacion;
+import com.fit.util.Validador;
 
 public class FormularioNatacion extends FormularioActividad {
 
@@ -24,9 +28,9 @@ public class FormularioNatacion extends FormularioActividad {
 
 	private JLabel labelErrorEstiloNatacion;
 
-	private String distancia;
+	private boolean distanciaValida = true;
 	
-	private String estiloNatacion;
+	private boolean estiloNatacionValido = true;
 	
 	public FormularioNatacion() {
 		super();
@@ -36,9 +40,7 @@ public class FormularioNatacion extends FormularioActividad {
 	
 	public FormularioNatacion(Natacion natacion) {
 		super(natacion);
-		this.distancia = distancia;
-		this.estiloNatacion = estiloNatacion;
-		
+
 		inicializar();
 	}
 
@@ -50,19 +52,61 @@ public class FormularioNatacion extends FormularioActividad {
 	private void inicializarCamposDistancia() {
 		add(new JLabel("Distancia"));
 		this.textFieldDistancia = new JTextField(15);
-		this.textFieldDistancia.setText((this.distancia != null) ? this.distancia : "0.0");
+		this.textFieldDistancia.setText((actividad != null) ? Float.toString(((Natacion) actividad).getDistancia()) : "0.0");
 		add(this.textFieldDistancia, "span, grow, wrap");
 		this.labelErrorDistancia = getLabelError();
 		add(this.labelErrorDistancia, "span, grow, wrap");
+		
+		agregarListenerDistancia();
+	}
+	
+	private void agregarListenerDistancia() {
+		
+		this.textFieldDistancia.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				validarDistancia();
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				validarDistancia();
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) { }
+		});
 	}
 	
 	private void inicializarCamposEstilosNatacion() {
 		add(new JLabel("Estilos natación"));
 		this.textFieldEstiloNatacion = new JTextField(15);
-		if(this.estiloNatacion != null) this.textFieldEstiloNatacion.setText(this.estiloNatacion);
+		if(actividad != null) this.textFieldEstiloNatacion.setText(((Natacion) actividad).getEstilosNatacion());
 		add(this.textFieldEstiloNatacion, "span, grow, wrap");
 		this.labelErrorEstiloNatacion = getLabelError();
 		add(this.labelErrorEstiloNatacion, "span, grow, wrap");
+		
+		agregarListenerEstilosNatacion();
+	}
+	
+	private void agregarListenerEstilosNatacion() {
+	
+		this.textFieldEstiloNatacion.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				validarEstilosNatacion();
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				validarEstilosNatacion();
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) { }
+		});
 	}
 	
 	@Override
@@ -97,17 +141,57 @@ public class FormularioNatacion extends FormularioActividad {
 		this.textFieldEstiloNatacion.setBorder(UIManager.getBorder(textField_border_key));
 	}
 
-	public String getDistancia() {
-		return this.textFieldDistancia.getText();
+	public float getDistancia() {
+		return Float.parseFloat(this.textFieldDistancia.getText());
 	}
 
 	public String getEstiloNatacion() {
 		return this.textFieldEstiloNatacion.getText();
 	}
+	
+	private void validarDistancia() {
+		limpiarCampoErrorDistancia();
+		distanciaValida = true;
+		if(!Validador.validarDistancia(this.textFieldDistancia.getText())) {
+			mostrarErrorCampoDistancia(MensajesValidacion.MENSAJE_VALIDACION_DISTANCIA_VALORES_NUMERICOS);
+			distanciaValida = false;
+		}
+		
+		validarInputs();
+	}
+	
+	private void validarEstilosNatacion() {
+		limpiarCampoErrorEstiloNatacion();
+		estiloNatacionValido = true;
+		if(getEstiloNatacion().length() > Natacion.TAMANIO_MAXIMO_ESTILO_NATACION) {
+			mostrarErrorCampoEstilosNatacion(Natacion.MENSAJE_TAMANIO_MAXIMO_ESTILO_NATACION);
+			estiloNatacionValido = false;
+		}
+		
+		validarInputs();
+	}
 
 	@Override
 	public Actividad getActividad() {
-		// TODO Auto-generated method stub
-		return null;
+		Natacion natacion;
+		if(actividad != null) natacion = (Natacion) actividad;
+		else natacion = new Natacion();
+		natacion.setFechaHora(getFecha());
+		natacion.setDuracion(getDuracion());
+		natacion.setUbicacion(getUbicacion());
+		natacion.setDistancia(getDistancia());
+		natacion.setEstilosNatacion(getEstiloNatacion());
+		return natacion;
+	}
+
+	@Override
+	protected void validarInputs() {
+		if(observadorInputs != null) observadorInputs.update(((fechaValida() && distanciaValida) && estiloNatacionValido)? true : false);
+		else throw new RuntimeErrorException(new Error("Se debe agregar un InputsValidosObserver al FormularioNatación"));
+	}
+	
+	@Override
+	public String getTitulo() {
+		return TipoActividad.NATACION.getNombre();
 	}
 }

@@ -9,12 +9,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.fit.actividad.AbstractFactory.CrudMvcFactory;
 import com.fit.actividad.controlador.ControladorActividad;
 import com.fit.actividad.modelo.TipoActividad;
-import com.fit.actividad.vista.caminata.CaminataFactory;
-import com.fit.actividad.vista.caminata.VistaCrearCaminata;
 import com.fit.actividad.vista.panelFormulario.FormularioCaminata;
+import com.fit.actividad.vista.panelFormulario.FormularioCiclismo;
+import com.fit.actividad.vista.panelFormulario.FormularioNatacion;
 import com.fit.util.OpcionesTipoActividad;
 import com.fit.util.Pantalla;
 
@@ -65,11 +64,11 @@ public class SeleccionTipoActividadCrear extends JFrame implements ActionListene
 			String opcionSeleccionada = opcionesTipoActividad[combo.getSelectedIndex()];
 			
 			if(opcionSeleccionada.equals(TipoActividad.CAMINATA.getNombre())) {
-				CrudMvcFactory factory = new CaminataFactory(controlador, new FormularioCaminata());
-				VistaCrearCaminata vista = (VistaCrearCaminata) factory.getVistaFormularioCrear();
-				vista.setVisible(true);
+				new CreacionActividad(controlador, new FormularioCaminata());
 			}else if(opcionSeleccionada.equals(TipoActividad.CICLISMO.getNombre())) {
-				System.out.println("Seleccionado " +  opcionSeleccionada);
+				new CreacionActividad(controlador, new FormularioCiclismo());
+			}else if(opcionSeleccionada.equals(TipoActividad.NATACION.getNombre())) {
+				new CreacionActividad(controlador, new FormularioNatacion());
 			}
 			
 			dispose();

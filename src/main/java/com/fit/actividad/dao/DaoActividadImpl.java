@@ -31,6 +31,7 @@ public class DaoActividadImpl implements DaoActividad{
 	
 	@Override
 	public boolean guardarActividad(Actividad actividad) {
+		logger.info("se va a guardar {}", actividad);
 		try {	
 			String query = "insert into actividad (user_id, tipo_actividad_id, fecha_hora, duracion, ubicacion) values(?, ?, ?, ?, ?);";
 			PreparedStatement insertStatement = this.conexion.prepareStatement(query);

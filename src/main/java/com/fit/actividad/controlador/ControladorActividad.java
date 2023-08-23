@@ -2,22 +2,28 @@ package com.fit.actividad.controlador;
 
 import java.util.List;
 
-import com.fit.actividad.AbstractFactory.Controlador;
-import com.fit.actividad.AbstractFactory.CrudMvcFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fit.actividad.modelo.Actividad;
 import com.fit.actividad.modelo.Caminata;
+import com.fit.actividad.modelo.Ciclismo;
 import com.fit.actividad.modelo.ModeloActividad;
+import com.fit.actividad.modelo.Natacion;
 import com.fit.actividad.modelo.TipoActividad;
 import com.fit.actividad.vista.ModeloActividadObserver;
-import com.fit.actividad.vista.actividades.VistaDetalles;
-import com.fit.actividad.vista.caminata.CaminataFactory;
-import com.fit.actividad.vista.caminata.DetallesCaminata;
-import com.fit.actividad.vista.caminata.VistaActualizarCaminata;
+import com.fit.actividad.vista.actividades.ActualizacionActividad;
+import com.fit.actividad.vista.detalles.DetallesCaminata;
+import com.fit.actividad.vista.detalles.DetallesCiclismo;
+import com.fit.actividad.vista.detalles.DetallesNatacion;
+import com.fit.actividad.vista.detalles.DetallesActividad;
 import com.fit.actividad.vista.panelFormulario.FormularioCaminata;
+import com.fit.actividad.vista.panelFormulario.FormularioCiclismo;
+import com.fit.actividad.vista.panelFormulario.FormularioNatacion;
 
-public class ControladorActividad implements Controlador{
+public class ControladorActividad {
 	
-	private CrudMvcFactory factory;
+	private static final Logger logger = LoggerFactory.getLogger(ControladorActividad.class);
 
 	protected ModeloActividad modelo;
 
@@ -25,22 +31,19 @@ public class ControladorActividad implements Controlador{
 		this.modelo = modelo;
 	}
 	
-	@Override
 	public void registrarActividad(Actividad actividad) {
+		logger.info("guardando {}", actividad);
 		modelo.guardarActividad(actividad);
 	}
 
-	@Override
 	public List<Actividad> leerListaActividades() {
 		return modelo.obtenerActividadesDelUsuario(27);//TODO: cambiar
 	}
 	
-	@Override
 	public void actualizarActividad(Actividad actividad) {
 		modelo.actualizarActividad(actividad);
 	}
 	
-	@Override
 	public void eliminarActividad(int index) {
 		modelo.eliminarActividad(modelo.obtenerActividadPorIndexEnLista(index).getId());
 	}
@@ -48,16 +51,22 @@ public class ControladorActividad implements Controlador{
 	public void abrirVentanaDetalles(int index) {
 		Actividad actividad = modelo.obtenerActividadPorIndexEnLista(index);
 		if(actividad.getTipoActividad() == TipoActividad.CAMINATA.getValor()) {
-			new VistaDetalles(new DetallesCaminata((Caminata) actividad));
+			new DetallesActividad(new DetallesCaminata((Caminata) actividad));
+		}else if(actividad.getTipoActividad() == TipoActividad.CICLISMO.getValor()) {
+			new DetallesActividad(new DetallesCiclismo((Ciclismo) actividad));
+		}else if(actividad.getTipoActividad() == TipoActividad.NATACION.getValor()) {
+			new DetallesActividad(new DetallesNatacion((Natacion) actividad));
 		}
 	}
 	
 	public void abrirVentanaActualizarActividad(int index) {
 		Actividad actividad = modelo.obtenerActividadPorIndexEnLista(index);
 		if(actividad.getTipoActividad() == TipoActividad.CAMINATA.getValor()) {
-			factory = new CaminataFactory(this, new FormularioCaminata((Caminata) actividad));
-			VistaActualizarCaminata vista = (VistaActualizarCaminata) factory.getVistaFormularioActualizar();
-			vista.setVisible(true);
+			new ActualizacionActividad(this, new FormularioCaminata((Caminata) actividad));
+		}else if(actividad.getTipoActividad() == TipoActividad.CICLISMO.getValor()) {
+			new ActualizacionActividad(this, new FormularioCiclismo((Ciclismo) actividad));
+		}else if(actividad.getTipoActividad() == TipoActividad.NATACION.getValor()) {
+			new ActualizacionActividad(this, new FormularioNatacion((Natacion) actividad));
 		}
 	}
 	

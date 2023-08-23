@@ -7,7 +7,9 @@ public class Caminata extends Actividad {
 
 	private float distancia;
 
-	public Caminata() {}
+	public Caminata() {
+		super();
+	}
 	
 	public Caminata(int id, int userId, Timestamp fechaHora, Time duracion, String ubicación, float distancia) {
 		super(id, userId, fechaHora, duracion, ubicación);

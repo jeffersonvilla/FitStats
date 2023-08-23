@@ -1,4 +1,4 @@
-package com.fit.actividad.vista.panelFormulario;
+package com.fit.actividad.vista;
 
 public interface InputsValidosObserver {
 

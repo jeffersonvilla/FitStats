@@ -1,4 +1,4 @@
-package com.fit.actividad.vista.actividades;
+package com.fit.actividad.vista.detalles;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -8,16 +8,16 @@ import com.fit.util.Formato;
 
 import net.miginfocom.swing.MigLayout;
 
-/**
- * Panel que muestra la información en comun de las actividades
- * 
- * */
 public abstract class PanelDetalles extends JPanel{
 	
 	private static final long serialVersionUID = 1L;
+	
+	private Actividad actividad;
 
 	public PanelDetalles(Actividad actividad) {
 		super(new MigLayout());
+		
+		this.actividad = actividad;
 		
 		add(new JLabel("Fecha y hora:"));
 		add(new JLabel(Formato.formatearFechaHora(actividad.getFechaHora())), "wrap");
@@ -27,5 +27,9 @@ public abstract class PanelDetalles extends JPanel{
 		
 		add(new JLabel("Ubicación:"));
 		add(new JLabel(actividad.getUbicacion()), "wrap");
+	}
+	
+	public String getTitulo() {
+		return actividad.getNombreTipoActividad();
 	}
 }

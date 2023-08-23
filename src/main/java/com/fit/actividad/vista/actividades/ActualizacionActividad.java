@@ -1,4 +1,4 @@
-package com.fit.actividad.vista.caminata;
+package com.fit.actividad.vista.actividades;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -6,13 +6,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import com.fit.actividad.AbstractFactory.VistaFormularioActualizar;
 import com.fit.actividad.controlador.ControladorActividad;
-import com.fit.actividad.vista.panelFormulario.FormularioCaminata;
-import com.fit.actividad.vista.panelFormulario.InputsValidosObserver;
+import com.fit.actividad.vista.InputsValidosObserver;
+import com.fit.actividad.vista.panelFormulario.FormularioActividad;
 
-public class VistaActualizarCaminata extends VentanaFormularioCaminata 
-implements VistaFormularioActualizar, ActionListener, InputsValidosObserver{
+public class ActualizacionActividad extends VentanaFormularioActividad implements ActionListener, InputsValidosObserver{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -20,7 +18,7 @@ implements VistaFormularioActualizar, ActionListener, InputsValidosObserver{
 	
 	private JButton botonActualizar;
 	
-	public VistaActualizarCaminata(ControladorActividad controlador, FormularioCaminata formulario) {
+	public ActualizacionActividad(ControladorActividad controlador, FormularioActividad formulario) {
 		super(controlador, formulario);
 		
 		formulario.setObservadorInputs(this);
@@ -35,6 +33,7 @@ implements VistaFormularioActualizar, ActionListener, InputsValidosObserver{
 		
 		pack();
 		setResizable(false);
+		setVisible(true);
 	}
 
 	@Override

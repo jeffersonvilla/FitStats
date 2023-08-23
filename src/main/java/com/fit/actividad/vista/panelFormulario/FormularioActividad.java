@@ -24,6 +24,7 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import com.fit.actividad.modelo.Actividad;
+import com.fit.actividad.vista.InputsValidosObserver;
 import com.fit.util.Validador;
 
 public abstract class FormularioActividad extends PanelFormulario {
@@ -234,6 +235,8 @@ public abstract class FormularioActividad extends PanelFormulario {
 	protected String getUbicacion() {
 		return this.textFieldUbicacion.getText();
 	}
+	
+	public abstract String getTitulo();
 	
 	public abstract Actividad getActividad();
 
