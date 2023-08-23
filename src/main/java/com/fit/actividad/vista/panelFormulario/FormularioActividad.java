@@ -92,7 +92,7 @@ public abstract class FormularioActividad extends PanelFormulario {
 	}
 	
 	private void inicializarCamposHora() {
-		add(new JLabel("Hora"));
+		add(new JLabel("Hora inicio"));
 		this.selectorHora = getSelectorHoraIncio();
 		add(this.selectorHora, "grow, wrap");
 		this.labelErrorHora = getLabelError();
@@ -101,7 +101,7 @@ public abstract class FormularioActividad extends PanelFormulario {
 	
 	private void inicializarCamposDuracion() {
 		add(new JLabel("Duracion", JLabel.CENTER), "span, grow, wrap");
-		add(new JLabel("hora(s)"));
+		add(new JLabel("Cantidad de horas"));
 		this.duracionHoras = getSelectorDuracion(23, getHorasDuracion());
 		add(this.duracionHoras, "split 3, grow");
 		add(new JLabel("minutos"));

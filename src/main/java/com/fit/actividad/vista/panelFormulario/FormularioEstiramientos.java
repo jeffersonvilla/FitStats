@@ -1,6 +1,8 @@
 package com.fit.actividad.vista.panelFormulario;
 
 import java.awt.Color;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.management.RuntimeErrorException;
 import javax.swing.BorderFactory;
@@ -17,6 +19,8 @@ import com.fit.actividad.modelo.TipoActividad;
 public class FormularioEstiramientos extends FormularioActividad {
 
 	private static final long serialVersionUID = 1L;
+	
+	private static final String EJEMPLO_TIPO_SESION = "Ejemplo: Yoga";
 
 	private JTextField textFieldTipoSesion;
 
@@ -51,6 +55,7 @@ public class FormularioEstiramientos extends FormularioActividad {
 		add(new JLabel("Tipo de sesion"));
 		this.textFieldTipoSesion = new JTextField(15);
 		if(actividad != null) this.textFieldTipoSesion.setText(((Estiramientos) actividad).getTipoSesion());
+		else this.textFieldTipoSesion.setText(EJEMPLO_TIPO_SESION);
 		add(this.textFieldTipoSesion, "span, grow, wrap");
 		this.labelErrorTipoSesion = getLabelError();
 		add(this.labelErrorTipoSesion,  "span, grow, wrap");
@@ -74,6 +79,18 @@ public class FormularioEstiramientos extends FormularioActividad {
 			
 			@Override
 			public void changedUpdate(DocumentEvent e) { }
+		});
+		
+		this.textFieldTipoSesion.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) { }
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				if(textFieldTipoSesion.getText().equals(EJEMPLO_TIPO_SESION))
+					textFieldTipoSesion.setText("");
+			}
 		});
 	}
 	
@@ -149,7 +166,10 @@ public class FormularioEstiramientos extends FormularioActividad {
 	private void validarTipoSesion() {
 		limpiarCampoErrorTipoSesion();
 		tipoSesionValido = true;
-		if(getTipoSesion().length() > Estiramientos.TAMANIO_MAXIMO_TIPO_SESION) {
+		if(getTipoSesion().isBlank()) {
+			mostrarErrorCampoTipoSesion(MENSAJE_VALIDACION_CAMPO_VACIO);
+			tipoSesionValido = false;
+		}else if(getTipoSesion().length() > Estiramientos.TAMANIO_MAXIMO_TIPO_SESION) {
 			mostrarErrorCampoTipoSesion(Estiramientos.MENSAJE_TAMANIO_MAXIMO_TIPO_SESION);
 			tipoSesionValido = false;
 		}
