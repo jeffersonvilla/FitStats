@@ -21,6 +21,10 @@ public class EntrenamientoGimnasio extends Actividad {
 
 	private String descansoEntreSeries;
 	
+	public EntrenamientoGimnasio() {
+		super();
+	}
+
 	public EntrenamientoGimnasio(int id, int userId, Timestamp fechaHora, Time duracion, String ubicacion, 
 			String ejerciciosRealizados, String descansoEntreEjercicios, String descansoEntreSeries) {
 		super(id, userId, fechaHora, duracion, ubicacion);

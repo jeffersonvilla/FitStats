@@ -18,7 +18,14 @@ public class Estiramientos extends Actividad {
 	private String tipoSesion;
 
 	private String nivelDificultad;
-	
+	public Estiramientos() {
+		super();
+	}
+
+	public Estiramientos(int id, int userId, Timestamp fechaHora, Time duracion, String ubicacion) {
+		super(id, userId, fechaHora, duracion, ubicacion);
+	}
+
 	public Estiramientos(int id, int userId, Timestamp fechaHora, Time duracion, String ubicacion, 
 			String tipoSesion, String nivelDificultad) {
 		super(id, userId, fechaHora, duracion, ubicacion);

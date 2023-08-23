@@ -15,7 +15,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-import com.fit.actividad.controlador.ControladorActividad;
+import com.fit.actividad.ControladorActividad;
 import com.fit.actividad.modelo.Actividad;
 import com.fit.actividad.vista.ModeloActividadObserver;
 import com.fit.util.Formato;

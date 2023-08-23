@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import com.fit.actividad.controlador.ControladorActividad;
+import com.fit.actividad.ControladorActividad;
 import com.fit.actividad.vista.InputsValidosObserver;
 import com.fit.actividad.vista.panelFormulario.FormularioActividad;
 

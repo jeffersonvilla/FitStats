@@ -26,6 +26,10 @@ public class DeporteEquipo extends Actividad {
 
 	private String resultadoDelPartido;
 
+	public DeporteEquipo() {
+		super();
+	}
+
 	public DeporteEquipo(int id, int userId, Timestamp fechaHora, Time duracion, String ubicacion, String nombreDeporte, String nombreEquipos,
 			String resultadoDelPartido) {
 		super(id, userId, fechaHora, duracion, ubicacion);

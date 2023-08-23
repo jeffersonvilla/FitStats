@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 
-import com.fit.actividad.controlador.ControladorActividad;
+import com.fit.actividad.ControladorActividad;
 import com.fit.actividad.vista.panelFormulario.FormularioActividad;
 import com.fit.util.Pantalla;
 

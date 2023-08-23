@@ -9,11 +9,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.fit.actividad.controlador.ControladorActividad;
+import com.fit.actividad.ControladorActividad;
 import com.fit.actividad.modelo.TipoActividad;
 import com.fit.actividad.vista.panelFormulario.FormularioCaminata;
 import com.fit.actividad.vista.panelFormulario.FormularioCiclismo;
+import com.fit.actividad.vista.panelFormulario.FormularioDeporteEquipo;
+import com.fit.actividad.vista.panelFormulario.FormularioEntrenamientoGimnasio;
+import com.fit.actividad.vista.panelFormulario.FormularioEstiramientos;
 import com.fit.actividad.vista.panelFormulario.FormularioNatacion;
+import com.fit.actividad.vista.panelFormulario.FormularioOtraActividad;
 import com.fit.util.OpcionesTipoActividad;
 import com.fit.util.Pantalla;
 
@@ -69,6 +73,14 @@ public class SeleccionTipoActividadCrear extends JFrame implements ActionListene
 				new CreacionActividad(controlador, new FormularioCiclismo());
 			}else if(opcionSeleccionada.equals(TipoActividad.NATACION.getNombre())) {
 				new CreacionActividad(controlador, new FormularioNatacion());
+			}else if(opcionSeleccionada.equals(TipoActividad.DEPORTE_EQUIPO.getNombre())) {
+				new CreacionActividad(controlador, new FormularioDeporteEquipo());
+			}else if(opcionSeleccionada.equals(TipoActividad.ENTRENAMIENTO_GIMNASIO.getNombre())) {
+				new CreacionActividad(controlador, new FormularioEntrenamientoGimnasio());
+			}else if(opcionSeleccionada.equals(TipoActividad.ESTIRAMIENTOS.getNombre())) {
+				new CreacionActividad(controlador, new FormularioEstiramientos());
+			}else if(opcionSeleccionada.equals(TipoActividad.OTRA_ACTIVIDAD.getNombre())) {
+				new CreacionActividad(controlador, new FormularioOtraActividad());
 			}
 			
 			dispose();

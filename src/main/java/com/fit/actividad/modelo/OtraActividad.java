@@ -12,6 +12,14 @@ public class OtraActividad extends Actividad {
 
 	private String descripcion;
 
+	public OtraActividad() {
+		super();
+	}
+
+	public OtraActividad(int id, int userId, Timestamp fechaHora, Time duracion, String ubicacion) {
+		super(id, userId, fechaHora, duracion, ubicacion);
+	}
+
 	public OtraActividad(int id, int userId, Timestamp fechaHora, Time duracion, String ubicacion, String descripcion) {
 		super(id, userId, fechaHora, duracion, ubicacion);
 		this.descripcion = descripcion;
