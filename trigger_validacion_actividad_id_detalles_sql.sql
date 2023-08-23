@@ -1,7 +1,7 @@
 delimiter $$ 
 
 create trigger verificando_detalles_caminata_carrera 
-before insert on detalles_caminata_carrera 
+before insert on detalles_caminata 
 for each row begin
 declare x varchar(50);
 set x = (select nombre_actividad from tipo_actividad t 

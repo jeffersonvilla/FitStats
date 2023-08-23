@@ -41,7 +41,7 @@ CREATE TABLE `actividad` (
   CONSTRAINT `fk_registros_usuarios` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `detalles_caminata_carrera` (
+CREATE TABLE `detalles_caminata` (
   `actividad_id` int NOT NULL,
   `distancia` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`actividad_id`),
